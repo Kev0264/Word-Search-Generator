@@ -9,5 +9,5 @@ dist/
 *.png
 *.pdf
 !examples/*.png
-generated_puzzles/
-word_lists/
+/generated_puzzles/
+/word_lists/

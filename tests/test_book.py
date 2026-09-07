@@ -137,8 +137,21 @@ def test_build_book_skips_puzzle_too_long_for_grid_with_warning():
 
     assert any("TooLong" in w for w in warnings)
     # Only the "Fine" puzzle should have produced a puzzle page (plus title
-    # page, divider, answer key page, and any blank padding page).
-    assert len(pages) <= 5
+    # page, divider, answer key page, and any recto/even-page-count padding).
+    assert len(pages) <= 8
+
+
+def test_force_recto_inserts_blank_page_only_when_even():
+    from word_search.book import _force_recto
+
+    pages: list = []
+    # Odd page number: nothing inserted, number unchanged.
+    assert _force_recto(pages, 3) == 3
+    assert pages == []
+
+    # Even page number: one blank page inserted, number advances to odd.
+    assert _force_recto(pages, 4) == 5
+    assert len(pages) == 1
 
 
 def test_build_book_includes_intro_and_instructions_pages():

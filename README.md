@@ -95,8 +95,15 @@ The book is assembled as: title page → intro pages → instructions pages →
 one full page per puzzle → an "Answer Keys" divider → 4-up answer key pages
 (2×2 mini grids per page, with every solution cell shaded in translucent
 gray rather than full color, so it stays legible and print-safe in a
-black & white KDP interior). A warning is printed if the assembled book
-comes in under KDP's 24-page paperback minimum.
+black & white KDP interior). Each puzzle and the "Answer Keys" divider
+always start on a right-hand (recto) page — a blank page is inserted before
+one if needed — so a puzzle you're marking up always gets a clean, dedicated
+spread. A warning is printed if the assembled book comes in under KDP's
+24-page paperback minimum.
+
+Margins are generous since these are pages meant to be written on, not just
+read: 1.0in on the inside (gutter) edge, 0.75in outside, 0.75in top, 0.85in
+bottom, plus a small extra buffer between the margin and the grid itself.
 
 `--csv` accepts the same `--size`, `--difficulty`, `--seed`,
 `--no-backwards`, and `--straight-only` flags as single-puzzle mode, applied
