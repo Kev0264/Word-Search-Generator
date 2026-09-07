@@ -54,6 +54,13 @@ to common word-search-book conventions:
 | `easy` | 12×12 | horizontal/vertical only, no backwards | 8-12 |
 | `medium` | 15×15 (default) | all 8 directions, backwards allowed | 12-18 |
 | `hard` | 20×20 | all 8 directions, backwards allowed | 20-28 |
+| `large-print` | 10×10 | horizontal/vertical only, no backwards | 6-10 |
+
+`large-print` is a genuine accessibility preset for `--csv` book mode, not
+just "easy" relabeled: on the fixed 8.5×11in page, a smaller grid means much
+bigger cells, and every other text element (title, word list, table of
+contents) is also scaled up about 35%, so the whole book — not just the
+grid — reads large.
 
 Any explicit `--size`, `--straight-only`, or `--no-backwards` flag overrides
 the preset's value for that setting. If your word list falls outside the
@@ -77,13 +84,30 @@ wordsearch --csv puzzles.csv --intro intro.md --instructions instructions.md \
   --difficulty medium -o book.pdf
 ```
 
-**CSV format**: one puzzle per row — first column is the puzzle's title
-(leave blank for an auto-numbered "Puzzle 1", "Puzzle 2", ...), remaining
-columns are that puzzle's words:
+**CSV format**: a required header row, then one puzzle per row with fixed
+columns — title, trivia, then words. The header row's own text is ignored
+(it's just skipped), but it must be present. Words always start at the same
+column whether or not a given puzzle has trivia, which keeps a spreadsheet's
+columns lined up; there's no fixed limit on how many word columns a row can
+have, and the header doesn't need a `Word1`/`Word2`/... label for each one —
+"Words" (or nothing at all) is enough:
 
 ```csv
-Animals,TIGER,ELEPHANT,GIRAFFE,DOLPHIN,PENGUIN
-Space,MOON,STAR,PLANET,COMET,GALAXY
+Title,Trivia,Words
+Animals,,TIGER,ELEPHANT,GIRAFFE,DOLPHIN,PENGUIN
+Space,,MOON,STAR,PLANET,COMET,GALAXY
+```
+
+Leave the title blank for an auto-numbered "Puzzle 1", "Puzzle 2", ....
+
+**Trivia blurbs (optional)**: leave the trivia cell blank if a puzzle
+doesn't have one. When present, it's printed as an italicized blurb below
+that puzzle's word list. Quote the cell if the fact itself contains a
+comma; for multiple short paragraphs, put a blank line inside the (quoted)
+cell:
+
+```csv
+Animals,"An elephant's trunk has over 40,000 muscles.",TIGER,ELEPHANT,GIRAFFE
 ```
 
 **`--intro`/`--instructions`**: plain text or a tiny markdown subset —
@@ -91,15 +115,25 @@ Space,MOON,STAR,PLANET,COMET,GALAXY
 bullets. Content that overflows one page automatically flows onto the next.
 Both are optional; omit either flag to skip that section.
 
-The book is assembled as: title page → intro pages → instructions pages →
-one full page per puzzle → an "Answer Keys" divider → 4-up answer key pages
-(2×2 mini grids per page, with every solution cell shaded in translucent
-gray rather than full color, so it stays legible and print-safe in a
-black & white KDP interior). Each puzzle and the "Answer Keys" divider
-always start on a right-hand (recto) page — a blank page is inserted before
-one if needed — so a puzzle you're marking up always gets a clean, dedicated
-spread. A warning is printed if the assembled book comes in under KDP's
-24-page paperback minimum.
+The book is assembled as: title page → intro pages → instructions pages → a
+combined table of contents / progress checklist (a checkbox, number, and
+dot-leadered page number per puzzle, so you can both jump to a puzzle and
+mark it done in the same list) → one full page per puzzle → an "Answer
+Keys" divider → 4-up answer key pages (2×2 mini grids per page, with every
+solution cell shaded in translucent gray rather than full color, so it
+stays legible and print-safe in a black & white KDP interior). Each puzzle
+and the "Answer Keys" divider always start on a right-hand (recto) page — a
+blank page is inserted before one if needed — so a puzzle you're marking up
+always gets a clean, dedicated spread. A warning is printed if the
+assembled book comes in under KDP's 24-page paperback minimum.
+
+Each puzzle page is headed "Puzzle N: Title" in a serif heading font with a
+rule underneath, matching the title page and section divider, so the book
+reads as one designed system rather than a bare grid-plus-list. Grid lines
+throughout (including the mini answer keys) are thin gray rather than bold
+black, and word lists/paragraphs use a regular-weight font instead of bold,
+so headings, body text, and puzzle letters each have their own visual
+weight.
 
 Margins are generous since these are pages meant to be written on, not just
 read: 1.0in on the inside (gutter) edge, 0.75in outside, 0.75in top, 0.85in
@@ -123,7 +157,7 @@ to every puzzle in the book.
 | `--instructions` | Text/markdown file rendered as the book's instructions page(s) (`--csv` mode) |
 | `--book-title` | Title page text (`--csv` mode; default: the CSV filename) |
 | `--author` | Author name on the title page (`--csv` mode) |
-| `--difficulty` | `easy`, `medium`, or `hard` preset for size/directions (see above) |
+| `--difficulty` | `easy`, `medium`, `hard`, or `large-print` preset for size/directions (see above) |
 | `--size, -s` | Grid size: `15` (square) or `15x20` (rows x cols) |
 | `--output, -o` | Output path — puzzle `.png`/`.pdf` in single-file mode, or the book PDF in `--csv` mode (default: `book.pdf`) |
 | `--answer-key, -a` | Optional answer key output path (single-file mode) |

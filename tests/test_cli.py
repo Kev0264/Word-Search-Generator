@@ -100,7 +100,7 @@ def test_word_count_warning_only_fires_with_difficulty():
 
 def test_csv_mode_builds_a_book_pdf(tmp_path):
     csv_path = tmp_path / "puzzles.csv"
-    csv_path.write_text("Animals,TIGER,LION,BEAR\nColors,RED,BLUE,GREEN\n")
+    csv_path.write_text("Title,Trivia,Words\nAnimals,,TIGER,LION,BEAR\nColors,,RED,BLUE,GREEN\n")
     output_path = tmp_path / "my_book.pdf"
 
     exit_code = main(

@@ -11,6 +11,7 @@ MARGIN = 40
 TITLE_HEIGHT = 50
 CIRCLE_WIDTH_RATIO = 0.09
 CIRCLE_RADIUS_RATIO = 0.46
+GRID_LINE_COLOR = "#999999"
 
 # Distinct colors cycled per placed word so that unrelated words which happen
 # to cross near each other (e.g. two diagonals sharing a row) are visually
@@ -33,12 +34,45 @@ HIGHLIGHT_PALETTE = [
 
 
 def load_font(size: int) -> ImageFont.ImageFont:
+    """Bold sans -- used for grid letters and other bold emphasis."""
     for name in ("DejaVuSans-Bold.ttf", "Arial Bold.ttf", "arialbd.ttf"):
         try:
             return ImageFont.truetype(name, size)
         except OSError:
             continue
     return ImageFont.load_default()
+
+
+def load_heading_font(size: int) -> ImageFont.ImageFont:
+    """Bold serif -- used for titles/headings, distinct from body text and
+    grid letters so the page reads with real typographic hierarchy."""
+    for name in ("DejaVuSerif-Bold.ttf", "Georgia Bold.ttf", "Times New Roman Bold.ttf"):
+        try:
+            return ImageFont.truetype(name, size)
+        except OSError:
+            continue
+    return load_font(size)
+
+
+def load_body_font(size: int) -> ImageFont.ImageFont:
+    """Regular-weight sans -- used for paragraphs and word lists, so not
+    every line on the page is shouting in bold."""
+    for name in ("DejaVuSans.ttf", "Arial.ttf", "arial.ttf"):
+        try:
+            return ImageFont.truetype(name, size)
+        except OSError:
+            continue
+    return load_font(size)
+
+
+def load_italic_font(size: int) -> ImageFont.ImageFont:
+    """Italic sans -- used for small callouts like a trivia blurb."""
+    for name in ("DejaVuSans-Oblique.ttf", "Arial Italic.ttf", "ariali.ttf"):
+        try:
+            return ImageFont.truetype(name, size)
+        except OSError:
+            continue
+    return load_body_font(size)
 
 
 def wrap_words_by_pixel(words: list[str], font: ImageFont.ImageFont, max_width: int) -> list[str]:
@@ -87,7 +121,7 @@ class PuzzleRenderer:
         return wrap_words_by_pixel(words, font, width - MARGIN * 2)
 
     def _word_list_height(self, width: int) -> int:
-        lines = self._wrap_word_list(width, self._font(18))
+        lines = self._wrap_word_list(width, load_body_font(18))
         return 40 + len(lines) * 24
 
     def _render(self, with_answers: bool) -> Image.Image:
@@ -105,7 +139,7 @@ class PuzzleRenderer:
             (width / 2, MARGIN / 2),
             self.title,
             fill="black",
-            font=self._font(28),
+            font=load_heading_font(28),
             anchor="ma",
         )
 
@@ -114,10 +148,10 @@ class PuzzleRenderer:
 
         for r in range(rows + 1):
             y = grid_top + r * self.cell_size
-            draw.line([(grid_left, y), (grid_left + grid_w, y)], fill="black")
+            draw.line([(grid_left, y), (grid_left + grid_w, y)], fill=GRID_LINE_COLOR)
         for c in range(cols + 1):
             x = grid_left + c * self.cell_size
-            draw.line([(x, grid_top), (x, grid_top + grid_h)], fill="black")
+            draw.line([(x, grid_top), (x, grid_top + grid_h)], fill=GRID_LINE_COLOR)
 
         letter_font = self._font(int(self.cell_size * 0.55))
         for r in range(rows):
@@ -195,10 +229,10 @@ class PuzzleRenderer:
             (width / 2, top),
             "Find these words:",
             fill="black",
-            font=self._font(20),
+            font=load_heading_font(20),
             anchor="ma",
         )
-        font = self._font(18)
+        font = load_body_font(18)
         wrapped = self._wrap_word_list(width, font)
         y = top + 30
         for line in wrapped:

@@ -45,8 +45,8 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--csv",
-        help="CSV file with one puzzle per row (first column = title, remaining "
-        "columns = words); builds a single print-ready, multi-page KDP book PDF",
+        help="CSV file with a header row, then one puzzle per row (title, trivia "
+        "[blank if none], then words); builds a single print-ready, multi-page KDP book PDF",
     )
     parser.add_argument(
         "--intro",
@@ -76,7 +76,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--difficulty",
-        choices=["easy", "medium", "hard"],
+        choices=list(DIFFICULTY_PRESETS.keys()),
         help="Difficulty preset controlling grid size and allowed directions "
         "(overridden by explicit --size/--straight-only/--no-backwards)",
     )

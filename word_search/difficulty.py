@@ -22,6 +22,15 @@ DIFFICULTY_PRESETS: dict[str, dict] = {
         "allow_backwards": True,
         "word_count": (20, 28),
     },
+    # A genuine accessibility preset: a small grid on the same fixed page
+    # size means each cell -- and every font that scales off it -- comes out
+    # much larger, rather than just being "easy" with the same tiny print.
+    "large-print": {
+        "size": "10",
+        "straight_only": True,
+        "allow_backwards": False,
+        "word_count": (6, 10),
+    },
 }
 
 
