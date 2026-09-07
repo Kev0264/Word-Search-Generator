@@ -27,6 +27,7 @@ class PlacedWord:
     col: int
     direction: str
     cells: list[tuple[int, int]] = field(default_factory=list)
+    display: str = ""
 
 
 class WordSearchGenerator:
@@ -43,7 +44,7 @@ class WordSearchGenerator:
         max_attempts_per_word: int = 500,
         fill_letters: str = string.ascii_uppercase,
     ):
-        self.words = self._normalize_words(words)
+        self.words, self.display_words = self._normalize_words(words)
         self.rows = rows
         self.cols = cols
         self.allow_backwards = allow_backwards
@@ -57,15 +58,20 @@ class WordSearchGenerator:
         self.skipped: list[str] = []
 
     @staticmethod
-    def _normalize_words(words: list[str]) -> list[str]:
-        seen: set[str] = set()
+    def _normalize_words(words: list[str]) -> tuple[list[str], dict[str, str]]:
+        """Cleans each word down to the letters-only form placed in the grid,
+        while remembering the original (uppercased) spelling for display in
+        the word list, so a word like "mother-in-law" is hidden in the grid
+        as MOTHERINLAW but still printed as MOTHER-IN-LAW to solvers."""
         normalized: list[str] = []
+        display_words: dict[str, str] = {}
         for word in words:
-            cleaned = "".join(ch for ch in word.strip().upper() if ch.isalpha())
-            if cleaned and cleaned not in seen:
-                seen.add(cleaned)
+            display = word.strip().upper()
+            cleaned = "".join(ch for ch in display if ch.isalpha())
+            if cleaned and cleaned not in display_words:
                 normalized.append(cleaned)
-        return normalized
+                display_words[cleaned] = display
+        return normalized, display_words
 
     def generate(self) -> list[list[str]]:
         if not self.words:
@@ -79,7 +85,7 @@ class WordSearchGenerator:
 
         for word in sorted(self.words, key=len, reverse=True):
             if not self._place_word(word):
-                self.skipped.append(word)
+                self.skipped.append(self.display_words[word])
 
         self._fill_blanks()
         return self.grid
@@ -105,7 +111,9 @@ class WordSearchGenerator:
             if self._fits(cells, letters):
                 for (r, c), ch in zip(cells, letters):
                     self.grid[r][c] = ch
-                self.placements.append(PlacedWord(word, row, col, direction_name, cells))
+                self.placements.append(
+                    PlacedWord(word, row, col, direction_name, cells, self.display_words[word])
+                )
                 return True
         return False
 

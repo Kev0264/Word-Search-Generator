@@ -4,6 +4,7 @@ import argparse
 import sys
 from pathlib import Path
 
+from .difficulty import DIFFICULTY_PRESETS, word_count_warning
 from .grid import WordSearchGenerationError, WordSearchGenerator
 from .render import PuzzleRenderer
 
@@ -43,6 +44,26 @@ def build_parser() -> argparse.ArgumentParser:
         "for every file found",
     )
     parser.add_argument(
+        "--csv",
+        help="CSV file with one puzzle per row (first column = title, remaining "
+        "columns = words); builds a single print-ready, multi-page KDP book PDF",
+    )
+    parser.add_argument(
+        "--intro",
+        help="Path to a text/markdown file rendered as the book's introduction "
+        "page(s) (used with --csv)",
+    )
+    parser.add_argument(
+        "--instructions",
+        help="Path to a text/markdown file rendered as the book's instructions "
+        "page(s) (used with --csv)",
+    )
+    parser.add_argument(
+        "--book-title",
+        help="Title for the book's title page (used with --csv; default: the CSV filename)",
+    )
+    parser.add_argument("--author", help="Author name printed on the title page (used with --csv)")
+    parser.add_argument(
         "--output-dir",
         default="generated_puzzles",
         help="Directory to write output into when using --words-dir (default: generated_puzzles)",
@@ -54,7 +75,17 @@ def build_parser() -> argparse.ArgumentParser:
         help="Output image format when using --words-dir (default: png)",
     )
     parser.add_argument(
-        "--size", "-s", default="15", help="Grid size, e.g. 15 or 15x20 (ROWSxCOLS)"
+        "--difficulty",
+        choices=["easy", "medium", "hard"],
+        help="Difficulty preset controlling grid size and allowed directions "
+        "(overridden by explicit --size/--straight-only/--no-backwards)",
+    )
+    parser.add_argument(
+        "--size",
+        "-s",
+        default=None,
+        help="Grid size, e.g. 15 or 15x20 (ROWSxCOLS); default 15, or the "
+        "--difficulty preset's size",
     )
     parser.add_argument(
         "--output", "-o", default="puzzle.png", help="Output path for the puzzle (.png or .pdf)"
@@ -68,16 +99,29 @@ def build_parser() -> argparse.ArgumentParser:
         "--no-backwards",
         dest="allow_backwards",
         action="store_false",
+        default=None,
         help="Disallow reversed words",
     )
     parser.add_argument(
         "--straight-only",
         action="store_true",
+        default=None,
         help="Only place words horizontally and vertically (no diagonals)",
     )
     parser.add_argument("--cell-size", type=int, default=40, help="Pixel size of each grid cell")
-    parser.set_defaults(allow_backwards=True)
     return parser
+
+
+def apply_difficulty(args: argparse.Namespace) -> None:
+    """Fills in --size/--straight-only/--no-backwards from the --difficulty
+    preset wherever the user didn't pass them explicitly."""
+    preset = DIFFICULTY_PRESETS.get(args.difficulty, {})
+    if args.size is None:
+        args.size = preset.get("size", "15")
+    if args.straight_only is None:
+        args.straight_only = preset.get("straight_only", False)
+    if args.allow_backwards is None:
+        args.allow_backwards = preset.get("allow_backwards", True)
 
 
 def build_generator(words: list[str], args: argparse.Namespace) -> WordSearchGenerator:
@@ -96,6 +140,10 @@ def build_generator(words: list[str], args: argparse.Namespace) -> WordSearchGen
 def run_single(args: argparse.Namespace) -> int:
     words = load_words(args)
     generator = build_generator(words, args)
+
+    warning = word_count_warning(args.difficulty, len(generator.words))
+    if warning:
+        print(f"Warning: {warning}", file=sys.stderr)
 
     try:
         generator.generate()
@@ -141,6 +189,10 @@ def run_batch(args: argparse.Namespace) -> int:
         ]
         generator = build_generator(words, args)
 
+        warning = word_count_warning(args.difficulty, len(generator.words))
+        if warning:
+            print(f"Warning ({txt_file.name}): {warning}", file=sys.stderr)
+
         try:
             generator.generate()
         except WordSearchGenerationError as exc:
@@ -167,9 +219,61 @@ def run_batch(args: argparse.Namespace) -> int:
     return exit_code
 
 
+def run_book(args: argparse.Namespace) -> int:
+    from .book import build_book, read_puzzle_csv, save_book
+
+    csv_path = Path(args.csv)
+    if not csv_path.is_file():
+        print(f"Error: {csv_path} is not a file", file=sys.stderr)
+        return 1
+
+    specs = read_puzzle_csv(csv_path)
+    if not specs:
+        print(f"Error: no puzzles found in {csv_path}", file=sys.stderr)
+        return 1
+
+    rows, cols = parse_size(args.size)
+    directions = ["N", "S", "E", "W"] if args.straight_only else None
+
+    intro_text = Path(args.intro).read_text(encoding="utf-8") if args.intro else None
+    instructions_text = (
+        Path(args.instructions).read_text(encoding="utf-8") if args.instructions else None
+    )
+    book_title = args.book_title or title_from_filename(csv_path)
+
+    pages, warnings = build_book(
+        specs,
+        rows=rows,
+        cols=cols,
+        allow_backwards=args.allow_backwards,
+        directions=directions,
+        seed=args.seed,
+        book_title=book_title,
+        author=args.author,
+        intro_text=intro_text,
+        instructions_text=instructions_text,
+        difficulty=args.difficulty,
+    )
+
+    for warning in warnings:
+        print(f"Warning: {warning}", file=sys.stderr)
+
+    output = args.output
+    if output == "puzzle.png":
+        output = "book.pdf"
+
+    save_book(pages, output)
+    print(f"Book saved to {output} ({len(pages)} pages, {len(specs)} puzzles)")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    apply_difficulty(args)
+
+    if args.csv:
+        return run_book(args)
 
     if args.words_dir:
         return run_batch(args)

@@ -8,6 +8,22 @@ def test_normalizes_and_dedupes_words():
     assert gen.words == ["PYTHON", "GRID"]
 
 
+def test_display_words_preserve_original_spelling():
+    gen = WordSearchGenerator(
+        ["mother-in-law", "O'Brien", "new york", "python3"], rows=15, cols=15, seed=1
+    )
+    assert gen.words == ["MOTHERINLAW", "OBRIEN", "NEWYORK", "PYTHON"]
+    assert gen.display_words == {
+        "MOTHERINLAW": "MOTHER-IN-LAW",
+        "OBRIEN": "O'BRIEN",
+        "NEWYORK": "NEW YORK",
+        "PYTHON": "PYTHON3",
+    }
+    gen.generate()
+    for placed in gen.placements:
+        assert placed.display == gen.display_words[placed.word]
+
+
 def test_all_words_appear_in_grid_reading_in_their_direction():
     words = ["PYTHON", "GRID", "SEARCH", "WORD"]
     gen = WordSearchGenerator(words, rows=15, cols=15, seed=42)

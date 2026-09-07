@@ -32,6 +32,33 @@ HIGHLIGHT_PALETTE = [
 ]
 
 
+def load_font(size: int) -> ImageFont.ImageFont:
+    for name in ("DejaVuSans-Bold.ttf", "Arial Bold.ttf", "arialbd.ttf"):
+        try:
+            return ImageFont.truetype(name, size)
+        except OSError:
+            continue
+    return ImageFont.load_default()
+
+
+def wrap_words_by_pixel(words: list[str], font: ImageFont.ImageFont, max_width: int) -> list[str]:
+    """Greedily packs words onto lines (three spaces apart) so that no
+    rendered line exceeds max_width pixels for the given font."""
+    draw = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    lines: list[str] = []
+    current: list[str] = []
+    for word in words:
+        candidate = "   ".join(current + [word])
+        if current and draw.textlength(candidate, font=font) > max_width:
+            lines.append("   ".join(current))
+            current = [word]
+        else:
+            current.append(word)
+    if current:
+        lines.append("   ".join(current))
+    return lines
+
+
 class PuzzleRenderer:
     """Renders a WordSearchGenerator's grid to a PNG or PDF image."""
 
@@ -53,28 +80,11 @@ class PuzzleRenderer:
 
     @staticmethod
     def _font(size: int) -> ImageFont.ImageFont:
-        for name in ("DejaVuSans-Bold.ttf", "Arial Bold.ttf", "arialbd.ttf"):
-            try:
-                return ImageFont.truetype(name, size)
-            except OSError:
-                continue
-        return ImageFont.load_default()
+        return load_font(size)
 
     def _wrap_word_list(self, width: int, font: ImageFont.ImageFont) -> list[str]:
-        max_width = width - MARGIN * 2
-        draw = ImageDraw.Draw(Image.new("RGB", (1, 1)))
-        lines: list[str] = []
-        current: list[str] = []
-        for word in sorted(self.generator.words):
-            candidate = "   ".join(current + [word])
-            if current and draw.textlength(candidate, font=font) > max_width:
-                lines.append("   ".join(current))
-                current = [word]
-            else:
-                current.append(word)
-        if current:
-            lines.append("   ".join(current))
-        return lines
+        words = sorted(self.generator.display_words.values())
+        return wrap_words_by_pixel(words, font, width - MARGIN * 2)
 
     def _word_list_height(self, width: int) -> int:
         lines = self._wrap_word_list(width, self._font(18))
