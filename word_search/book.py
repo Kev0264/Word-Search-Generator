@@ -20,13 +20,18 @@ PAGE_W = round(PAGE_WIDTH_IN * DPI)
 PAGE_H = round(PAGE_HEIGHT_IN * DPI)
 
 # KDP's inside (gutter) margin needs to grow with page count to stay clear of
-# the binding; 0.75in comfortably covers books up to a few hundred pages.
-# Margins mirror left/right by page parity so facing pages read correctly
-# once bound.
-MARGIN_INSIDE_IN = 0.75
-MARGIN_OUTSIDE_IN = 0.5
-MARGIN_TOP_IN = 0.6
-MARGIN_BOTTOM_IN = 0.75
+# the binding; 1.0in comfortably covers books up to a few hundred pages, with
+# extra room beyond KDP's bare minimum since these are puzzles the reader
+# marks up by hand near the grid's edge, not just text to read. Margins
+# mirror left/right by page parity so facing pages read correctly once bound.
+MARGIN_INSIDE_IN = 1.0
+MARGIN_OUTSIDE_IN = 0.75
+MARGIN_TOP_IN = 0.75
+MARGIN_BOTTOM_IN = 0.85
+
+# Extra breathing room between the margin and the puzzle grid itself, so a
+# circled answer near the grid's edge never has to crowd the margin line.
+GRID_PADDING_IN = 0.15
 
 MIN_KDP_PAGES = 24
 
@@ -266,7 +271,8 @@ def render_puzzle_page(
     word_list_h = header_h + len(wrapped) * int(word_font.size * 1.4) + in_to_px(0.15)
 
     rows, cols = generator.rows, generator.cols
-    grid_available_w = printable_w
+    grid_padding = in_to_px(GRID_PADDING_IN)
+    grid_available_w = printable_w - grid_padding * 2
     grid_available_h = printable_h - title_h - word_list_h - in_to_px(0.1)
     cell_size = max(10, min(grid_available_w // cols, grid_available_h // rows))
 
@@ -403,6 +409,18 @@ def render_answer_key_pages(
     return pages
 
 
+def _force_recto(pages: list[Image.Image], page_number: int) -> int:
+    """Inserts a blank page if page_number is even, so the next page (a
+    puzzle, or the answer-key section) always starts on a right-hand
+    (recto) page -- the convention in puzzle books, since the reader marks
+    up the page and each puzzle should get a clean, dedicated spread rather
+    than landing wherever the previous content happened to end."""
+    if page_number % 2 == 0:
+        pages.append(new_page())
+        page_number += 1
+    return page_number
+
+
 def build_book(
     puzzle_specs: list[PuzzleSpec],
     rows: int,
@@ -458,11 +476,13 @@ def build_book(
                 f"{', '.join(generator.skipped)}"
             )
 
+        page_number = _force_recto(pages, page_number)
         pages.append(render_puzzle_page(generator, spec.title, page_number))
         page_number += 1
         entries.append((spec.title, generator))
 
     if entries:
+        page_number = _force_recto(pages, page_number)
         pages.append(render_section_divider("Answer Keys"))
         page_number += 1
 
