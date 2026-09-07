@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import math
-import textwrap
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -61,10 +60,25 @@ class PuzzleRenderer:
                 continue
         return ImageFont.load_default()
 
+    def _wrap_word_list(self, width: int, font: ImageFont.ImageFont) -> list[str]:
+        max_width = width - MARGIN * 2
+        draw = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+        lines: list[str] = []
+        current: list[str] = []
+        for word in sorted(self.generator.words):
+            candidate = "   ".join(current + [word])
+            if current and draw.textlength(candidate, font=font) > max_width:
+                lines.append("   ".join(current))
+                current = [word]
+            else:
+                current.append(word)
+        if current:
+            lines.append("   ".join(current))
+        return lines
+
     def _word_list_height(self, width: int) -> int:
-        text = "   ".join(sorted(self.generator.words))
-        wrapped = textwrap.wrap(text, width=max(20, width // 11))
-        return 40 + len(wrapped) * 24
+        lines = self._wrap_word_list(width, self._font(18))
+        return 40 + len(lines) * 24
 
     def _render(self, with_answers: bool) -> Image.Image:
         rows, cols = self.generator.rows, self.generator.cols
@@ -174,9 +188,8 @@ class PuzzleRenderer:
             font=self._font(20),
             anchor="ma",
         )
-        text = "   ".join(sorted(self.generator.words))
-        wrapped = textwrap.wrap(text, width=max(20, width // 11))
         font = self._font(18)
+        wrapped = self._wrap_word_list(width, font)
         y = top + 30
         for line in wrapped:
             draw.text((width / 2, y), line, fill="black", font=font, anchor="ma")
