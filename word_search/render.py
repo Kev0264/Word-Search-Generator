@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 import textwrap
 from pathlib import Path
 
@@ -9,10 +10,13 @@ from .grid import WordSearchGenerator
 
 MARGIN = 40
 TITLE_HEIGHT = 50
+CIRCLE_WIDTH_RATIO = 0.09
+CIRCLE_RADIUS_RATIO = 0.46
 
 # Distinct colors cycled per placed word so that unrelated words which happen
 # to cross near each other (e.g. two diagonals sharing a row) are visually
-# distinguishable instead of blending into one same-colored, misleading block.
+# distinguishable, and so that two words sharing a letter both stay visible
+# as overlapping outlines rather than one word's fill covering the other's.
 HIGHLIGHT_PALETTE = [
     "#ffd166",
     "#ef476f",
@@ -84,17 +88,6 @@ class PuzzleRenderer:
         grid_top = TITLE_HEIGHT + MARGIN
         grid_left = MARGIN
 
-        if with_answers:
-            for i, placed in enumerate(self.generator.placements):
-                color = HIGHLIGHT_PALETTE[i % len(HIGHLIGHT_PALETTE)]
-                for r, c in placed.cells:
-                    x0 = grid_left + c * self.cell_size
-                    y0 = grid_top + r * self.cell_size
-                    draw.rectangle(
-                        [x0, y0, x0 + self.cell_size, y0 + self.cell_size],
-                        fill=color,
-                    )
-
         for r in range(rows + 1):
             y = grid_top + r * self.cell_size
             draw.line([(grid_left, y), (grid_left + grid_w, y)], fill="black")
@@ -115,8 +108,63 @@ class PuzzleRenderer:
                     anchor="mm",
                 )
 
+        if with_answers:
+            for i, placed in enumerate(self.generator.placements):
+                color = HIGHLIGHT_PALETTE[i % len(HIGHLIGHT_PALETTE)]
+                start = (
+                    grid_left + placed.cells[0][1] * self.cell_size + self.cell_size / 2,
+                    grid_top + placed.cells[0][0] * self.cell_size + self.cell_size / 2,
+                )
+                end = (
+                    grid_left + placed.cells[-1][1] * self.cell_size + self.cell_size / 2,
+                    grid_top + placed.cells[-1][0] * self.cell_size + self.cell_size / 2,
+                )
+                self._draw_word_circle(draw, start, end, color)
+
         self._draw_word_list(draw, grid_top + grid_h + MARGIN, width)
         return img
+
+    def _draw_word_circle(
+        self,
+        draw: ImageDraw.ImageDraw,
+        start: tuple[float, float],
+        end: tuple[float, float],
+        color: str,
+    ) -> None:
+        """Draws a stadium-shaped (pill) outline from the center of the first
+        letter to the center of the last letter, circling the whole word."""
+        radius = self.cell_size * CIRCLE_RADIUS_RATIO
+        stroke = max(2, round(self.cell_size * CIRCLE_WIDTH_RATIO))
+
+        sx, sy = start
+        ex, ey = end
+        angle = math.degrees(math.atan2(ey - sy, ex - sx))
+
+        def offset(x: float, y: float, angle_deg: float, dist: float) -> tuple[float, float]:
+            rad = math.radians(angle_deg)
+            return (x + dist * math.cos(rad), y + dist * math.sin(rad))
+
+        side_a_start = offset(sx, sy, angle + 90, radius)
+        side_a_end = offset(ex, ey, angle + 90, radius)
+        side_b_start = offset(sx, sy, angle - 90, radius)
+        side_b_end = offset(ex, ey, angle - 90, radius)
+
+        draw.line([side_a_start, side_a_end], fill=color, width=stroke)
+        draw.line([side_b_start, side_b_end], fill=color, width=stroke)
+        draw.arc(
+            [sx - radius, sy - radius, sx + radius, sy + radius],
+            angle + 90,
+            angle + 270,
+            fill=color,
+            width=stroke,
+        )
+        draw.arc(
+            [ex - radius, ey - radius, ex + radius, ey + radius],
+            angle - 90,
+            angle + 90,
+            fill=color,
+            width=stroke,
+        )
 
     def _draw_word_list(self, draw: ImageDraw.ImageDraw, top: int, width: int) -> None:
         draw.text(
