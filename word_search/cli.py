@@ -62,6 +62,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--book-title",
         help="Title for the book's title page (used with --csv; default: the CSV filename)",
     )
+    parser.add_argument(
+        "--subtitle",
+        help="Optional subtitle printed below the main title in smaller italic type "
+        "(used with --csv)",
+    )
     parser.add_argument("--author", help="Author name printed on the title page (used with --csv)")
     parser.add_argument(
         "--year",
@@ -291,6 +296,7 @@ def run_book(args: argparse.Namespace) -> int:
         seed=args.seed,
         book_title=book_title,
         author=args.author,
+        subtitle=args.subtitle,
         intro_text=intro_text,
         instructions_text=instructions_text,
         difficulty=args.difficulty,

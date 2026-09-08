@@ -1,31 +1,2701 @@
 Title,Trivia,Words
-Animals,"An elephant's trunk contains over 40,000 muscles -- more than the entire human body.",TIGER,ELEPHANT,GIRAFFE,ZEBRA,KANGAROO,LEOPARD,CHEETAH,MONKEY,GORILLA,RHINO,HIPPO,BUFFALO,ANTELOPE,JACKAL
-Ocean Life,,DOLPHIN,WHALE,SHARK,OCTOPUS,JELLYFISH,STARFISH,SEAHORSE,LOBSTER,CRAB,CORAL,PLANKTON,STINGRAY,CLAM,ANCHOVY
-Birds,,EAGLE,SPARROW,ROBIN,FALCON,PARROT,PENGUIN,OWL,HAWK,FLAMINGO,PELICAN,WOODPECKER,HUMMINGBIRD,SWAN,CROW
-Farm Life,,TRACTOR,BARN,PASTURE,HARVEST,ROOSTER,PIGLET,HAYSTACK,SILO,PLOW,ORCHARD,SCARECROW,LIVESTOCK,FENCE,MEADOW
-Seasons,,SPRING,SUMMER,AUTUMN,WINTER,BLOSSOM,HARVEST,SNOWFALL,SUNSHINE,RAINFALL,FOLIAGE,FROST,BREEZE,EQUINOX,SOLSTICE
-Weather,,THUNDER,LIGHTNING,RAINBOW,DROUGHT,HURRICANE,BLIZZARD,HUMIDITY,FORECAST,CLIMATE,TORNADO,OVERCAST,DRIZZLE,SUNSHINE,FROST
-Flowers and Plants,,DAISY,TULIP,ORCHID,SUNFLOWER,LAVENDER,CACTUS,FERN,IVY,MARIGOLD,PETUNIA,JASMINE,DAFFODIL,BLOSSOM,SPROUT
-Fruits and Vegetables,,BANANA,PINEAPPLE,BROCCOLI,SPINACH,CARROT,PUMPKIN,AVOCADO,CUCUMBER,RASPBERRY,ARTICHOKE,ASPARAGUS,CANTALOUPE,ZUCCHINI,TURNIP
-Desserts and Sweets,,BROWNIE,CUPCAKE,PUDDING,CARAMEL,TOFFEE,SORBET,MERINGUE,FUDGE,PASTRY,MOUSSE,PRALINE,MACAROON,COBBLER,SUNDAE
-Breakfast Foods,,PANCAKE,WAFFLE,OMELET,OATMEAL,BACON,SAUSAGE,GRANOLA,YOGURT,MUFFIN,CEREAL,TOAST,SYRUP,SCRAMBLE,CROISSANT
-Kitchen and Cooking,,SKILLET,SPATULA,BLENDER,COLANDER,WHISK,KETTLE,APRON,CUTTING,SIMMER,MARINATE,SEASONING,CASSEROLE,PANTRY,RECIPE
-Camping and Outdoors,,CAMPFIRE,TENT,LANTERN,COMPASS,BACKPACK,HIKING,TRAIL,CANOE,SLEEPING,MARSHMALLOW,WILDERNESS,BINOCULARS,FIREWOOD,RIVERBANK
-Sports,,SOCCER,BASKETBALL,VOLLEYBALL,HOCKEY,TENNIS,CYCLING,MARATHON,WRESTLING,ARCHERY,GYMNASTICS,REFEREE,STADIUM,DEFENSE,TOURNAMENT
-Music and Instruments,,GUITAR,VIOLIN,TRUMPET,CLARINET,DRUMSET,PIANO,SAXOPHONE,HARMONICA,CELLO,FLUTE,ORCHESTRA,MELODY,RHYTHM,HARMONY
-School Days,,CLASSROOM,TEACHER,NOTEBOOK,PENCIL,BACKPACK,HOMEWORK,LIBRARY,HALLWAY,LOCKER,SCHEDULE,CAFETERIA,PRINCIPAL,RECESS,SEMESTER
-Space and Astronomy,,GALAXY,METEOR,ASTEROID,NEBULA,SATELLITE,TELESCOPE,ORBIT,COMET,ECLIPSE,ASTRONAUT,ROCKET,UNIVERSE,GRAVITY,STARDUST
-Beach and Seaside,,SEASHELL,LIGHTHOUSE,SANDCASTLE,BOARDWALK,SNORKEL,DRIFTWOOD,TIDEPOOL,HORIZON,UMBRELLA,SEAGULL,SHORELINE,LAGOON,SANDBAR,SURFBOARD
-Household Items,,BLANKET,CUSHION,MIRROR,CANDLE,DOORMAT,CURTAIN,CABINET,STAIRCASE,HALLWAY,CHIMNEY,WALLPAPER,THERMOSTAT,DRAWER,HAMPER
-Hobbies and Crafts,,PAINTING,KNITTING,POTTERY,ORIGAMI,SCRAPBOOK,CROCHET,SEWING,SCULPTURE,CALLIGRAPHY,WOODWORK,EMBROIDERY,COLLAGE,CERAMICS,QUILTING
-Christmas,,REINDEER,STOCKING,GARLAND,MISTLETOE,ORNAMENT,CHIMNEY,SLEIGH,CAROLING,TINSEL,WREATH,GINGERBREAD,EGGNOG,FIREPLACE,SNOWFLAKE
-Halloween,,PUMPKIN,SKELETON,COSTUME,CAULDRON,GOBLIN,LANTERN,WITCH,COBWEB,GRAVEYARD,VAMPIRE,PHANTOM,BROOMSTICK,CANDY,MOONLIGHT
-Thanksgiving,,TURKEY,HARVEST,STUFFING,CRANBERRY,PUMPKIN,GRATITUDE,FEAST,GATHERING,CASSEROLE,AUTUMN,COBBLER,ORCHARD,PILGRIM,CORNUCOPIA
-Travel and Vacation,,PASSPORT,LUGGAGE,ITINERARY,AIRPORT,SOUVENIR,HORIZON,VOYAGE,EXCURSION,COMPASS,HOSTEL,LANDMARK,SIGHTSEE,ADVENTURE,DEPARTURE
-Gardening,,TROWEL,COMPOST,GREENHOUSE,FERTILIZER,SEEDLING,WATERING,PRUNING,BLOSSOM,TRELLIS,MULCH,ORCHARD,HARVEST,IRRIGATION,TERRACE
-Colors and Shapes,,CRIMSON,TURQUOISE,MAGENTA,LAVENDER,TRIANGLE,HEXAGON,OCTAGON,CYLINDER,SPHERE,RECTANGLE,DIAMOND,CRESCENT,PENTAGON,SPECTRUM
-Emotions,,HAPPINESS,SADNESS,EXCITEMENT,CURIOSITY,GRATITUDE,SERENITY,ANXIETY,CONFIDENCE,COMPASSION,ENTHUSIASM,NOSTALGIA,CONTENTMENT,EMPATHY,OPTIMISM
-Transportation,,BICYCLE,SUBWAY,FREIGHT,HELICOPTER,FERRY,MOTORCYCLE,CARAVAN,LOCOMOTIVE,GONDOLA,SCOOTER,TROLLEY,AIRPLANE,SAILBOAT,MONORAIL
-Weddings and Celebrations,,BOUQUET,CEREMONY,RECEPTION,BRIDESMAID,TOAST,CONFETTI,ORCHESTRA,INVITATION,HONEYMOON,BANQUET,GARLAND,CELEBRATION,VOWS,ANNIVERSARY
-Greek Mythology,"The word ""odyssey"" comes straight from Odysseus's ten-year journey home from Troy.",OLYMPUS,ORACLE,TITAN,PHOENIX,LABYRINTH,CENTAUR,MEDUSA,ODYSSEY,TRIDENT,PEGASUS,SPHINX,CHIMERA,NECTAR,MINOTAUR
-Technology,,COMPUTER,INTERNET,SOFTWARE,KEYBOARD,BLUETOOTH,DOWNLOAD,NETWORK,ALGORITHM,DATABASE,BROADBAND,FIREWALL,PROCESSOR,INTERFACE,ENCRYPTION
+Fruits and Vegetables,"Bananas are botanically classified as berries, unlike strawberries.
+
+A pineapple takes about two years to fully grow and ripen.
+
+Broccoli is actually an immature flower cluster that hasn't bloomed yet.
+
+Popeye's creator gave him a love of spinach for its vitamin A, not iron, despite a popular myth to the contrary.
+
+Carrots were originally purple before orange varieties became popular in Europe.
+
+Pumpkins are more than 90 percent water by weight.
+
+Avocados are technically a single-seeded berry, not a vegetable.
+
+Cucumbers are made up of about 96 percent water, more than most produce.
+
+Each raspberry is actually a cluster of dozens of tiny individual fruits.
+
+An artichoke is the unopened flower bud of a large thistle plant.
+
+Asparagus spears can grow several inches in just a single day.
+
+A cantaloupe's netted skin pattern is called ""webbing.""
+
+Zucchini flowers are edible and often fried or stuffed as a delicacy.
+
+Turnips were carved as lanterns before pumpkins became the Halloween favorite.",BANANA,PINEAPPLE,BROCCOLI,SPINACH,CARROT,PUMPKIN,AVOCADO,CUCUMBER,RASPBERRY,ARTICHOKE,ASPARAGUS,CANTALOUPE,ZUCCHINI,TURNIP
+Camping and Outdoors,"Campfires were one of the earliest technologies to give early humans warmth, light, and safety.
+
+Modern camping tents evolved from military designs used in the 19th century.
+
+Lanterns were once fueled by whale oil before kerosene became common.
+
+A compass needle aligns with Earth's magnetic field to always point north.
+
+The modern internal-frame backpack was popularized in the 1960s and 70s.
+
+Hiking is one of the most popular outdoor recreational activities in the world.
+
+The Appalachian Trail stretches roughly 2,200 miles along the eastern United States.
+
+Canoes have been used by cultures around the world for thousands of years.
+
+A quality sleeping bag is rated by the lowest temperature it can comfortably handle.
+
+Roasting marshmallows over an open fire became popular in the early 1900s.
+
+Protected wilderness areas are set aside specifically to remain undeveloped by humans.
+
+Binoculars use two angled telescopes to create a single magnified, 3D image.
+
+Dry, seasoned firewood burns hotter and produces far less smoke than green wood.
+
+Riverbanks are constantly reshaped by the erosion and flow of moving water.",CAMPFIRE,TENT,LANTERN,COMPASS,BACKPACK,HIKING,TRAIL,CANOE,SLEEPING,MARSHMALLOW,WILDERNESS,BINOCULARS,FIREWOOD,RIVERBANK
+Restaurant,"A restaurant menu is often carefully designed to highlight the dishes that are most profitable to prepare.
+
+The role of a waiter historically developed alongside the rise of formal restaurants in 18th-century France.
+
+Professional kitchens are often organized into distinct stations, each responsible for a specific type of dish.
+
+Reservations help restaurants estimate demand and manage table turnover during busy periods.
+
+Appetizers are meant to be lighter dishes served before the main course.
+
+The word ""entree"" now commonly refers to a main dish, though it historically referred to a course served before the main meal in French dining.
+
+Desserts are typically the final course of a meal, often emphasizing sweetness.
+
+The modern concept of a head chef leading a structured kitchen brigade traces back to French culinary tradition.
+
+A garnish is added mainly to enhance a dish's visual presentation, though it can also add flavor.
+
+Tipping customs for restaurant service vary significantly between different countries.
+
+Buffet-style dining lets guests select and serve themselves from a variety of dishes.
+
+A hostess typically manages seating and greets guests as they arrive at a restaurant.
+
+Cutlery sets historically became more standardized as formal dining etiquette developed in Europe.
+
+Itemized receipts help both diners and restaurants track exactly what was ordered and charged.",MENU,WAITER,KITCHEN,RESERVATION,APPETIZER,ENTREE,DESSERT,CHEF,GARNISH,TIP,BUFFET,HOSTESS,CUTLERY,RECEIPT
+Travel and Vacation,"Modern passports with photographs became standard in the early 1900s.
+
+Wheeled luggage wasn't widely available to travelers until the 1970s.
+
+A detailed itinerary can help travelers make the most of a limited trip.
+
+The world's busiest airports handle well over 100 million passengers a year.
+
+The word ""souvenir"" comes from the French word meaning ""to remember.""
+
+A ship's horizon can appear to curve slightly due to the Earth's shape.
+
+Long ocean voyages once took months before modern engines shortened travel time.
+
+A short excursion is typically a side trip taken from a larger home base.
+
+Sailors relied on a magnetic compass for navigation long before GPS existed.
+
+Hostels were created in the early 1900s to give young travelers affordable lodging.
+
+Famous landmarks often become the most recognizable symbol of an entire city or country.
+
+The word ""sightsee"" only entered common English usage in the 1800s.
+
+The idea of ""adventure travel"" grew rapidly in popularity in the late 20th century.
+
+Airport departure boards were once updated entirely by hand before digital displays.",PASSPORT,LUGGAGE,ITINERARY,AIRPORT,SOUVENIR,HORIZON,VOYAGE,EXCURSION,COMPASS,HOSTEL,LANDMARK,SIGHTSEE,ADVENTURE,DEPARTURE
+School Days,"The one-room classroom was the standard for American education well into the 20th century.
+
+Teachers have existed as a profession for thousands of years, dating to ancient civilizations.
+
+The spiral notebook design was patented in the early 20th century.
+
+The modern pencil's graphite core was discovered in England in the 1500s.
+
+The word ""backpack"" only became common in everyday use in the mid-1900s.
+
+The ideal amount of homework has been debated by educators for over a century.
+
+The oldest known libraries date back thousands of years to ancient Mesopotamia.
+
+School hallways are typically built wide enough for students to pass safely between classes.
+
+Combination lockers became common in schools in the early-to-mid 1900s.
+
+A class schedule helps students balance different subjects throughout the day.
+
+The word ""cafeteria"" comes from a Spanish and Mexican term for a coffee shop.
+
+The word ""principal"" originally meant ""first"" or ""most important"" in Latin.
+
+Recess breaks are linked by researchers to improved focus and classroom behavior.
+
+Most schools divide the academic year into two main semesters.",CLASSROOM,TEACHER,NOTEBOOK,PENCIL,BACKPACK,HOMEWORK,LIBRARY,HALLWAY,LOCKER,SCHEDULE,CAFETERIA,PRINCIPAL,RECESS,SEMESTER
+Christmas,"Real reindeer are strong swimmers, quite unlike their flying counterparts in holiday legend.
+
+Hanging stockings by the fireplace became a popular tradition in the 1800s.
+
+Garland was traditionally made from natural greenery like pine, holly, or fir branches.
+
+Kissing under mistletoe is a tradition that dates back hundreds of years in Europe.
+
+Glass Christmas ornaments were first mass-produced in Germany in the 1800s.
+
+Santa entering through the chimney echoes an old belief that spirits used hearths to travel.
+
+Sleighs were once a practical winter vehicle long before becoming a holiday symbol.
+
+Caroling has roots in old midwinter songs sung door-to-door for centuries.
+
+Tinsel was originally made from real shredded silver in the 1600s.
+
+Wreaths have symbolized eternity and the changing seasons since ancient times.
+
+Gingerbread houses became popular in Germany, partly inspired by old fairy tales.
+
+Eggnog is believed to have descended from a medieval European drink called posset.
+
+Fireplaces were historically the primary source of heat and light for entire homes.
+
+Every natural snowflake is believed to have a unique six-sided crystal structure.",REINDEER,STOCKING,GARLAND,MISTLETOE,ORNAMENT,CHIMNEY,SLEIGH,CAROLING,TINSEL,WREATH,GINGERBREAD,EGGNOG,FIREPLACE,SNOWFLAKE
+Rocks and Minerals,"Granite is an igneous rock that forms from slowly cooling magma deep underground.
+
+Quartz is one of the most abundant minerals in Earth's continental crust.
+
+Limestone is often formed from the compressed remains of ancient marine organisms.
+
+Marble forms when limestone is transformed by intense heat and pressure underground.
+
+Obsidian is a natural volcanic glass that forms when lava cools extremely quickly.
+
+Basalt is the most common volcanic rock and makes up much of the ocean floor.
+
+Slate splits easily into thin, flat sheets because of its layered structure.
+
+Gypsum is soft enough to be scratched with a fingernail, making it useful for identification.
+
+Calcite reacts with acid, which is one of the simplest ways geologists identify it in the field.
+
+Feldspar makes up a large portion of Earth's crust and is a key ingredient in many rocks.
+
+Mica splits into thin, flexible sheets and was historically used in stove and lantern windows.
+
+Pyrite is nicknamed ""fool's gold"" because of its metallic, golden appearance.
+
+Fossils form when the remains of living things are gradually replaced by minerals over long periods of time.
+
+Sediment layers can reveal a record of Earth's history stretching back millions of years.",GRANITE,QUARTZ,LIMESTONE,MARBLE,OBSIDIAN,BASALT,SLATE,GYPSUM,CALCITE,FELDSPAR,MICA,PYRITE,FOSSIL,SEDIMENT
+Beach and Seaside,"Most seashells are the exoskeletons left behind by mollusks like snails and clams.
+
+Lighthouses have guided sailors safely along dangerous coastlines for over 2,000 years.
+
+The world's tallest sandcastle on record stands over 69 feet high.
+
+Early wooden boardwalks were built to keep beachgoers' feet out of the hot sand.
+
+The snorkel's simple tube design lets swimmers breathe while floating face-down.
+
+Driftwood can travel thousands of miles across oceans before washing ashore.
+
+Tidepools reveal a miniature ecosystem of sea life exposed only at low tide.
+
+The horizon appears only a few miles away for a person standing at sea level.
+
+The beach umbrella became a popular seaside accessory in the 19th century.
+
+Seagulls can drink both fresh water and salt water thanks to special glands.
+
+Shorelines are constantly reshaped by tides, waves, and shifting sand.
+
+A lagoon is typically a shallow body of water separated from the sea by a reef or sandbar.
+
+Sandbars can shift position significantly after just a single strong storm.
+
+The modern surfboard evolved from solid wooden boards used by Polynesian islanders.",SEASHELL,LIGHTHOUSE,SANDCASTLE,BOARDWALK,SNORKEL,DRIFTWOOD,TIDEPOOL,HORIZON,UMBRELLA,SEAGULL,SHORELINE,LAGOON,SANDBAR,SURFBOARD
+Cars and Automobiles,"Early automobile engines were far less efficient and powerful than modern ones, but established the basic design still used today.
+
+A transmission manages how engine power is converted into the right speed and torque for the wheels.
+
+The ignition system provides the spark needed to start a gasoline engine's combustion process.
+
+Bumpers are designed to help absorb impact and reduce damage during low-speed collisions.
+
+A car's dashboard displays essential information like speed, fuel level, and warning indicators.
+
+An odometer tracks the total distance a vehicle has traveled over its lifetime.
+
+Headlights allow safe nighttime driving and are legally required on most public roads.
+
+A car's exhaust system channels combustion gases away from the engine and out of the vehicle.
+
+A vehicle's chassis forms the structural frame that supports its body and major components.
+
+Horsepower is a unit used to measure an engine's power output.
+
+A manual gearshift lets a driver select gears directly rather than relying on an automatic system.
+
+Windshields are made of laminated glass designed to hold together rather than shatter into sharp pieces.
+
+Mechanics diagnose and repair a wide range of mechanical and electrical vehicle issues.
+
+A muffler reduces the noise produced by a vehicle's exhaust system.",ENGINE,TRANSMISSION,IGNITION,BUMPER,DASHBOARD,ODOMETER,HEADLIGHT,EXHAUST,CHASSIS,HORSEPOWER,GEARSHIFT,WINDSHIELD,MECHANIC,MUFFLER
+Desserts and Sweets,"The brownie was reportedly invented after a baker forgot to add baking powder to a cake.
+
+Cupcakes get their name from being baked in individual cups instead of one large pan.
+
+Pudding was originally a savory dish long before it became a sweet dessert.
+
+Caramel forms when sugar is heated until it browns and develops a nutty flavor.
+
+Toffee is made by boiling sugar and butter together until it hardens as it cools.
+
+Sorbet contains no dairy at all, unlike sherbet, which has a small amount.
+
+Meringue is made almost entirely of whipped egg whites and sugar.
+
+Fudge became popular in America after a supposed ""fudged"" batch of caramel in the 1880s.
+
+The word ""pastry"" comes from ""paste,"" referring to the dough used to make it.
+
+Mousse gets its light, airy texture from whipped cream or beaten egg whites.
+
+Pralines are named after a 17th-century French diplomat.
+
+A macaroon is traditionally made from shredded coconut or ground almonds.
+
+A cobbler gets its name because its uneven crust resembles a cobbled street.
+
+The ice cream sundae was partly invented to get around old laws restricting Sunday soda sales.",BROWNIE,CUPCAKE,PUDDING,CARAMEL,TOFFEE,SORBET,MERINGUE,FUDGE,PASTRY,MOUSSE,PRALINE,MACAROON,COBBLER,SUNDAE
+Sports,"Soccer is the most widely played and watched sport on the planet.
+
+Basketball was invented in 1891 by James Naismith using a soccer ball and peach baskets.
+
+Volleyball was originally invented as a gentler alternative to basketball.
+
+Ice hockey pucks are frozen before games to reduce bouncing on the ice.
+
+Some tennis scoring terms may trace back to the French word for egg, ""l'oeuf.""
+
+Competitive multi-stage cycling races can cover well over 2,000 miles.
+
+The marathon's 26.2-mile distance comes from a legendary run in ancient Greece.
+
+Wrestling is considered one of the oldest organized sports in human history.
+
+Archery has been used for both hunting and combat for tens of thousands of years.
+
+Gymnastics traces its roots to ancient Greek training for physical fitness.
+
+The word ""referee"" comes from an old term meaning to ""refer back"" a decision.
+
+The largest stadiums in the world can hold well over 100,000 spectators.
+
+A strong defense is often credited as the foundation of championship teams.
+
+The word ""tournament"" originally described medieval contests where knights competed on horseback for glory.",SOCCER,BASKETBALL,VOLLEYBALL,HOCKEY,TENNIS,CYCLING,MARATHON,WRESTLING,ARCHERY,GYMNASTICS,REFEREE,STADIUM,DEFENSE,TOURNAMENT
+Ocean Life,"Dolphins sleep with only half of their brain at a time so they can keep breathing.
+
+The blue whale is the largest animal ever known to have lived on Earth.
+
+A shark's skeleton is made entirely of cartilage, not bone.
+
+An octopus has three hearts and blue-tinted blood.
+
+Jellyfish have no brain, heart, or bones, yet have existed for over 500 million years.
+
+A starfish can regenerate an entire lost arm, and sometimes a whole new body from it.
+
+Seahorses are the only animals where the male carries and gives birth to the babies.
+
+A lobster's teeth are located inside its stomach.
+
+Crabs can regrow a lost claw over the course of several molts.
+
+Coral reefs are built by tiny animals called polyps, not plants or rocks.
+
+Plankton produce more than half of the world's oxygen.
+
+A stingray's barb is a modified, venomous version of a shark-like tooth or scale.
+
+Some clams can live for centuries; one was found to be over 500 years old.
+
+Anchovies swim in massive schools that can contain millions of fish.",DOLPHIN,WHALE,SHARK,OCTOPUS,JELLYFISH,STARFISH,SEAHORSE,LOBSTER,CRAB,CORAL,PLANKTON,STINGRAY,CLAM,ANCHOVY
+Greek Mythology,"Mount Olympus was believed to be the home of the twelve major Greek gods.
+
+The Oracle of Delphi was consulted by leaders across the ancient Greek world.
+
+The Titans were an older generation of gods overthrown by Zeus and the Olympians.
+
+The phoenix is a mythical bird said to be reborn from its own ashes.
+
+The labyrinth was built to imprison the monstrous Minotaur in Greek legend.
+
+A centaur is depicted as half-human and half-horse in Greek mythology.
+
+Medusa's gaze was said to instantly turn anyone who looked at her to stone.
+
+The word ""odyssey"" comes straight from Odysseus's ten-year journey home from Troy.
+
+Poseidon's trident was said to have the power to summon storms and earthquakes.
+
+Pegasus was a winged horse born from the blood of the slain Medusa.
+
+The riddle-loving Sphinx guarded the entrance to the city of Thebes.
+
+The chimera was a fire-breathing hybrid creature made of lion, goat, and snake parts.
+
+Nectar was believed to be the drink of the Greek gods, alongside the food ambrosia.
+
+The Minotaur was a monster with the body of a man and the head of a bull.",OLYMPUS,ORACLE,TITAN,PHOENIX,LABYRINTH,CENTAUR,MEDUSA,ODYSSEY,TRIDENT,PEGASUS,SPHINX,CHIMERA,NECTAR,MINOTAUR
+Household Items,"Woven blankets are among the oldest known textile items made by humans.
+
+Cushions were originally a symbol of wealth and status in ancient households.
+
+Early mirrors were made from polished metal long before glass mirrors existed.
+
+Candles have been used for both light and timekeeping for thousands of years.
+
+A doormat's ridged design is meant to scrape dirt and debris off shoes.
+
+Curtains were historically used to retain heat as much as for privacy or style.
+
+The word ""cabinet"" originally referred to a small private room, not furniture.
+
+Spiral staircases were often built in castles to give defenders an advantage.
+
+Long hallways became common once homes moved away from single large rooms.
+
+Chimneys let smoke escape while creating a draft that helps a fire burn.
+
+Wallpaper became widely affordable and popular in the 1700s and 1800s.
+
+The modern electric thermostat was invented in the 1880s.
+
+Sliding drawer mechanisms have changed remarkably little over the centuries.
+
+The laundry hamper became a common household item as indoor plumbing spread.",BLANKET,CUSHION,MIRROR,CANDLE,DOORMAT,CURTAIN,CABINET,STAIRCASE,HALLWAY,CHIMNEY,WALLPAPER,THERMOSTAT,DRAWER,HAMPER
+Halloween,"Carving pumpkins became popular in America after Irish immigrants adapted an older turnip tradition.
+
+The adult human skeleton is made up of 206 individual bones.
+
+Wearing costumes on Halloween is thought to trace back to old disguise-the-spirits traditions.
+
+Cauldrons were ordinary cooking pots long before becoming a witchcraft symbol.
+
+The word ""goblin"" has roots in old European folklore describing mischievous spirits.
+
+Jack-o'-lanterns get their name from an old Irish folk tale about a trickster named Jack.
+
+The witch's iconic pointed hat has murky origins, possibly tied to old European fashion.
+
+Spider silk can be stronger than steel, pound for pound.
+
+Graveyards have long been associated with Halloween folklore about wandering spirits.
+
+Vampire-like legends appear in some form across nearly every culture in history.
+
+The word ""phantom"" comes from a Greek root meaning ""to show"" or ""appearance.""
+
+The flying witch on a broomstick is an image popularized in medieval European art.
+
+More candy is sold in the United States around Halloween than any other holiday.
+
+Moonlight is simply reflected sunlight bouncing off the moon's surface.",PUMPKIN,SKELETON,COSTUME,CAULDRON,GOBLIN,LANTERN,WITCH,COBWEB,GRAVEYARD,VAMPIRE,PHANTOM,BROOMSTICK,CANDY,MOONLIGHT
+Volcanoes,"Magma is called lava only once it reaches the Earth's surface.
+
+Lava temperatures can exceed 2,000 degrees Fahrenheit depending on its composition.
+
+A volcanic crater forms at the opening where material is expelled during an eruption.
+
+Volcanic eruptions can range from slow lava flows to violent, explosive blasts.
+
+Volcanic ash consists of tiny, jagged rock and glass particles rather than soft soot.
+
+A caldera forms when a volcano's summit collapses after a massive eruption empties its magma chamber.
+
+Gases escaping through volcanic vents can be monitored to help predict eruptions.
+
+Magma originates from partially molten rock in Earth's upper mantle and crust.
+
+Pumice is so full of trapped gas bubbles that some pieces can float on water.
+
+Sulfur compounds released during eruptions often produce the distinctive rotten-egg smell near volcanic vents.
+
+A ""dormant"" volcano hasn't erupted recently but isn't considered permanently inactive.
+
+Small tremors are often used by scientists as an early warning sign of volcanic activity.
+
+A fissure eruption releases lava through a long crack rather than a single central vent.
+
+Obsidian, the volcanic glass, forms when lava cools too quickly for mineral crystals to form.",MAGMA,LAVA,CRATER,ERUPTION,ASH,CALDERA,VENT,MANTLE,PUMICE,SULFUR,DORMANT,TREMOR,FISSURE,OBSIDIAN
+Gardening,"The hand trowel's basic design has remained largely unchanged for centuries.
+
+Compost recycles food and yard waste into nutrient-rich soil for future planting.
+
+Greenhouses trap heat and sunlight to let plants grow outside their normal season.
+
+Fertilizer supplies key nutrients like nitrogen, phosphorus, and potassium to soil.
+
+A seedling is a young plant grown from a seed before it's ready to transplant.
+
+Most garden vegetables need about one inch of water per week to thrive.
+
+Pruning encourages healthier growth by removing dead or overcrowded branches.
+
+A blossom eventually gives way to the fruit a plant is trying to produce.
+
+A trellis gives climbing plants like vines and beans a structure to grow upward on.
+
+Mulch helps soil retain moisture and blocks weeds from taking over a garden bed.
+
+Well-tended orchards can be productive for many generations within a single family.
+
+A good harvest depends heavily on timing, soil health, and consistent weather.
+
+Ancient irrigation systems date back thousands of years to early river civilizations.
+
+Terrace farming lets crops grow on steep hillsides that would otherwise erode.",TROWEL,COMPOST,GREENHOUSE,FERTILIZER,SEEDLING,WATERING,PRUNING,BLOSSOM,TRELLIS,MULCH,ORCHARD,HARVEST,IRRIGATION,TERRACE
+Movies and Cinema,"A film director oversees the creative vision and execution of a movie's production.
+
+A screenplay provides the dialogue, structure, and scene descriptions used to make a film.
+
+Actors portray characters, often preparing extensively to fully embody a role.
+
+A movie premiere is the first official public showing of a film.
+
+Sequels continue a story from an earlier, usually successful film.
+
+Film soundtracks are often composed specifically to enhance a movie's emotional tone.
+
+Animation can be created through hand-drawn art, stop-motion, or computer-generated techniques.
+
+Movie studios handle financing, production, and distribution for major film releases.
+
+A blockbuster typically refers to a film with especially high box office earnings.
+
+Cinematography covers a film's visual style, including camera angles, lighting, and composition.
+
+Subtitles allow audiences to follow dialogue in a language different from the film's original audio.
+
+Movie trailers are edited specifically to generate interest without revealing a film's full plot.
+
+A scene is a continuous sequence of action that takes place in a single setting.
+
+End credits list the many people involved in a film's cast and production crew.",DIRECTOR,SCREENPLAY,ACTOR,PREMIERE,SEQUEL,SOUNDTRACK,ANIMATION,STUDIO,BLOCKBUSTER,CINEMATOGRAPHY,SUBTITLE,TRAILER,SCENE,CREDITS
+Breakfast Foods,"Pancakes date back thousands of years, with early versions made by ancient Greeks and Romans.
+
+The waffle's grid pattern comes from the hinged iron plates traditionally used to cook it.
+
+The word ""omelet"" comes from an old French term referring to a thin blade or plate.
+
+Oatmeal is made from oats that have been rolled, crushed, or steel-cut.
+
+Bacon-curing methods date back thousands of years to ancient China.
+
+The word ""sausage"" comes from the Latin ""salsus,"" meaning salted.
+
+Granola was invented in the 1800s as a health food at a wellness sanitarium.
+
+Yogurt is made by fermenting milk with live bacterial cultures.
+
+Muffins can be quick-bread style or yeast-raised, like English muffins.
+
+Breakfast cereal was popularized in the late 1800s as a health-conscious alternative to heavy meals.
+
+Toasting bread creates new flavors through a chemical change called the Maillard reaction.
+
+Real maple syrup requires roughly 40 gallons of tree sap to make just one gallon of syrup.
+
+Scrambled eggs cook best over low, gentle heat rather than high heat.
+
+The croissant's flaky layers come from folding butter into the dough dozens of times.",PANCAKE,WAFFLE,OMELET,OATMEAL,BACON,SAUSAGE,GRANOLA,YOGURT,MUFFIN,CEREAL,TOAST,SYRUP,SCRAMBLE,CROISSANT
+Music and Instruments,"The modern guitar evolved from centuries-old stringed instruments across Europe and the Middle East.
+
+A quality violin can take a skilled luthier hundreds of hours to build by hand.
+
+The trumpet is one of the oldest instruments, with early versions over 3,000 years old.
+
+The clarinet's rich tone comes from a single reed vibrating against its mouthpiece.
+
+A standard drum set combines the roles of several separate percussionists into one player.
+
+The piano was invented in Italy in the early 1700s to allow both loud and soft playing.
+
+The saxophone, invented in the 1840s, is classified as a woodwind, not a brass instrument.
+
+The harmonica produces sound from both blowing and drawing air across metal reeds.
+
+The cello's deep, warm tone makes it one of the instruments closest to the human voice.
+
+The flute is among the oldest known musical instruments, with examples over 40,000 years old.
+
+A full symphony orchestra can include over 100 musicians playing together.
+
+A melody is the sequence of notes that makes a piece of music recognizable.
+
+Rhythm is the pattern of beats and silences that gives music its sense of time.
+
+Harmony happens when two or more different notes are played together pleasingly.",GUITAR,VIOLIN,TRUMPET,CLARINET,DRUMSET,PIANO,SAXOPHONE,HARMONICA,CELLO,FLUTE,ORCHESTRA,MELODY,RHYTHM,HARMONY
+Birds,"A bald eagle's nest can weigh over a thousand pounds.
+
+Sparrows are found on every continent except Antarctica.
+
+The robin's orange-red breast gave the color ""robin"" its name, not the other way around.
+
+The peregrine falcon is the fastest animal on Earth, with a recorded dive over 240 mph.
+
+Parrots are one of the few animals that can learn to mimic human speech.
+
+Penguins are known to ""propose"" to their mates with a carefully chosen pebble.
+
+An owl can rotate its head about 270 degrees without hurting itself.
+
+Hawks can spot small prey from nearly a mile away.
+
+A flamingo's pink color comes almost entirely from pigments in the shrimp and algae it eats.
+
+A pelican's beak pouch can hold several gallons of water at once.
+
+Woodpeckers have shock-absorbing skulls that protect their brains while drilling.
+
+Hummingbirds are the only birds that can fly backward.
+
+A group of swans is called a ""bank"" on land and a ""wedge"" in flight.
+
+Crows can recognize individual human faces and remember them for years.",EAGLE,SPARROW,ROBIN,FALCON,PARROT,PENGUIN,OWL,HAWK,FLAMINGO,PELICAN,WOODPECKER,HUMMINGBIRD,SWAN,CROW
+World Landmarks,"The pyramids of Giza were built as tombs for ancient Egyptian pharaohs over 4,000 years ago.
+
+Rome's Colosseum could reportedly hold tens of thousands of spectators for public events.
+
+The Acropolis of Athens sits atop a rocky hill overlooking the city and includes several ancient temples.
+
+Stonehenge's massive stones were transported from sources many miles away using methods still debated by researchers.
+
+The Parthenon was built in the 5th century BCE as a temple dedicated to the goddess Athena.
+
+Gothic cathedrals introduced architectural innovations like flying buttresses to support taller, more open interiors.
+
+A monument is typically built specifically to commemorate a person, group, or event.
+
+Castles combined residential space with defensive fortifications for medieval nobility.
+
+A fortress is designed primarily for military defense rather than everyday living.
+
+Ancient temples were often built to align with specific astronomical events, such as solstices.
+
+A plaza serves as an open public gathering space, common in city centers historically and today.
+
+Roman aqueducts used gravity alone to carry water over long distances to cities.
+
+Obelisks were originally an ancient Egyptian architectural form, later adopted by other cultures worldwide.
+
+A citadel is a fortress that typically protects or overlooks a city, often built on high ground.",PYRAMID,COLOSSEUM,ACROPOLIS,STONEHENGE,PARTHENON,CATHEDRAL,MONUMENT,CASTLE,FORTRESS,TEMPLE,PLAZA,AQUEDUCT,OBELISK,CITADEL
+Colors and Shapes,"Crimson is a deep red historically derived from crushed insect shells.
+
+Turquoise gets its name from an old French term referring to Turkish trade routes.
+
+Magenta was named after an 1859 battle fought in a town in northern Italy.
+
+Lavender the color takes its name directly from the pale purple flower.
+
+A triangle is the simplest possible polygon, with just three sides.
+
+Honeycomb cells are hexagons because that shape tiles perfectly with no wasted space.
+
+A stop sign's octagon shape was chosen so it's recognizable even from behind.
+
+A cylinder has two flat circular ends connected by one curved surface.
+
+A sphere encloses the most volume possible for a given surface area.
+
+A rectangle is any four-sided shape where every interior angle is exactly 90 degrees.
+
+A diamond shape has four equal sides set at an angle, forming what's technically a rhombus.
+
+A crescent shape appears whenever one curved shape partially overlaps a circular one.
+
+The Pentagon building in Virginia is named for its distinctive five-sided shape.
+
+A spectrum shows how visible light separates into a continuous range of colors.",CRIMSON,TURQUOISE,MAGENTA,LAVENDER,TRIANGLE,HEXAGON,OCTAGON,CYLINDER,SPHERE,RECTANGLE,DIAMOND,CRESCENT,PENTAGON,SPECTRUM
+Thanksgiving,"Wild turkeys can run up to 25 mph and fly in short bursts despite their size.
+
+The first Thanksgiving harvest celebration is often dated to 1621 in Plymouth.
+
+Stuffing recipes vary widely, with regional versions found across the country.
+
+Cranberries float in water because of tiny air pockets inside each berry.
+
+Pumpkin pie became a Thanksgiving staple across New England by the 1800s.
+
+Practicing gratitude has been shown by researchers to improve overall well-being.
+
+A feast historically marked the successful end of a season's harvest.
+
+Large family gatherings around Thanksgiving are a relatively modern tradition.
+
+The green bean casserole was invented in 1955 as a recipe for a soup company.
+
+Autumn is also called ""fall,"" a name referring to leaves falling from trees.
+
+A cobbler dessert traditionally uses whatever fruit is freshest and in season.
+
+Colonial-era orchards often supplied the fruit used in early Thanksgiving desserts.
+
+The Pilgrims who sailed on the Mayflower arrived in New England in 1620.
+
+The cornucopia, or ""horn of plenty,"" is an ancient symbol of abundance.",TURKEY,HARVEST,STUFFING,CRANBERRY,PUMPKIN,GRATITUDE,FEAST,GATHERING,CASSEROLE,AUTUMN,COBBLER,ORCHARD,PILGRIM,CORNUCOPIA
+Human Body,"The adult human skeleton contains 206 bones, though babies are born with more that fuse over time.
+
+Muscles can only pull, not push, which is why they work in opposing pairs.
+
+The human heart beats roughly 100,000 times a day without a person consciously thinking about it.
+
+The lungs contain hundreds of millions of tiny air sacs called alveoli.
+
+The human brain contains roughly 86 billion neurons.
+
+Neurons communicate using both electrical impulses and chemical signals called neurotransmitters.
+
+Arteries carry blood away from the heart, while veins carry it back.
+
+Tendons connect muscle to bone, allowing muscle contractions to move the skeleton.
+
+Ligaments connect bone to bone, helping stabilize joints throughout the body.
+
+The kidneys filter waste from the blood and help regulate the body's fluid balance.
+
+The liver can regenerate a significant portion of its own tissue after injury.
+
+The stomach's lining is coated in mucus that helps protect it from its own digestive acid.
+
+The retina converts light into electrical signals that the brain interprets as images.
+
+Cartilage cushions joints and lacks the direct blood supply that most other tissues have.",SKELETON,MUSCLE,HEART,LUNGS,BRAIN,NEURON,ARTERY,TENDON,LIGAMENT,KIDNEY,LIVER,STOMACH,RETINA,CARTILAGE
+Exercise and Fitness,"Treadmills allow indoor walking or running while controlling speed and incline.
+
+Dumbbells are a versatile strength-training tool that can be used for a wide range of exercises.
+
+Cardio exercise raises the heart rate and improves cardiovascular endurance over time.
+
+Stretching before or after exercise can help improve flexibility and range of motion.
+
+Endurance training gradually improves the body's ability to sustain physical effort over longer periods.
+
+A structured workout plan often balances strength, cardio, and recovery over the course of a week.
+
+Regular exercise causes muscle fibers to adapt and gradually grow stronger over time.
+
+Personal trainers help design and guide exercise routines tailored to individual goals.
+
+Marathon training typically builds up running distance gradually over several months.
+
+Flexibility training helps joints move through their full natural range of motion.
+
+Repetitions, or ""reps,"" measure how many times an exercise movement is performed in a set.
+
+Stamina reflects the body's ability to sustain prolonged physical or mental effort.
+
+A proper warmup gradually raises heart rate and loosens muscles before more intense exercise.
+
+Cooling down after exercise helps the heart rate and body gradually return to a resting state.",TREADMILL,DUMBBELL,CARDIO,STRETCH,ENDURANCE,WORKOUT,MUSCLE,TRAINER,MARATHON,FLEXIBILITY,REPETITION,STAMINA,WARMUP,COOLDOWN
+Magic and Illusion,"An illusionist creates the appearance of impossible events through carefully practiced technique.
+
+Sleight of hand relies on precise, practiced finger and hand movements to go unnoticed by an audience.
+
+Misdirection works by guiding an audience's attention away from the method behind a trick.
+
+A ""vanish"" is a classic type of magic trick where an object appears to disappear.
+
+Magic tricks generally combine physical skill, psychology, and careful preparation.
+
+Magic wands have long been used as a classic prop associated with stage magicians.
+
+A deck of cards is one of the most common tools used in close-up magic tricks.
+
+Escape acts require careful preparation, and often extensive practice, to perform safely.
+
+Levitation illusions are created through some combination of hidden supports, mirrors, or clever staging.
+
+The term ""magician"" applies both to modern performers and, historically, to some legendary or mythical figures.
+
+Audience perspective and attention are central factors that professional magicians carefully manage during a trick.
+
+A polished stage performance often takes months of rehearsal to perfect.
+
+Part of magic's lasting appeal comes from the mystery of not knowing exactly how a trick works.
+
+A skilled magician carefully controls when and how much of a trick's mechanism is ever revealed.",ILLUSIONIST,SLEIGHT,MISDIRECTION,VANISH,TRICK,WAND,DECK,ESCAPE,LEVITATION,MAGICIAN,AUDIENCE,PERFORMANCE,MYSTERY,REVEAL
+Kitchen and Cooking,"A well-seasoned cast iron skillet can last for generations with proper care.
+
+The spatula's flat, flexible design makes it ideal for flipping delicate foods.
+
+The first electric blender was invented in the 1920s.
+
+A colander's holes are sized to drain liquid while keeping food safely inside.
+
+Whisking incorporates air into a mixture, which is essential for fluffy meringues.
+
+The word ""kettle"" comes from an old term for a cooking pot or cauldron.
+
+Aprons were originally a practical garment for tradespeople, not just cooks.
+
+A sharp cutting knife is actually safer than a dull one because it needs less force.
+
+Simmering keeps liquid just below a boil, ideal for gently cooking delicate foods.
+
+Marinating meat helps tenderize it while adding flavor from acids and spices.
+
+Seasoning food well is considered one of the most important cooking skills.
+
+The word ""casserole"" originally referred to the cooking dish, not the meal itself.
+
+A well-stocked pantry traditionally keeps dry goods away from light and moisture.
+
+The oldest known written recipes date back nearly 4,000 years to ancient Mesopotamia.",SKILLET,SPATULA,BLENDER,COLANDER,WHISK,KETTLE,APRON,CUTTING,SIMMER,MARINATE,SEASONING,CASSEROLE,PANTRY,RECIPE
+Hobbies and Crafts,"Some of the oldest known cave paintings are over 40,000 years old.
+
+Knitting likely originated in the Middle East before spreading across Europe.
+
+Pottery is one of humanity's oldest crafts, dating back over 20,000 years.
+
+Origami became widely popular in Japan once paper production grew more affordable.
+
+Scrapbooking as a hobby traces back to ""commonplace books"" from centuries ago.
+
+Crochet uses a single hook, unlike knitting, which typically uses two needles.
+
+Sewing needles made of bone have been found dating back tens of thousands of years.
+
+Sculpture has been used to represent gods, rulers, and everyday life since ancient times.
+
+Calligraphy has been treated as a fine art form across Asia for centuries.
+
+Traditional woodwork joinery can hold pieces together without any nails or glue.
+
+Embroidery has been found preserved on garments thousands of years old.
+
+The art of collage became especially popular among early 20th-century artists.
+
+Ceramics are created by shaping clay and hardening it permanently through firing.
+
+Quilting historically served the practical purpose of using up leftover fabric scraps.",PAINTING,KNITTING,POTTERY,ORIGAMI,SCRAPBOOK,CROCHET,SEWING,SCULPTURE,CALLIGRAPHY,WOODWORK,EMBROIDERY,COLLAGE,CERAMICS,QUILTING
+Farm Life,"The first gasoline-powered tractors appeared in the late 1800s and transformed farming.
+
+Many barns were traditionally painted red because iron-oxide paint was cheap and durable.
+
+Farm pastures are often rotated so grazing animals don't wear out the grass.
+
+Harvest festivals celebrating the end of the growing season date back thousands of years.
+
+A rooster's crow can be heard from over a mile away in quiet conditions.
+
+A piglet can learn to recognize its own name within just a couple of weeks.
+
+A single haystack can weigh several tons once fully packed.
+
+Grain silos store harvested crops and protect them from moisture and pests.
+
+The plow is considered one of the most important inventions in agricultural history.
+
+Apple orchards can remain productive for 50 years or more with good care.
+
+Scarecrows have been used to protect crops from birds for thousands of years.
+
+The term ""livestock"" covers everything from cattle and sheep to poultry and pigs.
+
+Early prairie fences were often built from stacked stone since wood was scarce.
+
+An unmowed meadow can support hundreds of species of insects and wildflowers.",TRACTOR,BARN,PASTURE,HARVEST,ROOSTER,PIGLET,HAYSTACK,SILO,PLOW,ORCHARD,SCARECROW,LIVESTOCK,FENCE,MEADOW
+US Geography,"The Mississippi River is one of the longest rivers in North America, flowing through the country's heartland.
+
+The Rocky Mountains stretch through several western states and into Canada.
+
+The Appalachian Mountains are among the oldest mountain ranges in the world.
+
+Prairies once covered a huge portion of central North America before large-scale farming transformed the landscape.
+
+The Everglades in Florida is a unique wetland ecosystem home to a wide range of wildlife.
+
+The Grand Canyon was carved over millions of years by the Colorado River.
+
+A plateau is a large area of relatively flat, elevated land, found in several US regions.
+
+Florida is an example of a peninsula, land surrounded by water on three sides.
+
+An isthmus is a narrow strip of land connecting two larger landmasses.
+
+US territories are regions under American jurisdiction that aren't part of any state.
+
+The American Midwest is often called the country's agricultural heartland.
+
+The United States has thousands of miles of coastline along the Atlantic, Pacific, and Gulf coasts.
+
+The continental United States spans four standard time zones.
+
+Many US state borders follow rivers, while others follow simple surveyed straight lines.",MISSISSIPPI,ROCKIES,APPALACHIAN,PRAIRIE,EVERGLADES,CANYON,PLATEAU,PENINSULA,ISTHMUS,TERRITORY,HEARTLAND,COASTLINE,TIMEZONE,BORDER
+Emotions,"Studies suggest lasting happiness is linked more to relationships than to income.
+
+Sadness triggers the release of tears, which may help relieve emotional stress.
+
+Excitement and anxiety produce nearly identical physical reactions in the body.
+
+Curiosity has been linked by researchers to better memory and learning outcomes.
+
+Practicing gratitude regularly has been shown to improve overall mental health.
+
+Serenity is often associated with a slower heart rate and calmer breathing.
+
+Mild anxiety can actually improve focus and performance in small doses.
+
+Confidence can be built gradually through repeated practice and small successes.
+
+Compassion activates reward centers in the brain similar to receiving a gift.
+
+Enthusiasm is contagious and can visibly spread through a group or team.
+
+Nostalgia was once considered a medical illness before being reclassified as an emotion.
+
+Contentment differs from happiness by focusing on lasting satisfaction rather than excitement.
+
+Empathy allows people to understand and share the feelings of others.
+
+Optimism has been linked in studies to better long-term physical health outcomes.",HAPPINESS,SADNESS,EXCITEMENT,CURIOSITY,GRATITUDE,SERENITY,ANXIETY,CONFIDENCE,COMPASSION,ENTHUSIASM,NOSTALGIA,CONTENTMENT,EMPATHY,OPTIMISM
+Weddings and Celebrations,"Wedding bouquets were once carried partly to ward off evil spirits with strong herbs.
+
+Wedding ceremonies vary enormously in tradition and structure across world cultures.
+
+A reception typically follows the ceremony as a chance to celebrate with guests.
+
+A popular legend traces the bridesmaid tradition to ancient Rome, where matching dresses supposedly confused evil spirits or bandits.
+
+Raising a toast to celebrate has roots stretching back to ancient Greek and Roman customs.
+
+Confetti was originally made from real sugared almonds thrown at Italian celebrations.
+
+A live orchestra at a wedding has been a symbol of celebration for centuries.
+
+Formal paper invitations became common once printing presses made them affordable.
+
+The word ""honeymoon"" dates back centuries, possibly referencing a moon-long period of sweetness.
+
+A banquet traditionally marked a special, lavish shared meal for an occasion.
+
+Garlands have decorated celebrations since ancient Greek and Roman times.
+
+Celebrations mark meaningful milestones across virtually every human culture.
+
+Formal wedding vows have been exchanged in ceremonies for centuries.
+
+A wedding anniversary traditionally has its own symbolic gift, like paper or gold.",BOUQUET,CEREMONY,RECEPTION,BRIDESMAID,TOAST,CONFETTI,ORCHESTRA,INVITATION,HONEYMOON,BANQUET,GARLAND,CELEBRATION,VOWS,ANNIVERSARY
+Chemistry,"There are currently 118 confirmed chemical elements on the periodic table.
+
+A molecule forms when two or more atoms bond together chemically.
+
+Atoms are made up of protons, neutrons, and electrons, though hydrogen normally lacks neutrons.
+
+A compound contains atoms of more than one element bonded together in fixed proportions.
+
+Chemical reactions rearrange atoms into new substances without creating or destroying matter.
+
+A solution forms when one substance dissolves evenly into another.
+
+Acids are defined by their tendency to donate hydrogen ions in a chemical reaction.
+
+A catalyst speeds up a chemical reaction without being permanently consumed by it.
+
+Isotopes of an element have the same number of protons but different numbers of neutrons.
+
+Protons carry a positive charge and are found in an atom's nucleus.
+
+Electrons are negatively charged particles that occupy shifting probability regions around an atom's nucleus.
+
+Neutrons have no electric charge and help stabilize the nucleus of an atom.
+
+Polymers are large molecules made of repeating smaller units called monomers.
+
+Oxidation reactions involve a loss of electrons, and are the basis of processes like rusting.",ELEMENT,MOLECULE,ATOM,COMPOUND,REACTION,SOLUTION,ACID,CATALYST,ISOTOPE,PROTON,ELECTRON,NEUTRON,POLYMER,OXIDATION
+Nutrition,"Protein provides the building blocks the body uses to repair and build tissue.
+
+Carbohydrates are the body's primary and most readily available source of energy.
+
+Vitamins are essential nutrients the body needs in small amounts to function properly.
+
+Minerals like calcium and iron support numerous essential bodily functions.
+
+Dietary fiber aids digestion and can help maintain steady blood sugar levels.
+
+A calorie is a unit used to measure the amount of energy food provides.
+
+Proper hydration supports nearly every major function in the human body.
+
+Metabolism refers to the chemical processes that convert food into usable energy.
+
+A nutrient is any substance the body needs from food to grow, function, and repair itself.
+
+A balanced diet includes a variety of nutrients rather than relying heavily on just one or two.
+
+Portion size significantly affects total calorie and nutrient intake, even for otherwise healthy foods.
+
+Whole grains retain more of their natural fiber and nutrients than heavily refined grains.
+
+Antioxidants help protect cells from damage caused by unstable molecules called free radicals.
+
+A prolonged nutrient deficiency can lead to a range of specific health problems over time.",PROTEIN,CARBOHYDRATE,VITAMIN,MINERAL,FIBER,CALORIE,HYDRATION,METABOLISM,NUTRIENT,BALANCED,PORTION,WHOLEGRAIN,ANTIOXIDANT,DEFICIENCY
+Pizza and Italian Food,"Pizza has roots in ancient flatbreads, but the modern Neapolitan pizza dates to 18th-century Naples, Italy.
+
+Fresh pasta was being made in Italy by at least the Middle Ages, long before tomatoes ever reached Europe.
+
+Lasagna's name likely comes from a Greek word for a flat sheet of pasta dough.
+
+Ravioli were originally a way for cooks to use up small amounts of leftover meat, cheese, or vegetables.
+
+Risotto's creamy texture comes from slowly stirring starchy short-grain rice like Arborio, not from added cream.
+
+Gelato is churned more slowly than American ice cream, which gives it a denser texture with less air.
+
+Espresso gets its name from being made quickly, under pressure, rather than brewed slowly.
+
+Fresh mozzarella was traditionally made from water buffalo milk in the Campania region of Italy.
+
+Authentic Parmesan cheese must be aged for at least 12 months under strict Italian rules.
+
+Basil is a member of the mint family, along with oregano and other common Italian herbs.
+
+Oregano's name comes from Greek words meaning ""joy of the mountain.""
+
+Marinara sauce gets its name from Italian sailors, who could keep the simple tomato sauce fresh for long voyages.
+
+Bruschetta was originally a way for olive farmers to taste-test freshly pressed olive oil on grilled bread.
+
+Tiramisu means ""pick me up"" in Italian, a nod to its espresso and cocoa.",PIZZA,PASTA,LASAGNA,RAVIOLI,RISOTTO,GELATO,ESPRESSO,MOZZARELLA,PARMESAN,BASIL,OREGANO,MARINARA,BRUSCHETTA,TIRAMISU
+Photography,"Early cameras required exposure times of several minutes just to capture a single image.
+
+A lens bends light to focus it onto a camera's sensor or film.
+
+Aperture controls how much light enters a camera by adjusting the size of its opening.
+
+A camera's shutter controls how long light is allowed to hit the sensor or film.
+
+Exposure is determined by the combination of aperture, shutter speed, and light sensitivity.
+
+Autofocus systems use sensors to detect contrast and automatically sharpen an image.
+
+A tripod helps eliminate camera shake, especially useful during long exposures.
+
+Photographic film captures images using a chemical reaction triggered by light exposure.
+
+A digital image is made up of thousands or millions of tiny units called pixels.
+
+Zoom lenses let a photographer change focal length without physically moving closer to a subject.
+
+A camera flash provides a brief, intense burst of artificial light for a photo.
+
+Portrait photography traditionally uses a wider aperture to blur the background and emphasize the subject.
+
+A photographic negative shows colors and brightness values reversed from the final printed image.
+
+A darkroom uses controlled light and chemicals to develop and print film photographs.",CAMERA,LENS,APERTURE,SHUTTER,EXPOSURE,FOCUS,TRIPOD,FILM,PIXEL,ZOOM,FLASH,PORTRAIT,NEGATIVE,DARKROOM
+Flowers and Plants,"Daisies close their petals at night and reopen when the sun rises.
+
+Tulip bulbs were once so prized in 1600s Holland that they were traded like currency.
+
+There are over 25,000 known species of orchids, more than any other flowering plant family.
+
+A sunflower head is actually made up of thousands of tiny individual flowers.
+
+Lavender's calming scent comes from natural oils used in aromatherapy for centuries.
+
+Cacti store water in their thick stems, letting them survive months without rain.
+
+Ferns reproduce using spores instead of seeds or flowers.
+
+Ivy can climb using tiny root-like structures that cling directly to surfaces.
+
+Marigolds are often planted alongside vegetables to help repel garden pests.
+
+Petunias come in nearly every color except a true, solid black.
+
+Jasmine flowers release their strongest fragrance after the sun goes down.
+
+Daffodils contain a natural toxin that keeps most animals from eating them.
+
+A blossom is the flower of a plant that will later develop into fruit.
+
+A sprout is a plant's very first growth after a seed germinates.",DAISY,TULIP,ORCHID,SUNFLOWER,LAVENDER,CACTUS,FERN,IVY,MARIGOLD,PETUNIA,JASMINE,DAFFODIL,BLOSSOM,SPROUT
+Ancient Egypt,"Pharaohs were considered both political rulers and religious figures in ancient Egyptian society.
+
+The Great Pyramid of Giza remained the tallest man-made structure in the world for thousands of years.
+
+The Great Sphinx has the body of a lion and a human head, carved from a single massive limestone outcrop.
+
+Hieroglyphs combine phonetic and symbolic elements, and weren't fully deciphered until the discovery of the Rosetta Stone.
+
+Mummification was meant to preserve the body for the afterlife, a central belief in ancient Egyptian religion.
+
+Sarcophagi were often elaborately decorated stone or wooden containers that held a mummy's coffin.
+
+Papyrus, made from a Nile-growing plant, was one of the earliest writing materials in history.
+
+The Nile River's annual flooding deposited fertile silt that made large-scale farming possible in Egypt.
+
+Tomb walls were often decorated with scenes meant to help guide the deceased through the afterlife.
+
+Scarab beetles were a common symbol in ancient Egypt, associated with rebirth and protection.
+
+Obelisks were often placed in pairs at the entrances of Egyptian temples.
+
+Egyptian history is commonly divided into dynasties, each representing a ruling family line.
+
+The ankh symbol represented the concept of eternal life in ancient Egyptian art and writing.
+
+Chariots were introduced to Egypt and became important in warfare during the New Kingdom period.",PHARAOH,PYRAMID,SPHINX,HIEROGLYPH,MUMMY,SARCOPHAGUS,PAPYRUS,NILE,TOMB,SCARAB,OBELISK,DYNASTY,ANKH,CHARIOT
+Transportation,"The modern bicycle design with pedals dates back to the mid-1800s.
+
+London opened the world's first underground subway system back in 1863.
+
+Freight trains can pull well over 100 cars at once across long distances.
+
+A helicopter's rotor design allows it to hover in place, unlike a fixed-wing plane.
+
+Ferries have carried passengers and cargo across water for thousands of years.
+
+The first true motorcycle was built in Germany in the 1880s.
+
+Desert caravans historically relied on camels to cross vast, harsh terrain.
+
+Steam locomotives revolutionized long-distance travel in the early 1800s.
+
+Venice's iconic gondolas are built slightly asymmetrically to counter a single oar's push.
+
+Kick scooters became a massive fad in the early 2000s.
+
+Electric trolleys running on rails were once common in cities across America.
+
+The Wright brothers achieved the first powered airplane flight in 1903.
+
+Sailboats harness wind pressure against their sails to move across the water.
+
+Monorail trains run on a single rail, often elevated above city streets.",BICYCLE,SUBWAY,FREIGHT,HELICOPTER,FERRY,MOTORCYCLE,CARAVAN,LOCOMOTIVE,GONDOLA,SCOOTER,TROLLEY,AIRPLANE,SAILBOAT,MONORAIL
+Valentine's Day,"Cupid is often depicted with a bow and arrow as the Roman god associated with love and desire.
+
+Red roses have long been associated with romantic love, partly due to their historic ties to Venus and Aphrodite.
+
+Chocolate became strongly associated with Valentine's Day after boxed chocolates were popularized in the 19th century.
+
+""Sweetheart"" has been used as a term of affection in English for centuries.
+
+Decorative ribbon is commonly used to wrap Valentine's gifts and bouquets.
+
+The holiday's association with romance grew significantly during the Middle Ages in Europe.
+
+Exchanging paper valentine cards became widely popular in the 19th century as printing became more affordable.
+
+Cupid's arrow is said to cause whoever it strikes to fall in love.
+
+Flower bouquets are one of the most common traditional Valentine's Day gifts.
+
+An admirer is someone who feels attraction or fondness for another, often expressed on this holiday.
+
+Candy hearts with printed short messages became a popular Valentine's Day tradition in the late 1800s.
+
+The heart shape used to symbolize love doesn't closely resemble the actual human heart.
+
+A kiss is one of the most universally recognized gestures of affection.
+
+Many people keep sentimental keepsakes from meaningful Valentine's Day memories.",CUPID,ROSES,CHOCOLATE,SWEETHEART,RIBBON,ROMANCE,CARD,ARROW,BOUQUET,ADMIRER,CANDY,HEART,KISS,KEEPSAKE
+Physics,"Gravity gives objects weight and keeps planets in orbit around the sun.
+
+Velocity describes both an object's speed and its direction of motion.
+
+Momentum depends on both an object's mass and its velocity.
+
+Friction is a force that opposes motion between two surfaces in contact.
+
+Energy cannot be created or destroyed, only converted from one form to another.
+
+A force is any push or pull that can change an object's motion.
+
+Magnetism arises from the movement of electric charges, including those inside atoms.
+
+Voltage measures the electrical potential difference that drives current through a circuit.
+
+Wavelength is the distance between successive peaks of a wave, whether light or sound.
+
+Inertia is an object's tendency to resist changes to its current state of motion.
+
+Density describes how much mass is packed into a given volume of a substance.
+
+Air pressure decreases as altitude increases, which is why it's harder to breathe on tall mountains.
+
+A true vacuum contains no matter at all, though perfect vacuums are difficult to achieve in practice.
+
+Electrical resistance determines how much a material opposes the flow of electric current.",GRAVITY,VELOCITY,MOMENTUM,FRICTION,ENERGY,FORCE,MAGNETISM,VOLTAGE,WAVELENGTH,INERTIA,DENSITY,PRESSURE,VACUUM,RESISTANCE
+Sleep,"Dreams occur most vividly during a stage of sleep known as REM, or rapid eye movement.
+
+Insomnia refers to persistent difficulty falling or staying asleep.
+
+Mattress firmness preferences vary widely and can affect both comfort and spinal alignment.
+
+Pillows help support proper neck alignment during sleep, and preferences vary by sleep position.
+
+Melatonin is a hormone the body naturally produces to help regulate the sleep-wake cycle.
+
+The circadian rhythm is the body's roughly 24-hour internal clock that governs sleep and wakefulness.
+
+Short daytime naps can improve alertness without necessarily interfering with nighttime sleep.
+
+Snoring occurs when airflow causes tissues in the throat to vibrate during sleep.
+
+Alarm clocks became widely available for home use in the 19th and 20th centuries.
+
+A consistent bedtime routine can help signal to the body that it's time to wind down.
+
+Feeling drowsy is the body's natural signal that it needs rest.
+
+Restful sleep depends on both sleep duration and uninterrupted sleep quality.
+
+Nightmares are vivid, distressing dreams that most commonly occur during REM sleep.
+
+""Slumber"" is simply another word for a deep, restful sleep.",DREAM,INSOMNIA,MATTRESS,PILLOW,MELATONIN,CIRCADIAN,NAP,SNORE,ALARM,BEDTIME,DROWSY,RESTFUL,NIGHTMARE,SLUMBER
+Mexican Cuisine,"Tacos likely take their name from a term Mexican silver miners used for small paper-wrapped explosive charges.
+
+Burritos as commonly served in the US are a distinct, larger style than most traditional Mexican tacos.
+
+The word ""enchilada"" simply means ""seasoned with chili"" in Spanish.
+
+Quesadillas can be traced back centuries in Mexico, originally made with corn tortillas and native cheeses.
+
+Guacamole comes from the Aztec Nahuatl word ""ahuacamolli,"" meaning avocado sauce.
+
+Fresh salsa recipes date back to Aztec and Maya cooking, long before Europeans arrived.
+
+Corn tortillas have been a staple in Mexico for thousands of years, going back to ancient Mesoamerica.
+
+Tamales are wrapped and steamed in corn husks or banana leaves, a technique also going back to ancient Mesoamerica.
+
+Churros are widely associated with Spanish and Latin American cuisine, though their precise origin is debated.
+
+Cilantro is the same plant as coriander; the leaves and stems are usually called cilantro, the dried seeds coriander.
+
+Jalapeno peppers are named after Xalapa, a city in the Mexican state of Veracruz.
+
+Cumin has been used as a spice for thousands of years and reached Mexico through Spanish colonial trade.
+
+Mole sauces can include dozens of ingredients and take hours or even days to prepare properly.
+
+Nachos were invented in 1943 by Ignacio ""Nacho"" Anaya at a restaurant near the Texas-Mexico border.",TACO,BURRITO,ENCHILADA,QUESADILLA,GUACAMOLE,SALSA,TORTILLA,TAMALE,CHURRO,CILANTRO,JALAPENO,CUMIN,MOLE,NACHOS
+Painting and Art,"A painter's palette is used to hold and mix colors before they're applied to the canvas.
+
+Canvas became a popular painting surface in Europe starting around the 15th and 16th centuries.
+
+Paintbrush bristles can be made from natural animal hair or synthetic fibers, each suited to different effects.
+
+An easel holds a canvas upright, letting an artist step back and view proportions while working.
+
+Pigments are the finely ground colored substances that give paint its color.
+
+Watercolor paint is typically applied in thin, transparent layers that let the white paper show through.
+
+Acrylic paint dries much faster than oil paint, which changed how many modern artists work.
+
+Sketching is often used to plan composition before committing to a final, detailed piece.
+
+Portrait paintings have been used for centuries to record the likeness of notable individuals.
+
+Landscape painting focuses on natural scenery, becoming especially popular in Europe from the 17th century onward.
+
+A mural is a large artwork painted directly onto a wall or ceiling.
+
+Art galleries curate and display artwork, often helping connect artists with collectors and the public.
+
+A frame not only protects a painting's edges but also shapes how a viewer's eye engages with it.
+
+Varnish is applied over a finished painting to protect it and even out its final sheen.",PALETTE,CANVAS,BRUSH,EASEL,PIGMENT,WATERCOLOR,ACRYLIC,SKETCH,PORTRAIT,LANDSCAPE,MURAL,GALLERY,FRAME,VARNISH
+Insects,"A butterfly tastes with its feet, using sensors that detect sugars in potential food sources.
+
+Beetles make up the largest single group of animal species on Earth.
+
+Crickets chirp by rubbing specialized structures on their wings together, not by rubbing their legs.
+
+Grasshoppers can jump roughly 20 times the length of their own body.
+
+Dragonflies were among the very first flying insects to evolve, hundreds of millions of years ago.
+
+Ladybugs release a foul-smelling, bitter fluid from their legs to deter predators.
+
+A praying mantis can rotate its head about 180 degrees to scan for prey.
+
+Termite colonies can include a queen that lives for well over a decade, laying eggs constantly.
+
+A caterpillar's body largely dissolves and reorganizes inside its chrysalis before it becomes a butterfly.
+
+Fireflies produce light through a chemical reaction called bioluminescence.
+
+Some wasp species help control pest populations, making them useful in agriculture and gardens.
+
+Moths are generally most active at night, while most butterflies fly during the day.
+
+Aphids can reproduce without mating under the right conditions, quickly producing large colonies.
+
+Cicadas produce their distinctive buzzing sound using specialized membranes called tymbals.",BUTTERFLY,BEETLE,CRICKET,GRASSHOPPER,DRAGONFLY,LADYBUG,MANTIS,TERMITE,CATERPILLAR,FIREFLY,WASP,MOTH,APHID,CICADA
+Ancient Rome,"Roman emperors held ultimate authority over both civil and military matters across the empire.
+
+The Roman Senate advised on policy and originally represented the interests of the aristocratic class.
+
+A Roman legion typically consisted of several thousand soldiers organized into smaller units.
+
+Gladiators fought in arenas for public entertainment, and some earned enough fame to gain their freedom.
+
+The Roman Forum served as the political, commercial, and social center of the city.
+
+Roman aqueducts used precise engineering to transport water over long distances using gravity alone.
+
+The toga was a formal garment worn specifically by Roman citizens.
+
+A centurion commanded roughly 80 to 100 soldiers within a Roman legion.
+
+Roman chariots were used in warfare, transportation, and popular public races.
+
+The Colosseum hosted gladiatorial games, public spectacles, and even simulated naval battles.
+
+At its height, the Roman Empire controlled territory spanning three continents.
+
+Latin, the language of ancient Rome, remains the root of many modern European languages.
+
+Roman mosaics were made from small tiles called tesserae, arranged into detailed images.
+
+Catapults and other siege engines were key tools in Roman military campaigns.",EMPEROR,SENATE,LEGION,GLADIATOR,FORUM,AQUEDUCT,TOGA,CENTURION,CHARIOT,COLOSSEUM,EMPIRE,LATIN,MOSAIC,CATAPULT
+Technology,"Early computers filled entire rooms and had far less power than a modern phone.
+
+The internet grew out of a 1960s research network originally funded by the US military.
+
+Software refers to the programs and instructions that tell computer hardware what to do.
+
+The QWERTY keyboard layout was designed in the 1870s and has barely changed since.
+
+Bluetooth is named after a 10th-century Scandinavian king known for uniting tribes.
+
+The first file ever downloaded over a network predates the modern web itself.
+
+Computer networks let multiple devices share data and resources with each other.
+
+The word ""algorithm"" traces back to the name of a 9th-century Persian mathematician.
+
+A database organizes information so it can be quickly searched and retrieved.
+
+Broadband internet largely replaced slower dial-up connections in the early 2000s.
+
+A firewall monitors and filters network traffic to block unwanted or unsafe access.
+
+A computer's processor executes billions of instructions every single second.
+
+A user interface is the point where a person interacts directly with a device.
+
+Encryption scrambles data so that only someone with the correct key can read it.",COMPUTER,INTERNET,SOFTWARE,KEYBOARD,BLUETOOTH,DOWNLOAD,NETWORK,ALGORITHM,DATABASE,BROADBAND,FIREWALL,PROCESSOR,INTERFACE,ENCRYPTION
+Easter,"The Easter bunny tradition is believed to have roots in German folklore brought to America by immigrants.
+
+Easter baskets are traditionally used to hold and display decorated eggs and treats.
+
+Decorating eggs for spring celebrations predates Easter itself, with traditions found in several ancient cultures.
+
+Baby chicks are a common Easter symbol representing new life and the arrival of spring.
+
+Lilies are strongly associated with Easter partly due to their traditional symbolism of purity and rebirth.
+
+Easter's timing is tied to the arrival of spring in the Northern Hemisphere.
+
+Chocolate eggs and bunnies became especially popular Easter treats starting in 19th-century Europe.
+
+Decorative ribbon is often used on Easter baskets and gift wrapping.
+
+Soft pastel colors are strongly associated with Easter decorations and clothing.
+
+Elaborate Easter bonnets were historically part of a springtime fashion tradition in some Western cultures.
+
+Chicks hatch by breaking through their shell using a small, temporary structure called an egg tooth.
+
+Jellybeans became a popular Easter candy in the United States by the mid-20th century.
+
+Easter brunch is a popular family gathering tradition in many households.
+
+Decorating for Easter often includes pastel colors, flowers, and springtime imagery.",BUNNY,BASKET,EGG,CHICK,LILY,SPRING,CHOCOLATE,RIBBON,PASTEL,BONNET,HATCH,JELLYBEAN,BRUNCH,DECORATE
+Dinosaurs,"Tyrannosaurus rex had teeth that could grow to be nearly a foot long including the root, with the largest ever found even longer.
+
+Triceratops had one of the largest skulls of any known land animal, made up largely of its frill and horns.
+
+Velociraptor was actually much smaller than popular movies often portray, roughly the size of a turkey.
+
+Stegosaurus had bony plates along its back whose exact purpose is still debated by scientists.
+
+Brontosaurus was considered an invalid name for decades before research in 2015 restored it as a distinct genus.
+
+Pterodactyls were flying reptiles, not technically classified as dinosaurs at all.
+
+Most dinosaur fossils form when remains are buried quickly and minerals gradually replace the original bone.
+
+The mass extinction that ended the age of dinosaurs is widely linked to a massive asteroid impact.
+
+Paleontology is the scientific study of fossils and ancient life.
+
+The Jurassic period lasted roughly from 201 to 145 million years ago.
+
+The Cretaceous period ended with the mass extinction event that wiped out most dinosaur species.
+
+Herbivorous dinosaurs often had specialized teeth suited for grinding tough plant material.
+
+Carnivorous dinosaurs typically had sharp, serrated teeth designed for slicing through flesh.
+
+Careful excavation techniques help paleontologists remove fragile fossils from rock without damaging them.",TYRANNOSAURUS,TRICERATOPS,VELOCIRAPTOR,STEGOSAURUS,BRONTOSAURUS,PTERODACTYL,FOSSIL,EXTINCTION,PALEONTOLOGY,JURASSIC,CRETACEOUS,HERBIVORE,CARNIVORE,EXCAVATION
+Family and Relationships,"Sibling relationships are often among the longest-lasting relationships in a person's life.
+
+Parenting styles and practices vary widely across different cultures and generations.
+
+Grandparents often play an important role in passing down family stories and traditions.
+
+Cousins share a common set of grandparents or more distant ancestors, depending on how closely related they are.
+
+Family heritage often includes traditions, stories, and customs passed down across generations.
+
+Family traditions help create a shared sense of identity and continuity over time.
+
+A strong emotional bond often develops through shared experiences over time.
+
+Trust is widely considered a foundational element of healthy relationships.
+
+Emotional and practical support from family members can significantly affect wellbeing.
+
+Loyalty within families often means standing by one another through difficult times.
+
+Family reunions bring together relatives, sometimes from multiple generations, to reconnect.
+
+An ancestor is a family member from a previous generation from whom a person is descended.
+
+A household can include family members as well as others who share the same home.
+
+Traditions and stories are often carried forward from one generation to the next.",SIBLING,PARENT,GRANDPARENT,COUSIN,HERITAGE,TRADITION,BOND,TRUST,SUPPORT,LOYALTY,REUNION,ANCESTOR,HOUSEHOLD,GENERATION
+Sushi and Japanese Cuisine,"Sushi originally referred to the vinegared rice itself, not the raw fish often paired with it today.
+
+Sashimi refers to sliced raw fish or seafood served without rice, distinct from sushi.
+
+Real wasabi is a rhizome that's difficult to grow; much of what's served outside Japan is dyed horseradish instead.
+
+Tempura's light, crispy batter technique is believed to have been introduced to Japan by Portuguese traders in the 16th century.
+
+Ramen noodles originated from Chinese wheat noodles before becoming a distinctly Japanese dish.
+
+Miso is made by fermenting soybeans with salt and a mold called koji, sometimes for years.
+
+Edamame are young, immature soybeans, harvested before they fully ripen and harden.
+
+Teriyaki refers to a cooking technique -- grilling or broiling with a glossy soy-based glaze -- not one specific dish.
+
+Nori sheets are made from dried and pressed edible seaweed.
+
+Matcha is made from whole, stone-ground green tea leaves rather than steeped and discarded like regular tea.
+
+Dashi is a foundational broth in Japanese cooking, typically made from kelp and dried fish flakes.
+
+Udon noodles are thick and wheat-based, giving them a chewier bite than many other noodle types.
+
+Soba noodles are made from buckwheat, giving them a nutty flavor and grayish-brown color.
+
+Mochi is made by pounding steamed glutinous rice into a sticky, stretchy dough.",SUSHI,SASHIMI,WASABI,TEMPURA,RAMEN,MISO,EDAMAME,TERIYAKI,NORI,MATCHA,DASHI,UDON,SOBA,MOCHI
+Board Games,"Dice have been used in games for thousands of years, with early examples found in ancient Mesopotamia.
+
+Player tokens let each participant track their position and progress around a game board.
+
+A spinner is often used as an alternative to dice for generating a random result.
+
+Strategy games reward planning ahead rather than relying purely on luck.
+
+Checkers, also called draughts in some countries, is one of the oldest known board games still widely played.
+
+Dominoes can be traced back centuries, with early versions appearing in China.
+
+Board game components made of sturdy cardboard help boards and pieces survive repeated play.
+
+A ""roll"" determines how far a token or piece can move on a given turn.
+
+Board games are often divided into a grid of squares that define legal moves.
+
+A pawn is a common piece type, often representing the weakest or most numerous unit in a game.
+
+A deck of cards is often incorporated into board games to introduce chance and variety.
+
+Players usually alternate turns, taking actions in a set order until the game ends.
+
+A rulebook lays out the setup, objectives, and legal moves for a given game.
+
+Interlocking tiles are used in some games to build a different board layout every time.",DICE,TOKEN,SPINNER,STRATEGY,CHECKERS,DOMINOES,CARDBOARD,ROLL,SQUARE,PAWN,DECK,TURN,RULEBOOK,TILE
+Reptiles and Amphibians,"Lizards can regrow a lost tail, though the replacement is usually shorter and less flexible.
+
+Iguanas have a light-sensing ""third eye"" on top of their head that helps detect predators from above.
+
+Geckos can climb smooth vertical surfaces using microscopic hair-like structures on their toes.
+
+Chameleons change color mainly to communicate and regulate temperature, not just to camouflage.
+
+Tortoises are land-dwelling and can live for over a century in some species.
+
+Sea turtles can migrate thousands of miles, often returning to the beach where they hatched to lay eggs.
+
+Crocodiles have one of the strongest bite forces of any living animal.
+
+Alligators can be distinguished from crocodiles partly by their wider, more rounded snouts.
+
+Frogs absorb water and oxygen through their skin, making them sensitive to environmental pollution.
+
+Toads generally have drier, bumpier skin than frogs and tend to spend more time on land.
+
+Salamanders can regenerate entire lost limbs, not just tails.
+
+Newts are a type of salamander that typically spend part of their life cycle in water.
+
+Snakes smell using their tongues, which collect scent particles and pass them to a special sensory organ.
+
+Pythons kill prey by constriction, squeezing until the prey can no longer breathe.",LIZARD,IGUANA,GECKO,CHAMELEON,TORTOISE,TURTLE,CROCODILE,ALLIGATOR,FROG,TOAD,SALAMANDER,NEWT,SNAKE,PYTHON
+Medieval Times,"Knights typically trained for years, starting as a page and then a squire, before being formally knighted.
+
+Medieval castles were built primarily as fortified residences to defend against attack.
+
+Full suits of armor could weigh 40 to 60 pounds but were designed to still allow reasonable movement.
+
+Jousting tournaments served both as martial training and as popular public entertainment for nobility.
+
+A medieval kingdom's power was typically organized around a monarch and a network of loyal nobles.
+
+A squire assisted a knight and trained under him before potentially becoming a knight himself.
+
+A moat around a castle made it harder for attackers to reach the walls or dig tunnels beneath them.
+
+A drawbridge could be raised to block castle access and lowered to allow passage across the moat.
+
+Medieval monasteries were centers of religious life and also preserved many historical texts through hand-copying.
+
+Feudalism organized medieval society through a hierarchy of land-based obligations and loyalty.
+
+Peasants made up the majority of the medieval population and largely worked the land.
+
+Blacksmiths were essential craftsmen, forging everything from horseshoes to weapons and armor.
+
+Medieval tapestries often depicted historical or mythological scenes and also helped insulate stone castle walls.
+
+Crossbows required less training to use effectively than traditional longbows, changing medieval warfare.",KNIGHT,CASTLE,ARMOR,JOUST,KINGDOM,SQUIRE,MOAT,DRAWBRIDGE,MONASTERY,FEUDALISM,PEASANT,BLACKSMITH,TAPESTRY,CROSSBOW
+Firefighters,"Fire hoses are built to withstand high water pressure while remaining flexible enough to maneuver.
+
+Fire hydrants are connected to a pressurized water supply so firefighters can quickly attach a hose.
+
+Extendable ladders let firefighters reach upper floors of a building quickly during a rescue.
+
+Firefighter helmets are designed to protect against heat, falling debris, and impact.
+
+Firefighting sirens alert other drivers and pedestrians so emergency vehicles can move through traffic quickly.
+
+Fire extinguishers are classified by type depending on what kind of fire they're designed to fight.
+
+Search-and-rescue training prepares firefighters to safely locate and evacuate people from dangerous structures.
+
+Smoke inhalation is often more immediately dangerous in a fire than the flames themselves.
+
+Modern smoke alarms can detect fires early enough to give occupants critical extra time to escape.
+
+A fire engine typically carries water, hoses, and pumps needed to fight a fire on arrival.
+
+Fire stations are strategically located to help minimize response times across a coverage area.
+
+Hazmat training prepares firefighters to safely respond to hazardous chemical or material spills.
+
+Sprinkler systems can automatically respond to a fire before firefighters even arrive on scene.
+
+A stray ember can travel considerable distances and ignite a new fire far from its source.",HOSE,HYDRANT,LADDER,HELMET,SIREN,EXTINGUISHER,RESCUE,SMOKE,ALARM,ENGINE,STATION,HAZMAT,SPRINKLER,EMBER
+New Year's Eve,"New Year's Eve countdowns traditionally build toward the exact stroke of midnight.
+
+Fireworks displays are a global tradition for marking the start of a new year.
+
+Confetti is often released at New Year's celebrations to add color and a festive feel.
+
+Midnight marks the precise transition from one calendar year to the next.
+
+New Year's resolutions are personal goals people set, often related to health or self-improvement.
+
+Champagne became linked with celebration partly due to its historical association with French royalty.
+
+Different calendar systems around the world mark the new year on different dates.
+
+Clocks and countdowns are central to how many cultures mark the transition at midnight.
+
+New Year's celebrations take many different forms across cultures worldwide.
+
+A traditional toast is often raised at midnight to celebrate the year ahead.
+
+New Year's parties are among the most widely celebrated social gatherings worldwide.
+
+Streamers are a common, simple decoration for New Year's and other celebrations.
+
+Certain songs have become closely tied to New Year's celebrations in different countries.
+
+New Year's festivities often include gatherings, music, and food shared with family or friends.",COUNTDOWN,FIREWORKS,CONFETTI,MIDNIGHT,RESOLUTION,CHAMPAGNE,CALENDAR,CLOCK,CELEBRATION,TOAST,PARTY,STREAMER,ANTHEM,FESTIVITY
+Space and Astronomy,"Our galaxy, the Milky Way, contains an estimated 100 to 400 billion stars.
+
+A meteor is the streak of light produced when a small space rock burns up in the atmosphere.
+
+Most asteroids in our solar system orbit in a wide belt between Mars and Jupiter.
+
+A nebula is a giant cloud of gas and dust where new stars are often born.
+
+The first artificial satellite, Sputnik, launched into orbit in 1957.
+
+Galileo was among the first to use a telescope to study the night sky in detail.
+
+Objects in orbit are essentially in constant free-fall around a larger body.
+
+A comet's glowing tail always points away from the sun, no matter its direction of travel.
+
+A total solar eclipse can only be seen from a narrow path on Earth's surface.
+
+The first astronaut to orbit Earth was Yuri Gagarin, in 1961.
+
+Modern rockets rely on the same action-reaction principle Newton described centuries ago.
+
+The observable universe is estimated to be about 93 billion light-years across.
+
+Gravity is the weakest of the four fundamental forces, yet shapes the entire universe.
+
+Nearly all the elements in your body were originally formed inside ancient stars.",GALAXY,METEOR,ASTEROID,NEBULA,SATELLITE,TELESCOPE,ORBIT,COMET,ECLIPSE,ASTRONAUT,ROCKET,UNIVERSE,GRAVITY,STARDUST
+Babies and Nursery,"Cribs are specifically designed with safety features to reduce risk for sleeping infants.
+
+Strollers let caregivers transport infants comfortably while keeping their hands free.
+
+Pacifiers can help soothe infants by satisfying a natural sucking reflex.
+
+Baby bottles allow for feeding with formula or expressed breast milk.
+
+Modern diapers are designed to keep moisture away from a baby's sensitive skin.
+
+Lullabies have been used across cultures for generations to help soothe babies to sleep.
+
+Swaddling a baby in a blanket can help mimic the snugness of the womb and promote calm.
+
+Rattles are simple toys designed to capture an infant's attention through sound and movement.
+
+A bib helps protect a baby's clothing during feeding.
+
+Teething typically begins around six months of age as an infant's first teeth emerge.
+
+Newborns typically sleep in short stretches throughout both day and night.
+
+A onesie is a simple one-piece garment designed for easy dressing of infants.
+
+A nursery is a dedicated space set up specifically for a baby's sleeping and care needs.
+
+A hanging mobile above a crib can help capture and hold an infant's visual attention.",CRIB,STROLLER,PACIFIER,BOTTLE,DIAPER,LULLABY,BLANKET,RATTLE,BIB,TEETHING,NEWBORN,ONESIE,NURSERY,MOBILE
+Barbecue and Grilling,"Brisket comes from the breast section of the cow and needs long, slow cooking to become tender.
+
+Ribs are often cooked low and slow so the connective tissue has time to break down.
+
+Marinades typically combine an acid, oil, and seasonings to add flavor and help tenderize meat.
+
+Charcoal briquettes were popularized in the United States in the early 20th century, including by Henry Ford's company.
+
+Skewers let smaller pieces of food cook evenly by keeping them close to direct heat on all sides.
+
+A smoker cooks food slowly at low temperatures using indirect heat and wood smoke for flavor.
+
+The word ""grill"" comes from a French term for a grated cooking surface.
+
+Sausages are one of the oldest processed foods, with references dating back thousands of years.
+
+Kebabs have roots in the Middle East and Central Asia, going back centuries as a way to cook meat over open fire.
+
+Basting food with sauce or fat while it cooks helps keep the surface moist and flavorful.
+
+A dry rub is a mix of spices and seasonings applied directly to meat before cooking.
+
+Long-handled tongs let a cook flip food over hot coals without getting too close to the heat.
+
+A flame's color can hint at its temperature, with blue flames generally burning hotter than yellow ones.
+
+Leftover ashes from a charcoal fire were historically repurposed for uses like soap-making.",BRISKET,RIBS,MARINADE,CHARCOAL,SKEWER,SMOKER,GRILL,SAUSAGE,KEBAB,BASTING,RUB,TONGS,FLAME,ASHES
+Video Games,"Early home consoles in the 1970s often came with just one or two built-in games.
+
+Joysticks were adapted from aircraft controls before becoming a staple of early video game controllers.
+
+Early video game graphics were built from large, visible pixels due to limited processing power.
+
+Levels give players a structured sense of progress as challenges gradually increase.
+
+An avatar represents the player within a game's virtual world.
+
+Respawning lets a player's character return to the game after being defeated, without ending the session.
+
+Arcades were a major way people played video games before home consoles became affordable and common.
+
+Modern controllers often include motion sensors and vibration feedback in addition to standard buttons.
+
+Online play lets people compete or cooperate with others over the internet rather than only locally.
+
+Multiplayer games can be played competitively or cooperatively, locally or online.
+
+Advances in graphics processing have allowed video game visuals to grow dramatically more detailed over time.
+
+A game's soundtrack is often composed specifically to match its pacing and mood.
+
+Game developers include programmers, artists, writers, and designers working together on a single project.
+
+Video games span many genres, from puzzle and strategy to action and role-playing.",CONSOLE,JOYSTICK,PIXEL,LEVEL,AVATAR,RESPAWN,ARCADE,CONTROLLER,ONLINE,MULTIPLAYER,GRAPHICS,SOUNDTRACK,DEVELOPER,GENRE
+Rainforest,"The rainforest canopy forms a dense upper layer where most of the forest's animal life is found.
+
+Jaguars are the largest cats native to the Americas and are strong swimmers.
+
+Toucans use their large, colorful bills partly to help regulate their body temperature.
+
+Orchids make up one of the largest families of flowering plants, and many species grow in rainforests.
+
+Woody vines called lianas climb up trees to reach sunlight in the dense forest.
+
+Many rainforest monkey species use their tails to grip branches like an extra limb.
+
+Parrots are especially diverse in rainforest regions, with many species found nowhere else.
+
+Ferns are among the oldest plant groups on Earth and thrive in humid rainforest understories.
+
+Tropical rainforests maintain consistently high humidity, often above 80 percent year-round.
+
+The rainforest undergrowth receives only a small fraction of the sunlight that reaches the canopy.
+
+Macaws can live for many decades and often mate for life.
+
+Sloths move so slowly that algae can grow on their fur, helping them blend into the trees.
+
+Piranhas have a reputation for ferocity that's often exaggerated compared to their actual feeding behavior.
+
+Anacondas are among the heaviest snakes in the world and are strong swimmers in slow-moving water.",CANOPY,JAGUAR,TOUCAN,ORCHID,VINE,MONKEY,PARROT,FERN,HUMIDITY,UNDERGROWTH,MACAW,SLOTH,PIRANHA,ANACONDA
+Pirates,"Buried treasure is a popular pirate trope, but historically most pirates spent their plunder quickly rather than burying it.
+
+A cutlass was a short, curved sword favored by pirates for close combat aboard ships.
+
+Galleons were large sailing ships often targeted by pirates because they carried valuable cargo.
+
+Schooners were fast, agile sailing ships that made them well-suited for piracy and smuggling.
+
+Parrots became associated with pirates partly through popular fiction rather than strong historical evidence.
+
+A compass was an essential tool for navigation long before modern satellite-based systems existed.
+
+An anchor keeps a ship in place by digging into or gripping the seafloor.
+
+To ""plunder"" means to forcibly steal goods, historically a defining activity of piracy.
+
+A mutiny occurs when a ship's crew rebels against its captain's authority.
+
+""Marauder"" broadly describes someone who raids or plunders, a term often applied to pirates.
+
+""Buccaneer"" originally referred to hunters in the Caribbean before becoming linked with piracy.
+
+Doubloons were gold coins from the Spanish Empire, often depicted as classic pirate treasure.
+
+Ship-mounted cannons were pirates' primary weapon for intimidating or disabling other vessels.
+
+Pirates relied on maps and charts to navigate and, in fiction, to mark hidden treasure.",TREASURE,CUTLASS,GALLEON,SCHOONER,PARROT,COMPASS,ANCHOR,PLUNDER,MUTINY,MARAUDER,BUCCANEER,DOUBLOON,CANNON,MAP
+Police and Law Enforcement,"A police badge is typically numbered and tied to a specific officer's identity within a department.
+
+Patrol officers regularly travel a designated area to monitor for and respond to incidents.
+
+Handcuffs are designed to restrain a person's wrists safely during an arrest.
+
+A precinct is a local administrative division that a police department uses to organize its officers.
+
+Detectives typically focus on following up and investigating cases after an initial incident report.
+
+Witness accounts can provide crucial information during a criminal investigation.
+
+Evidence must be carefully collected and documented to remain usable in later legal proceedings.
+
+Police sirens use a distinct tone from fire and ambulance sirens to help drivers identify approaching emergency vehicles.
+
+Dispatchers coordinate communication between the public and responding officers during a call.
+
+A police uniform helps the public quickly identify an on-duty officer.
+
+A formal investigation follows structured steps to gather facts before drawing conclusions.
+
+A suspect is someone believed to be possibly involved in a crime, though not yet proven guilty.
+
+Police radios allow real-time coordination between officers and dispatch during active situations.
+
+Police canine units are trained to assist with tasks like tracking, detection, and search operations.",BADGE,PATROL,HANDCUFFS,PRECINCT,DETECTIVE,WITNESS,EVIDENCE,SIREN,DISPATCH,UNIFORM,INVESTIGATION,SUSPECT,RADIO,CANINE
+Independence Day,"Fireworks on Independence Day are often linked to John Adams's early call for celebrations with illuminations.
+
+Independence Day parades are held in towns across the United States to mark the occasion.
+
+The concept of liberty was central to the founding documents behind American independence.
+
+Patriotic displays on this holiday often include red, white, and blue decorations and clothing.
+
+National anthems are often played at official Independence Day ceremonies and events.
+
+The American flag is prominently displayed throughout Fourth of July celebrations.
+
+The idea of freedom from British rule was the central motivation behind the holiday's origin.
+
+Picnics and outdoor gatherings are a common way many families celebrate the holiday.
+
+Patriotic bunting in red, white, and blue is a traditional Independence Day decoration.
+
+The Declaration of Independence was formally adopted by the Continental Congress on July 4, 1776.
+
+Independence Day celebrations often combine solemn commemoration with festive public events.
+
+Sparklers are a popular, relatively low-key fireworks option often used by families at home.
+
+Barbecues are one of the most common ways Americans traditionally celebrate the Fourth of July.
+
+Ceremonial cannon fire has historically been used to mark significant national occasions, including this holiday.",FIREWORKS,PARADE,LIBERTY,PATRIOTIC,ANTHEM,FLAG,FREEDOM,PICNIC,BUNTING,DECLARATION,CELEBRATION,SPARKLER,BARBECUE,CANNON
+Weather,"Thunder is the sound created by air rapidly expanding after a lightning strike.
+
+A single lightning bolt can be hotter than the surface of the sun.
+
+A rainbow is actually a full circle, though we usually only see the arc above the horizon.
+
+Severe droughts can persist for years and reshape entire ecosystems.
+
+Hurricanes are called typhoons in the Pacific and cyclones in the Indian Ocean.
+
+A blizzard officially requires strong winds and low visibility lasting for hours.
+
+High humidity makes hot weather feel even hotter by slowing sweat evaporation.
+
+Modern weather forecasts rely on satellites, radar, and supercomputer models.
+
+Climate describes long-term weather patterns, while weather is day-to-day conditions.
+
+The strongest tornadoes can have wind speeds exceeding 300 mph.
+
+Overcast skies form when a thick, unbroken layer of clouds blocks the sun.
+
+Drizzle consists of droplets so small and light they seem to float rather than fall.
+
+Sunshine duration is tracked in hours per day by weather stations worldwide.
+
+Frost can damage crops even when the air temperature stays just above freezing.",THUNDER,LIGHTNING,RAINBOW,DROUGHT,HURRICANE,BLIZZARD,HUMIDITY,FORECAST,CLIMATE,TORNADO,OVERCAST,DRIZZLE,SUNSHINE,FROST
+Coffee and Cafes,"Espresso is made by forcing hot water through finely-ground coffee under high pressure.
+
+A latte is mostly steamed milk with a smaller proportion of espresso mixed in.
+
+The cappuccino gets its name from Capuchin friars, whose robe color resembled the drink's coffee-and-milk tone.
+
+Mocha coffee drinks are named after the port city of Mocha in Yemen, historically a major coffee trading hub.
+
+The word ""barista"" is Italian for bartender, applied specifically to coffee preparation.
+
+Roasting coffee beans triggers chemical reactions that develop their color, aroma, and flavor.
+
+A burr grinder crushes coffee beans more evenly than a blade grinder, producing a more consistent brew.
+
+A carafe is typically used to hold and serve brewed coffee after it's made.
+
+Adding cream to coffee changes its acidity and mouthfeel, not just its color.
+
+Coffee originally spread through the Islamic world before reaching Europe in the 17th century.
+
+Roughly 800 aromatic compounds have been identified in brewed coffee.
+
+Coffee beans are actually the pit, or seed, found inside a coffee cherry fruit.
+
+Cold brew coffee is steeped in cold water for many hours instead of being brewed hot.
+
+Milk foam for cappuccinos and lattes is created by introducing air into steamed milk.",ESPRESSO,LATTE,CAPPUCCINO,MOCHA,BARISTA,ROAST,GRINDER,CARAFE,CREAM,SUGAR,AROMA,BEANS,BREW,FOAM
+Dance,"Ballet developed in the Italian Renaissance courts before becoming formalized in France.
+
+The tango originated in the working-class neighborhoods of Buenos Aires and Montevideo in the late 1800s.
+
+The waltz was considered scandalous in its early days because of how closely partners held each other.
+
+Salsa dancing developed from a blend of Caribbean and Latin American musical traditions.
+
+Ballroom dancing covers a range of partnered dance styles performed in formal social settings.
+
+Choreography refers to the planned sequence of movements that make up a dance performance.
+
+Rhythm is the pattern of timing that dancers use to coordinate their movement with music.
+
+Tap dance uses metal plates on the shoes to produce percussive sound with each step.
+
+Hip hop dance grew out of street and club culture in the United States starting in the 1970s.
+
+Dancing ""en pointe"" in ballet requires years of training to build the necessary strength and technique.
+
+A pirouette is a full turn of the body balanced on one foot.
+
+Tempo describes how fast or slow a piece of music, and its accompanying dance, moves.
+
+Partner dancing relies on clear physical cues so both dancers can move in sync.
+
+A dance recital gives students a chance to perform what they've learned in front of an audience.",BALLET,TANGO,WALTZ,SALSA,BALLROOM,CHOREOGRAPHY,RHYTHM,TAP,HIPHOP,POINTE,PIROUETTE,TEMPO,PARTNER,RECITAL
+Arctic and Antarctica,"Glaciers form over many years as layers of snow compress into dense ice.
+
+Only about one-tenth of an iceberg is typically visible above the water's surface.
+
+Tundra soil often stays frozen just beneath the surface even during the brief Arctic summer.
+
+Penguins are found in the Southern Hemisphere and are not native to the Arctic at all.
+
+Walruses use their long tusks to help haul themselves out onto ice and to spar with rivals.
+
+Narwhals are sometimes called the ""unicorns of the sea"" because of their long, spiraled tusk.
+
+The aurora borealis is caused by charged particles from the sun interacting with Earth's magnetic field.
+
+Permafrost can remain frozen for thousands of years, sometimes preserving ancient plant and animal remains.
+
+Huskies have a thick double coat that helps insulate them in extremely cold climates.
+
+Blizzards combine strong winds with heavy snow, often reducing visibility to near zero.
+
+The Antarctic ice sheet holds the vast majority of the world's fresh water.
+
+Seals can slow their heart rate dramatically to conserve oxygen during long dives.
+
+Krill are tiny shrimp-like creatures that form the base of the food web for many polar species.
+
+Early polar expeditions faced extreme conditions that made simple survival a daily challenge.",GLACIER,ICEBERG,TUNDRA,PENGUIN,WALRUS,NARWHAL,AURORA,PERMAFROST,HUSKY,BLIZZARD,ICECAP,SEAL,KRILL,EXPEDITION
+Cowboys and the Old West,"Saddles were adapted by American cowboys from earlier Spanish and Mexican vaquero designs.
+
+A lasso, or lariat, is used to catch and control cattle and horses.
+
+Stirrups let a rider distribute their weight and control a horse more securely.
+
+Ranches could span thousands of acres, requiring cowboys to manage cattle across vast open land.
+
+Rodeo competitions grew directly out of everyday ranching skills like roping and riding.
+
+Stagecoaches provided long-distance transportation across the frontier before railroads expanded westward.
+
+The prairie's open grasslands made much of the central US well suited for cattle ranching.
+
+The Homestead Act of 1862 offered settlers land in exchange for living on and farming it.
+
+Sheriffs were often the primary law enforcement authority in small frontier towns.
+
+Outlaws in the Old West became infamous both for their crimes and for exaggerated tales told about them.
+
+Cattle drives moved herds hundreds of miles to reach railroads for shipment to eastern markets.
+
+Spurs attached to a rider's boots to help signal commands to a horse.
+
+A holster kept a sidearm secure and quickly accessible for a cowboy or lawman.
+
+The frontier represented the shifting edge of westward American settlement throughout the 1800s.",SADDLE,LASSO,STIRRUP,RANCH,RODEO,STAGECOACH,PRAIRIE,HOMESTEAD,SHERIFF,OUTLAW,CATTLE,SPUR,HOLSTER,FRONTIER
+Doctors and Medicine,"A stethoscope amplifies internal body sounds like the heartbeat and breathing.
+
+A diagnosis identifies the specific cause behind a patient's symptoms.
+
+Modern surgical techniques have advanced significantly since the introduction of anesthesia and sterile procedures.
+
+A prescription authorizes a patient to receive a specific medication and dosage.
+
+Vaccines work by training the immune system to recognize a specific pathogen without causing the actual disease.
+
+Clinics often provide outpatient care, treating patients without requiring an overnight hospital stay.
+
+Nurses provide much of the direct, ongoing patient care within hospitals and clinics.
+
+A symptom is a sign that something may be medically wrong, prompting further evaluation.
+
+Physical therapy helps patients recover strength, mobility, and function after an injury or surgery.
+
+X-rays use a form of radiation to produce images of bones and some internal structures.
+
+Antibiotics treat bacterial infections but have no effect on viral illnesses.
+
+Recovery time after a medical procedure varies widely based on its complexity and a patient's health.
+
+Bandages help protect a wound from infection while it heals.
+
+A patient's full medical history helps doctors make more informed diagnostic and treatment decisions.",STETHOSCOPE,DIAGNOSIS,SURGERY,PRESCRIPTION,VACCINE,CLINIC,NURSE,SYMPTOM,THERAPY,XRAY,ANTIBIOTIC,RECOVERY,BANDAGE,PATIENT
+St. Patrick's Day,"The shamrock is said to have been used by Saint Patrick to illustrate the concept of the Holy Trinity.
+
+Leprechauns come from Irish folklore, originally depicted as mischievous shoemaker-like fairies.
+
+A four-leaf clover is considered rare and lucky, distinct from the common three-leaf shamrock.
+
+Ireland is often nicknamed the ""Emerald Isle"" because of its lush green landscape.
+
+St. Patrick's Day parades became a major tradition in the United States before spreading back to Ireland.
+
+Saint Patrick is closely associated with the introduction of Christianity to Ireland in the 5th century.
+
+According to Irish folklore, a leprechaun's hidden gold is said to lie at the end of a rainbow.
+
+Rainbows form when light is refracted and reflected inside water droplets in the air.
+
+The color green became strongly linked to St. Patrick's Day and Irish identity over time.
+
+Traditional Irish jigs are a lively dance style often performed during St. Patrick's Day celebrations.
+
+Bagpipes, while more commonly associated with Scotland, are also featured in many Irish celebratory events.
+
+The harp is a longstanding national symbol of Ireland, appearing on official state emblems.
+
+St. Patrick's Day is closely tied to Irish folklore traditions about luck and fortune.
+
+St. Patrick's Day festivals are celebrated in cities around the world, not just in Ireland.",SHAMROCK,LEPRECHAUN,CLOVER,EMERALD,PARADE,IRELAND,GOLD,RAINBOW,GREEN,JIG,BAGPIPE,HARP,LUCK,FESTIVAL
+Seasons,"Spring begins as the Northern Hemisphere starts tilting back toward the sun.
+
+The summer solstice marks the longest stretch of daylight in the entire year.
+
+Autumn leaves change color as trees stop producing chlorophyll for the winter.
+
+Winter in the Southern Hemisphere happens at the same time as summer up north.
+
+Cherry blossoms typically bloom for only about one to two weeks each year.
+
+The word ""harvest"" once referred to the autumn season itself, not just gathering crops.
+
+No two snowflakes have ever been found to be exactly identical.
+
+Sunshine triggers the body to produce vitamin D through the skin.
+
+Rainfall is measured by the depth of water that would collect on a flat surface.
+
+Peak foliage season can shift by weeks depending on temperature and rainfall.
+
+Frost forms when water vapor freezes directly onto a cold surface overnight.
+
+A gentle breeze is officially classified as wind moving between about 8 and 12 mph.
+
+On the equinox, day and night are nearly equal in length almost everywhere on Earth.
+
+The winter solstice marks the shortest day and the official start of winter.",SPRING,SUMMER,AUTUMN,WINTER,BLOSSOM,HARVEST,SNOWFALL,SUNSHINE,RAINFALL,FOLIAGE,FROST,BREEZE,EQUINOX,SOLSTICE
+Tea Time,"Teapots have been used for brewing tea since at least the Ming Dynasty in China.
+
+A kettle heats water specifically for brewing, distinct from a pot used for cooking.
+
+Steeping tea too long can pull excess tannins from the leaves, making the brew taste bitter.
+
+Chamomile tea is made from dried flowers rather than tea leaves, so technically it's a herbal infusion.
+
+Oolong tea is partially oxidized, placing it flavor-wise between green and black tea.
+
+Herbal teas, or tisanes, don't actually contain leaves from the tea plant at all.
+
+A tea infuser holds loose leaves so they can be easily removed after steeping.
+
+Saucers were originally used to catch drips and later became part of a matched tea set.
+
+Tea biscuits are meant to be dipped and are often less sweet than dessert cookies.
+
+Ceylon tea takes its name from the former name of Sri Lanka, where it's grown.
+
+Darjeeling tea is grown in the Himalayan foothills of India and is sometimes called the ""champagne of teas.""
+
+Chai traditionally refers to tea brewed with milk and a blend of warming spices.
+
+Honey has long been used to sweeten tea because it dissolves easily in hot liquid.
+
+A squeeze of lemon can brighten tea's flavor and even change its color slightly due to its acidity.",TEAPOT,KETTLE,STEEP,CHAMOMILE,OOLONG,HERBAL,INFUSER,SAUCER,BISCUIT,CEYLON,DARJEELING,CHAI,HONEY,LEMON
+Fishing,"Anglers use a wide range of techniques depending on the species and body of water they're fishing.
+
+A tackle box keeps hooks, lures, and other small gear organized and ready to use.
+
+Fishing reels help control how much line is released or retrieved during a cast.
+
+Bait is meant to attract fish through smell, movement, or taste, whether live or artificial.
+
+Fish hooks have been found in archaeological sites dating back tens of thousands of years.
+
+Lures are designed to imitate prey through movement, color, or vibration in the water.
+
+Fishing rods are built with varying flexibility depending on the size of fish being targeted.
+
+Nets have been used for fishing since ancient times, evolving from simple woven fibers.
+
+Trout generally prefer cold, oxygen-rich water such as streams and mountain lakes.
+
+Bass are a popular sportfishing target known for their aggressive strikes at lures.
+
+Catfish use sensitive whisker-like barbels to help locate food in murky water.
+
+A dock provides easy water access for fishing without needing a boat.
+
+Casting technique affects how far and accurately a lure or bait can be placed.
+
+A fisherman's patience is often as important as their equipment or technique.",ANGLER,TACKLE,REEL,BAIT,HOOK,LURE,ROD,NET,TROUT,BASS,CATFISH,DOCK,CASTING,FISHERMAN
+Forests and Woodlands,"Oak trees can live for several centuries and support an especially wide range of wildlife.
+
+Maple trees are the source of the sap used to make maple syrup.
+
+Pine trees are conifers that keep most of their needle-like leaves year-round.
+
+Birch trees are known for their distinctive papery, peeling bark.
+
+The forest canopy filters sunlight, shaping which plants can grow in the layers below.
+
+Underbrush provides shelter and food for many small forest animals.
+
+A sapling is a young tree, typically past the seedling stage but not yet fully mature.
+
+Timber is wood that has been harvested and processed for use in construction.
+
+Moss lacks true roots and instead absorbs water and nutrients directly through its surface.
+
+A single oak tree can produce thousands of acorns in a good year, though only a few ever sprout.
+
+Conifers typically produce seeds in cones rather than flowers.
+
+Deciduous trees shed their leaves seasonally, usually in response to shorter days and cooler temperatures.
+
+A tree's trunk transports water and nutrients between its roots and its leaves.
+
+Tree roots can extend well beyond the width of the visible canopy above ground.",OAK,MAPLE,PINE,BIRCH,CANOPY,UNDERBRUSH,SAPLING,TIMBER,MOSS,ACORN,CONIFER,DECIDUOUS,TRUNK,ROOTS
+Circus,"A ringmaster traditionally introduces acts and keeps the show moving in a circus performance.
+
+Trapeze acts require years of training to safely perform high above the ground.
+
+Acrobats combine strength, flexibility, and precise timing to perform their routines.
+
+Jugglers can train to keep several objects moving through the air using only timing and coordination.
+
+Circus clowns developed distinctive makeup and costume traditions that vary by performer and troupe.
+
+Walking a tightrope requires exceptional balance, often aided by a long pole for stability.
+
+Traveling circuses historically used large tents that could be assembled and taken down at each stop.
+
+Circus performers and equipment once traveled between towns in horse-drawn caravans.
+
+A circus performer often specializes in one discipline, refined over years of practice.
+
+Spotlights help direct audience attention to specific performers during a live show.
+
+Circus audiences historically gathered for a form of entertainment unavailable through any other medium.
+
+Circus stunts are carefully rehearsed to manage risk despite their dramatic appearance.
+
+Distinctive costumes help circus performers stand out under bright lighting during a show.
+
+Older traveling circuses sometimes included a menagerie of exotic animals as part of the spectacle.",RINGMASTER,TRAPEZE,ACROBAT,JUGGLER,CLOWN,TIGHTROPE,TENT,CARAVAN,PERFORMER,SPOTLIGHT,AUDIENCE,STUNT,COSTUME,MENAGERIE
+Construction,"A blueprint provides a detailed technical plan that guides every stage of a construction project.
+
+Scaffolding gives workers safe, stable access to areas that would otherwise be hard to reach.
+
+Construction cranes can lift loads weighing many tons using a system of counterweights and cables.
+
+Cement is a key ingredient in concrete, acting as the binder that holds it together once cured.
+
+Bulldozers use a wide blade to push and clear large amounts of soil or debris.
+
+A building's foundation transfers its weight safely into the ground below.
+
+Steel girders provide the structural support that allows buildings to rise many stories high.
+
+Hard hats are designed to protect workers from falling debris on active construction sites.
+
+A general contractor coordinates the many different trades and schedules involved in a building project.
+
+Drywall became a popular alternative to plaster because it could be installed much faster.
+
+Lumber used in construction is graded based on its strength and intended structural use.
+
+Rivets join metal beams and plates together, historically common in bridges and steel-framed buildings.
+
+Excavators use a hydraulic arm and bucket to dig and move earth efficiently.
+
+Welding fuses metal parts together using intense, localized heat.",BLUEPRINT,SCAFFOLDING,CRANE,CEMENT,BULLDOZER,FOUNDATION,GIRDER,HARDHAT,CONTRACTOR,DRYWALL,LUMBER,RIVET,EXCAVATOR,WELDING
+Birthday Party,"Balloons have been a popular party decoration since rubber balloons became widely available in the 19th century.
+
+Blowing out birthday candles is a tradition some trace back to ancient Greek offerings to the moon goddess Artemis.
+
+Wrapped presents are a central tradition of birthday celebrations in many cultures.
+
+Confetti adds a festive, colorful touch to birthday parties and other celebrations.
+
+Invitations let hosts formally let guests know the details of an upcoming party.
+
+Streamers are an easy, inexpensive way to decorate for a birthday celebration.
+
+Birthday cupcakes offer an individually portioned alternative to a traditional shared cake.
+
+Making a wish while blowing out candles is a widely recognized birthday tradition.
+
+Decorative ribbon is often used both in gift wrapping and general party decoration.
+
+Birthday guests often bring gifts as a way of celebrating the occasion with the honoree.
+
+Thoughtful decorations can transform an ordinary room into a festive party space.
+
+Party games help keep guests entertained, especially at children's birthday celebrations.
+
+Surprise parties rely on secrecy among the guests to catch the honoree off guard.
+
+A birthday marks the anniversary of a person's date of birth each year.",BALLOON,CANDLE,PRESENT,CONFETTI,INVITATION,STREAMER,CUPCAKE,WISH,RIBBON,GUEST,DECORATION,GAMES,SURPRISE,ANNIVERSARY
+Cheese and Dairy,"Cheddar cheese takes its name from the English village of Cheddar, where it was first made.
+
+Brie is a soft cheese named after the French region where it originated.
+
+Gouda cheese is named after a Dutch city where it was historically traded, not necessarily made.
+
+Yogurt is produced by fermenting milk with live bacterial cultures.
+
+Butter is made by churning cream until the fat separates from the buttermilk.
+
+Heavy cream contains a much higher fat content than regular milk or half-and-half.
+
+Curds form when milk proteins coagulate, separating from the liquid whey.
+
+Whey, the liquid left after curds form, is often used in protein powders today.
+
+Rennet is an enzyme that helps curdle milk during the cheesemaking process.
+
+Parmesan cheese is aged for months and develops its characteristic gritty crystals over time.
+
+Fresh mozzarella is traditionally stored in its own whey or brine to stay moist.
+
+Ricotta is made from the leftover whey of other cheesemaking, making it a byproduct cheese.
+
+Cow's milk is the most widely consumed type of milk worldwide, though goat and sheep milk are also common.
+
+A ""starter culture"" of specific bacteria strains helps determine a dairy product's final flavor and texture.",CHEDDAR,BRIE,GOUDA,YOGURT,BUTTER,CREAM,CURDS,WHEY,RENNET,PARMESAN,MOZZARELLA,RICOTTA,MILK,CULTURE
+Chess,"The king is the most important piece in chess, though not the most powerful in terms of movement.
+
+The queen can move any number of squares in any direction, making it the most powerful chess piece.
+
+Bishops always stay on the same color square for the entire game.
+
+The knight is the only chess piece that can jump over other pieces.
+
+A rook moves in straight horizontal or vertical lines across the board.
+
+Pawns can only move forward, but they capture diagonally.
+
+Checkmate occurs when a king is under attack with no legal move to escape.
+
+A gambit is an opening move that sacrifices material in exchange for a positional advantage.
+
+The endgame refers to the final phase of a chess game, when relatively few pieces remain.
+
+A stalemate results in a draw when a player has no legal moves but their king isn't in check.
+
+Modern chess tournaments often use strict time controls to keep games moving.
+
+Chess openings have been studied and cataloged extensively over centuries of play.
+
+Castling lets a player move the king and a rook simultaneously under specific conditions.
+
+The title of grandmaster is the highest title a chess player can achieve, awarded by the sport's international governing body.",KING,QUEEN,BISHOP,KNIGHT,ROOK,PAWN,CHECKMATE,GAMBIT,ENDGAME,STALEMATE,TOURNAMENT,OPENING,CASTLE,GRANDMASTER
+Deserts,"Cacti store water in their thick stems, allowing them to survive long dry periods.
+
+Sand dunes are shaped and shifted over time by prevailing wind patterns.
+
+An oasis forms where underground water reaches the desert surface, supporting plant and animal life.
+
+A mirage is an optical illusion caused by light bending through layers of air at different temperatures.
+
+Scorpions can survive for long periods with very little water, thanks to a highly efficient metabolism.
+
+Camels store fat, not water, in their humps, which helps sustain them across long desert journeys.
+
+Aridity, extreme dryness, is the defining feature that determines whether a region is classified as a desert.
+
+A mesa is a flat-topped landform with steep sides, common in arid regions.
+
+Tumbleweeds break off from their roots and roll across open ground, scattering seeds as they go.
+
+Rattlesnakes use the segments in their tail to produce a warning buzz when threatened.
+
+Sandstorms can reduce visibility dramatically and carry fine particles for long distances.
+
+Droughts can occur in any climate, but their effects are often most severe in already-dry desert regions.
+
+Succulents, like cacti, have adapted thick, water-storing tissue to survive with little rainfall.
+
+Canyons in desert regions are often carved slowly over time by infrequent but powerful flash floods.",CACTUS,DUNE,OASIS,MIRAGE,SCORPION,CAMEL,ARIDITY,MESA,TUMBLEWEED,RATTLESNAKE,SANDSTORM,DROUGHT,SUCCULENT,CANYON
+Carnival and Fair,"Carousels, also called merry-go-rounds, became a popular fairground attraction in the 19th century.
+
+The midway is the central strip of a fair or carnival lined with rides, games, and food stands.
+
+Popcorn became a popular fairground snack partly because portable popping machines made it easy to sell fresh.
+
+Taffy is a chewy candy traditionally made by repeatedly stretching and folding a sugar mixture.
+
+Balloon vendors have long been a common sight at fairs and carnivals.
+
+Game booths typically offer small prizes to encourage repeated attempts.
+
+Carnival prizes are often intentionally modest, since the games themselves are the main draw.
+
+Fair rides range from gentle, family-friendly attractions to fast, thrill-oriented ones.
+
+Food vendors at fairs often specialize in a single standout item rather than a full menu.
+
+Parades have long been a central feature of larger festivals and carnivals.
+
+Confetti is often used at celebrations and parades to add color and a festive feel.
+
+Lanterns have historically been used to light outdoor fairs and festivals after dark.
+
+Admission tickets or wristbands are common ways fairs manage entry and ride access.
+
+A pavilion provides a covered space for exhibits or performances at a larger fair.",CAROUSEL,MIDWAY,POPCORN,TAFFY,BALLOON,BOOTH,PRIZE,RIDE,VENDOR,PARADE,CONFETTI,LANTERN,ADMISSION,PAVILION
+Library,"Library shelves are often organized using a standardized classification system to make items easy to locate.
+
+A library catalog helps patrons search for and locate specific books or materials.
+
+Library archives often preserve historical documents not found anywhere else.
+
+Reference materials, like encyclopedias, are often meant to be used within the library rather than checked out.
+
+Periodicals include magazines and journals published on a regular, recurring schedule.
+
+A library's circulation desk manages the checking out and returning of materials.
+
+The Dewey Decimal System organizes nonfiction books by subject using a numeric code.
+
+Librarians help patrons find information and manage a library's overall collection.
+
+""The stacks"" refers to the shelving areas where a library's books are physically stored.
+
+Microfilm allowed libraries to preserve and store old newspapers and documents in a compact format.
+
+Borrowing privileges typically require a library card tied to a patron's account.
+
+A renewal extends the time a patron can keep a borrowed item before it's due.
+
+Many libraries maintain designated quiet areas to support focused reading and studying.
+
+Reading rooms are often designed with comfortable seating and good lighting to encourage extended visits.",SHELF,CATALOG,ARCHIVE,REFERENCE,PERIODICAL,CIRCULATION,DEWEY,LIBRARIAN,STACKS,MICROFILM,BORROW,RENEWAL,QUIET,READING
+Graduation,"A diploma formally certifies that a student has completed a specific course of study.
+
+The graduation cap, or mortarboard, traces its design back to academic dress from medieval European universities.
+
+Academic gowns historically signified a scholar's dedication to formal study, a tradition graduation ceremonies still echo today.
+
+Moving a graduation cap's tassel from one side to the other traditionally marks the moment a degree is conferred.
+
+Graduation ceremonies formally mark the completion of a course of academic study.
+
+A valedictorian is typically the top-ranked student in a graduating class, often chosen to give a speech.
+
+""Commencement"" reflects the idea that graduation marks a beginning as much as an ending.
+
+Alumni networks can provide ongoing connections and support well beyond graduation itself.
+
+Speakers at graduation ceremonies typically address the graduating class from a podium.
+
+A certificate can formally recognize the completion of a specific program or achievement.
+
+Graduation represents a significant personal and academic achievement for most students.
+
+Graduation ceremonies often emphasize looking ahead to a graduate's future opportunities.
+
+Graduating is widely regarded as a major milestone in a person's educational journey.
+
+Graduation ceremonies are often occasions of considerable pride for both graduates and their families.",DIPLOMA,CAP,GOWN,TASSEL,CEREMONY,VALEDICTORIAN,COMMENCEMENT,ALUMNI,PODIUM,CERTIFICATE,ACHIEVEMENT,FUTURE,MILESTONE,PRIDE
+Chocolate,"Cocoa powder is made by pressing most of the fat, or cocoa butter, out of ground cacao beans.
+
+Cacao trees were first cultivated by ancient Mesoamerican civilizations thousands of years ago.
+
+Chocolate truffles get their name from their rough, round shape resembling the fungus of the same name.
+
+Ganache is a simple mixture of chocolate and cream used for fillings, frostings, and truffles.
+
+Pralines originated in France before evolving into different regional versions, including a nutty candy popular in the American South.
+
+Chocolate fondue became popular in the mid-20th century as a fun, shareable dessert.
+
+The first brownie recipes appeared in American cookbooks around the turn of the 20th century.
+
+Mousse gets its light, airy texture from whipped cream or egg whites folded into the base.
+
+Nougat is typically made from whipped egg whites, sugar or honey, and nuts.
+
+Caramel forms when sugar is heated until it breaks down and turns a deep golden-brown.
+
+Vanilla is one of the most labor-intensive spices to produce, since the orchid flowers must be hand-pollinated.
+
+The word ""confection"" broadly covers any sweet treat made mostly of sugar.
+
+A bonbon traditionally refers to a small, bite-sized piece of candy, often with a filled center.
+
+Foil and paper wrappers help protect chocolate from melting, moisture, and light exposure.",COCOA,CACAO,TRUFFLE,GANACHE,PRALINE,FONDUE,BROWNIE,MOUSSE,NOUGAT,CARAMEL,VANILLA,CONFECTION,BONBON,WRAPPER
+Yoga and Meditation,"A mantra is a word or phrase repeated during meditation to help focus the mind.
+
+Controlled breathing techniques are central to many yoga and meditation practices.
+
+Yoga postures, or poses, are designed to build strength, flexibility, and balance together.
+
+Mindfulness involves paying deliberate attention to the present moment without judgment.
+
+Stretching helps improve flexibility and can reduce muscle tension over time.
+
+Balance poses in yoga often help build core strength as well as stability.
+
+The lotus position is a common cross-legged seated pose used in meditation.
+
+Chakras, in traditional yogic philosophy, are considered centers of energy within the body.
+
+Practicing relaxation techniques regularly has been linked to lower reported stress levels.
+
+Meditation practices exist across many different cultures and spiritual traditions worldwide.
+
+In yoga, ""asana"" is the Sanskrit term specifically referring to a physical posture.
+
+""Namaste"" is a respectful greeting used at the close of many yoga sessions.
+
+Cultivating stillness during meditation can take consistent practice for most beginners.
+
+Body awareness, or noticing physical sensations without reacting to them, is a core meditation skill.",MANTRA,BREATH,POSTURE,MINDFULNESS,STRETCH,BALANCE,LOTUS,CHAKRA,RELAXATION,MEDITATION,ASANA,NAMASTE,STILLNESS,AWARENESS
+Rivers and Lakes,"A river's current is driven largely by gravity pulling water from higher to lower elevation.
+
+A tributary is a smaller stream or river that feeds into a larger one.
+
+A river delta forms where sediment builds up as a river slows and spreads out near its mouth.
+
+Rapids form where a riverbed's steep drop or obstacles cause water to move fast and turbulently.
+
+A reservoir is often created by damming a river to store water for supply or power.
+
+Waterfalls form where a river drops abruptly over a change in elevation, often due to erosion-resistant rock.
+
+Shorelines are constantly reshaped by the erosive action of waves and currents over time.
+
+Sediment carried by rivers is gradually deposited downstream, building new land over long periods.
+
+An estuary is where a river's fresh water mixes with the salt water of the sea.
+
+Floodplains are naturally fertile because rivers deposit nutrient-rich sediment when they overflow their banks.
+
+Dams can generate hydroelectric power by channeling flowing water through turbines.
+
+Wetlands act as natural filters, improving water quality by trapping pollutants and sediment.
+
+A stream is generally smaller than a river, though the exact naming can vary by region.
+
+A river basin includes all the land area that drains into a particular river system.",CURRENT,TRIBUTARY,DELTA,RAPIDS,RESERVOIR,WATERFALL,SHORELINE,SEDIMENT,ESTUARY,FLOODPLAIN,DAM,WETLAND,STREAM,BASIN
+Museums,"Museum exhibits are often rotated over time to showcase different parts of a larger collection.
+
+Artifacts displayed in museums are often accompanied by research establishing their age and origin.
+
+A curator selects, researches, and organizes items for museum exhibits.
+
+Museum galleries are typically organized by theme, era, or type of artwork or artifact.
+
+A museum's full collection is often much larger than what's on public display at any given time.
+
+Display cases help protect fragile items while still allowing visitors to view them closely.
+
+Museum archives preserve documents and records that support research long after an exhibit closes.
+
+Restoration work can take years for a single damaged artwork or artifact.
+
+Museums often rely partly on donations, both of items and of funding, to operate.
+
+Museum admission fees vary widely, and many museums offer free days or discounted hours.
+
+A diorama uses a miniature scene to recreate a historical moment or natural habitat.
+
+Sculptures displayed in museums range from ancient carved stone to modern mixed-media works.
+
+Guided tours help visitors understand the context and significance behind museum exhibits.
+
+Preservation techniques aim to slow the natural deterioration of historical artifacts over time.",EXHIBIT,ARTIFACT,CURATOR,GALLERY,COLLECTION,DISPLAY,ARCHIVE,RESTORATION,DONATION,ADMISSION,DIORAMA,SCULPTURE,TOUR,PRESERVATION
+Post Office and Mail,"Envelopes have been used to protect written correspondence for centuries.
+
+Postage stamps were introduced in the 1840s to standardize and prepay mail delivery costs.
+
+Parcels are typically charged based on a combination of weight, size, and destination.
+
+Postcards became popular in the late 1800s as a quick, affordable way to send a short message.
+
+Mailboxes give carriers a consistent, accessible place to deliver mail at each address.
+
+A complete address ensures mail is sorted and routed correctly to its destination.
+
+Mail delivery schedules can vary depending on location and type of service selected.
+
+Mail carriers often walk or drive established routes to deliver to the same addresses daily.
+
+Postage cost is generally based on a mail piece's weight, size, and shipping speed.
+
+ZIP codes help postal systems sort and route mail efficiently across large distances.
+
+Sorting facilities use both automated machines and human workers to route mail efficiently.
+
+Packages are often tracked using a unique number that updates at each stage of delivery.
+
+Letters remain a common form of formal or personal written communication despite the rise of email.
+
+A mailing receipt provides proof that an item was sent, often including a tracking number.",ENVELOPE,STAMP,PARCEL,POSTCARD,MAILBOX,ADDRESS,DELIVERY,CARRIER,POSTAGE,ZIPCODE,SORTING,PACKAGE,LETTER,RECEIPT
+Soups and Stews,"Broth is typically made by simmering meat, bones, or vegetables in water for a shorter time than stock.
+
+Chowder traditionally includes chunks of seafood or vegetables in a thick, creamy base.
+
+Bisque is a smooth, creamy soup traditionally made from a strained shellfish base.
+
+Gumbo is a Louisiana specialty that blends French, African, Spanish, and Native American culinary influences.
+
+A ladle's deep, rounded bowl makes it easier to serve soup without spilling.
+
+Simmering keeps liquid just below a boil, allowing flavors to develop slowly without toughening ingredients.
+
+Dumplings appear in many global cuisines, from Chinese jiaozi to Eastern European pierogi.
+
+Noodles have been found among some of the oldest known food remains, dating back thousands of years.
+
+Lentils are one of the oldest cultivated legumes, with evidence of their use dating back over 8,000 years.
+
+Barley is one of the earliest grains ever domesticated by humans.
+
+Carrots weren't originally orange; early cultivated carrots were often purple or yellow.
+
+Celery was originally grown as a medicinal herb before becoming a common vegetable.
+
+Parsnips look similar to carrots but have a sweeter, earthier flavor, especially after a frost.
+
+A kettle of soup left simmering on a stove is a scene found across countless culinary traditions.",BROTH,CHOWDER,BISQUE,GUMBO,LADLE,SIMMER,DUMPLING,NOODLE,LENTIL,BARLEY,CARROT,CELERY,PARSNIP,KETTLE
+Reading and Books,"A novel is a long work of fiction, generally distinguished from a short story by its length and scope.
+
+An author is credited as the original creator of a written work.
+
+Chapters break a longer book into manageable, organized sections.
+
+Libraries have existed in some form for thousands of years, dating back to ancient civilizations.
+
+Bookmarks help readers return to the exact page where they left off.
+
+A book's genre categorizes it by style, subject, or theme, such as mystery or fantasy.
+
+A plot is the sequence of events that make up a story's narrative.
+
+Characters drive a story's plot forward through their choices, conflicts, and relationships.
+
+Publishers handle the editing, printing, and distribution of a finished manuscript.
+
+A manuscript is a written work before it has been typeset and published.
+
+Hardcover books use a rigid protective cover, often making them more durable than paperbacks.
+
+Paperback books became widely popular in the 20th century partly because they were cheaper to produce.
+
+An anthology collects multiple works, often short stories or poems, into a single volume.
+
+A prologue provides background information or context before a story's main action begins.",NOVEL,AUTHOR,CHAPTER,LIBRARY,BOOKMARK,GENRE,PLOT,CHARACTER,PUBLISHER,MANUSCRIPT,HARDCOVER,PAPERBACK,ANTHOLOGY,PROLOGUE
+Mountains,"A summit is the highest point of a mountain, sometimes reached only after multiple failed attempts by climbers.
+
+Many of the world's tallest peaks were formed by the slow collision of tectonic plates.
+
+A ridge is a long, narrow stretch of elevated land connecting higher points.
+
+Air pressure and oxygen levels drop significantly at high altitude, which is why climbers often need supplemental oxygen.
+
+Avalanches occur when unstable layers of snow suddenly break loose and slide down a slope.
+
+Mountain glaciers form from compacted snow and can carve out valleys as they move slowly downhill.
+
+Steep cliffs are often the result of long-term erosion or geological faulting.
+
+The angle of a slope strongly affects both erosion patterns and how challenging it is to climb.
+
+Climbers often use a base camp as a staging area before attempting a summit push.
+
+The timberline marks the elevation above which trees can no longer survive due to cold and wind.
+
+A crevasse is a deep crack in glacial ice that can be hidden by a thin layer of snow.
+
+A mountain ascent is often broken into stages to help climbers adjust to changing altitude.
+
+Large boulders on mountainsides are often deposited by retreating glaciers thousands of years ago.
+
+A plateau is a raised, relatively flat area of land found at various elevations, including in mountain ranges.",SUMMIT,PEAK,RIDGE,ALTITUDE,AVALANCHE,GLACIER,CLIFF,SLOPE,BASECAMP,TIMBERLINE,CREVASSE,ASCENT,BOULDER,PLATEAU
+Sandwiches,"The sandwich is often credited to the Earl of Sandwich, who reportedly wanted a meal he could eat without leaving the gaming table.
+
+A baguette's long, crisp shape makes it a popular base for French-style sandwiches.
+
+A panini is traditionally pressed and grilled, giving it a warm, toasted exterior.
+
+The club sandwich traditionally uses three slices of bread instead of the usual two.
+
+A hoagie's name is believed to trace back to shipyard workers on Hog Island near Philadelphia.
+
+Delis, short for delicatessens, historically specialized in prepared and cured meats.
+
+Mustard seeds have been used as a condiment and spice for thousands of years.
+
+Mayonnaise is an emulsion of oil and egg yolk, first documented in 18th-century Europe.
+
+Lettuce was cultivated by the ancient Egyptians thousands of years before it became a sandwich staple.
+
+Tomatoes were once mistakenly believed to be poisonous by many Europeans due to their nightshade relatives.
+
+Pickling vegetables in brine or vinegar is an ancient preservation method still used today.
+
+Toasting bread changes its flavor and texture through a browning reaction triggered by heat.
+
+A wrap swaps traditional sliced bread for a soft flatbread or tortilla.
+
+The crust of a loaf forms because its outer surface dries and browns faster than the interior.",BAGUETTE,PANINI,CLUB,HOAGIE,DELI,MUSTARD,MAYONNAISE,LETTUCE,TOMATO,PICKLE,TOAST,WRAP,SLICE,CRUST
+Writing,"Grammar rules provide a shared structure that helps writing stay clear and consistent.
+
+Paragraphs group related sentences together to organize ideas for the reader.
+
+A metaphor describes something by directly equating it with something else, without using ""like"" or ""as.""
+
+A narrative is a story or account of connected events, whether fictional or true.
+
+Dialogue lets characters speak directly, helping reveal their personality and relationships.
+
+An outline organizes ideas and structure before a writer begins drafting in full.
+
+A first draft is meant to get ideas down, with the expectation that it will be revised later.
+
+Editing focuses on refining a piece's content, clarity, and structure.
+
+A strong vocabulary gives a writer more precise and varied ways to express ideas.
+
+Punctuation marks help clarify meaning, pacing, and tone within written sentences.
+
+A thesaurus helps writers find alternative words with similar meanings.
+
+Keeping a journal is a long-practiced way for writers to record thoughts and ideas regularly.
+
+An essay presents an argument or exploration of a topic, typically in prose form.
+
+Revision often involves reworking structure and content, not just fixing small errors.",GRAMMAR,PARAGRAPH,METAPHOR,NARRATIVE,DIALOGUE,OUTLINE,DRAFT,EDIT,VOCABULARY,PUNCTUATION,THESAURUS,JOURNAL,ESSAY,REVISION
+Dogs and Cats,"Puppies are typically weaned from their mother's milk by around eight weeks of age.
+
+Kittens are born with their eyes closed, typically opening them within about a week or two.
+
+Collars often hold identification tags that help reunite lost pets with their owners.
+
+A leash gives an owner control over a dog's movement during walks in public spaces.
+
+Whiskers help cats sense the width of spaces and detect nearby objects in low light.
+
+Cats purr not only when content but sometimes also when stressed or in pain.
+
+Dogs bark for many reasons, including alerting, greeting, and expressing anxiety or excitement.
+
+A kennel can refer to a dog's shelter or to a facility that boards or breeds dogs.
+
+Cats are typically trained to use a litter box from a very young age.
+
+Different dog breeds were often developed for specific original purposes, like herding or hunting.
+
+Veterinarians are trained to diagnose and treat health issues in a wide range of animal species.
+
+Regular grooming helps manage shedding and can catch skin issues early in pets.
+
+Each dog's paw print pattern is unique, similar to a human fingerprint.
+
+A dog's tail position and movement communicate a range of different emotional states.",PUPPY,KITTEN,COLLAR,LEASH,WHISKERS,PURR,BARK,KENNEL,LITTERBOX,BREED,VETERINARIAN,GROOMING,PAWPRINT,TAIL
+Spices and Seasonings,"Cinnamon comes from the inner bark of certain trees native to South Asia.
+
+Nutmeg was once so valuable in Europe that wars were fought over control of its trade.
+
+Ginger has been used both as a spice and a traditional remedy for thousands of years.
+
+Turmeric gets its vivid yellow-orange color from a compound called curcumin.
+
+Paprika is made from ground, dried peppers and ranges from mild to quite spicy.
+
+Cloves are the dried flower buds of a tropical tree, used whole or ground.
+
+Vanilla comes from the seed pods of a specific orchid species, making it labor-intensive to harvest.
+
+Saffron, made from crocus flower stigmas, is one of the most expensive spices in the world by weight.
+
+Black pepper was historically so valuable it was sometimes used as a form of currency.
+
+Salt has been used to preserve food for thousands of years, long before refrigeration existed.
+
+Garlic belongs to the same plant family as onions, leeks, and chives.
+
+Onions can be traced back to cultivation more than 5,000 years ago.
+
+Rosemary's name comes from Latin words meaning ""dew of the sea.""
+
+Thyme was used by ancient Greeks as incense and by Egyptians in embalming practices.",CINNAMON,NUTMEG,GINGER,TURMERIC,PAPRIKA,CLOVE,VANILLA,SAFFRON,PEPPER,SALT,GARLIC,ONION,ROSEMARY,THYME
+Collecting and Hobbies,"Stamp collecting, sometimes called philately, became a widespread hobby soon after postage stamps were introduced.
+
+Coin collecting, or numismatics, often values rarity and condition as much as a coin's age.
+
+An item is generally considered an antique once it's roughly 100 years old or more.
+
+""Vintage"" items are typically old but not necessarily old enough to be classified as antiques.
+
+Collectors often use albums with individual slots to organize and protect small items.
+
+Thoughtful display can help protect a collection from damage while still allowing it to be enjoyed.
+
+A professional appraisal estimates the value of a collectible based on rarity, condition, and demand.
+
+Memorabilia refers to items collected because of their connection to a specific event, person, or era.
+
+A catalog helps collectors identify and track known variations within a given collectible category.
+
+Rarity is one of the biggest factors driving a collectible's value in the marketplace.
+
+Auctions let collectors bid competitively for items, often driving prices above initial estimates.
+
+An artifact is an object made or shaped by humans, often studied for its historical significance.
+
+Souvenirs are often collected specifically to commemorate a trip or experience.
+
+Some collections are valued mainly for their connection to personal or cultural heritage rather than resale value.",STAMP,COIN,ANTIQUE,VINTAGE,ALBUM,DISPLAY,APPRAISAL,MEMORABILIA,CATALOG,RARITY,AUCTION,ARTIFACT,SOUVENIR,HERITAGE
+Bakery,"Dough's texture changes dramatically once gluten develops through mixing and kneading.
+
+Yeast produces carbon dioxide as it feeds on sugars, which is what makes bread dough rise.
+
+Modern ovens allow far more precise temperature control than traditional wood-fired baking.
+
+Pastry dough often relies on cold fat mixed into flour to create flaky, layered textures.
+
+A traditional baguette's crisp crust comes partly from steam injected into the oven during baking.
+
+Croissants get their flaky layers from a labor-intensive process of folding butter into the dough repeatedly.
+
+Muffins are typically mixed less than cakes, giving them a denser, less airy crumb.
+
+Frosting can be made in many styles, from simple glazes to whipped buttercream.
+
+Kneading dough develops gluten strands that give bread its structure and chew.
+
+Flour's protein content affects whether it's better suited for bread, cakes, or pastries.
+
+Professional bakers often start their workday very early to have fresh bread ready each morning.
+
+A loaf's shape and crust are shaped by both the recipe and the pan or technique used.
+
+Soft pretzels get their distinctive brown crust from a quick dip in an alkaline solution before baking.
+
+Cupcakes became especially popular in the 20th century partly because they were easy to portion and decorate.",DOUGH,YEAST,OVEN,PASTRY,BAGUETTE,CROISSANT,MUFFIN,FROSTING,KNEAD,FLOUR,BAKER,LOAF,PRETZEL,CUPCAKE
+Animals,"Tigers are the largest wild cat species, with some males weighing over 600 pounds.
+
+An elephant's trunk has no bones at all, relying instead on tens of thousands of muscle fibers for its strength and precision.
+
+A giraffe's tongue can be up to 20 inches long, helping it strip leaves from thorny trees.
+
+Zebra stripes are unique to each individual, much like a human fingerprint.
+
+Kangaroos cannot walk backward because of the shape and structure of their legs and tail.
+
+A leopard can carry prey twice its own body weight up into a tree.
+
+Cheetahs can accelerate from 0 to 60 mph in about three seconds.
+
+Monkeys use dozens of distinct vocal calls to warn each other about specific predators.
+
+Gorillas share about 98 percent of their DNA with humans.
+
+A rhino's horn is made of keratin, the same protein found in human hair and nails.
+
+Hippos secrete a natural reddish, oily substance often called ""blood sweat.""
+
+A group of buffalo is called an obstinacy, reflecting their famously stubborn nature.
+
+Antelope can leap remarkable distances in a single bound to escape predators.
+
+Jackals often mate for life and take turns guarding their den.",TIGER,ELEPHANT,GIRAFFE,ZEBRA,KANGAROO,LEOPARD,CHEETAH,MONKEY,GORILLA,RHINO,HIPPO,BUFFALO,ANTELOPE,JACKAL

@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 from .difficulty import word_count_warning
 from .grid import WordSearchGenerationError, WordSearchGenerator
@@ -15,6 +15,7 @@ from .render import (
     load_body_font,
     load_font,
     load_heading_font,
+    load_italic_font,
     wrap_words_by_pixel,
 )
 
@@ -44,6 +45,7 @@ GRID_PADDING_IN = 0.15
 MIN_KDP_PAGES = 24
 
 TITLE_SIZE = 100
+SUBTITLE_SIZE = 52
 AUTHOR_SIZE = 44
 COPYRIGHT_SIZE = 28
 H1_SIZE = 78
@@ -294,23 +296,82 @@ def render_text_pages(
     return pages
 
 
+def _fit_heading_lines(
+    text: str, printable_w: int, base_size: int, min_size: int
+) -> tuple[ImageFont.ImageFont, list[str]]:
+    """Shrinks a heading font until its wrapped text fits in at most two
+    lines within printable_w, down to min_size."""
+    size = base_size
+    font = load_heading_font(size)
+    lines = _wrap_paragraph(text, font, printable_w)
+    while len(lines) > 2 and size > min_size:
+        size -= 4
+        font = load_heading_font(size)
+        lines = _wrap_paragraph(text, font, printable_w)
+    return font, lines
+
+
 def render_title_page(
-    title: str, author: str | None, page_number: int, text_scale: float = 1.0
+    title: str,
+    author: str | None,
+    page_number: int,
+    text_scale: float = 1.0,
+    subtitle: str | None = None,
 ) -> Image.Image:
     img = new_page()
     draw = ImageDraw.Draw(img)
-    title_y = PAGE_H * 0.4
-    draw.text(
-        (PAGE_W / 2, title_y),
-        title,
-        font=load_heading_font(round(TITLE_SIZE * text_scale)),
-        fill="black",
-        anchor="mm",
+    left, right, _, _ = page_margins(page_number)
+    printable_w = PAGE_W - left - right
+
+    title_size = round(TITLE_SIZE * text_scale)
+    title_font, title_lines = _fit_heading_lines(
+        title, printable_w, title_size, round(title_size * 0.45)
     )
-    _draw_title_rule(draw, PAGE_W / 2, title_y + in_to_px(0.45), in_to_px(2.5))
+    title_line_height = int(title_font.size * 1.15)
+    title_block_height = title_line_height * len(title_lines)
+
+    subtitle_font = None
+    subtitle_lines: list[str] = []
+    subtitle_line_height = 0
+    subtitle_block_height = 0
+    subtitle_gap = in_to_px(0.18) if subtitle else 0
+    if subtitle:
+        subtitle_size = round(SUBTITLE_SIZE * text_scale)
+        size = subtitle_size
+        font = load_italic_font(size)
+        lines = _wrap_paragraph(subtitle, font, printable_w)
+        min_size = round(subtitle_size * 0.5)
+        while len(lines) > 2 and size > min_size:
+            size -= 4
+            font = load_italic_font(size)
+            lines = _wrap_paragraph(subtitle, font, printable_w)
+        subtitle_font, subtitle_lines = font, lines
+        subtitle_line_height = int(subtitle_font.size * 1.2)
+        subtitle_block_height = subtitle_line_height * len(subtitle_lines)
+
+    total_height = title_block_height + subtitle_gap + subtitle_block_height
+    title_y = PAGE_H * 0.4
+    top_of_block = title_y - total_height / 2
+
+    for i, line in enumerate(title_lines):
+        line_center_y = top_of_block + title_line_height * i + title_line_height / 2
+        draw.text((PAGE_W / 2, line_center_y), line, font=title_font, fill="black", anchor="mm")
+
+    cursor_y = top_of_block + title_block_height
+    if subtitle and subtitle_font is not None:
+        cursor_y += subtitle_gap
+        for i, line in enumerate(subtitle_lines):
+            line_center_y = cursor_y + subtitle_line_height * i + subtitle_line_height / 2
+            draw.text(
+                (PAGE_W / 2, line_center_y), line, font=subtitle_font, fill="#333333", anchor="mm"
+            )
+        cursor_y += subtitle_block_height
+
+    rule_y = cursor_y + in_to_px(0.25)
+    _draw_title_rule(draw, PAGE_W / 2, rule_y, in_to_px(2.5))
     if author:
         draw.text(
-            (PAGE_W / 2, title_y + in_to_px(0.75)),
+            (PAGE_W / 2, rule_y + in_to_px(0.3)),
             author,
             font=load_body_font(round(AUTHOR_SIZE * text_scale)),
             fill="black",
@@ -683,6 +744,7 @@ def build_book(
     seed: int | None,
     book_title: str,
     author: str | None = None,
+    subtitle: str | None = None,
     intro_text: str | None = None,
     instructions_text: str | None = None,
     difficulty: str | None = None,
@@ -695,7 +757,7 @@ def build_book(
     if year is None:
         year = date.today().year
 
-    pages.append(render_title_page(book_title, author, page_number, text_scale))
+    pages.append(render_title_page(book_title, author, page_number, text_scale, subtitle=subtitle))
     page_number += 1
 
     pages.append(render_copyright_page(book_title, author, year, page_number, text_scale))
