@@ -14,7 +14,6 @@ from .render import (
     load_body_font,
     load_font,
     load_heading_font,
-    load_italic_font,
     wrap_words_by_pixel,
 )
 
@@ -49,7 +48,6 @@ H1_SIZE = 78
 H2_SIZE = 52
 BODY_SIZE = 40
 PUZZLE_TITLE_SIZE = 60
-TRIVIA_SIZE = 30
 WORDLIST_HEADER_SIZE = 44
 WORDLIST_BODY_SIZE = 38
 MINI_TITLE_SIZE = 30
@@ -302,7 +300,6 @@ def render_puzzle_page(
     title: str,
     page_number: int,
     puzzle_number: int | None = None,
-    trivia: str | None = None,
     text_scale: float = 1.0,
 ) -> Image.Image:
     left, right, top, bottom = page_margins(page_number)
@@ -332,18 +329,10 @@ def render_puzzle_page(
     header_h = int(header_font.size * 1.4)
     word_list_h = header_h + len(wrapped) * int(word_font.size * 1.4) + in_to_px(0.15)
 
-    trivia_font = load_italic_font(round(TRIVIA_SIZE * text_scale))
-    trivia_lines: list[str] = []
-    trivia_h = 0
-    if trivia:
-        for part in trivia.split("\n\n"):
-            trivia_lines.extend(_wrap_paragraph(part, trivia_font, printable_w))
-        trivia_h = in_to_px(0.15) + len(trivia_lines) * int(trivia_font.size * 1.35)
-
     rows, cols = generator.rows, generator.cols
     grid_padding = in_to_px(GRID_PADDING_IN)
     grid_available_w = printable_w - grid_padding * 2
-    grid_available_h = printable_h - title_h - word_list_h - trivia_h - in_to_px(0.1)
+    grid_available_h = printable_h - title_h - word_list_h - in_to_px(0.1)
     cell_size = max(10, min(grid_available_w // cols, grid_available_h // rows))
 
     grid_w = cell_size * cols
@@ -379,12 +368,6 @@ def render_puzzle_page(
     for line in wrapped:
         draw.text((left + printable_w / 2, y), line, font=word_font, fill="black", anchor="ma")
         y += int(word_font.size * 1.4)
-
-    if trivia_lines:
-        y += in_to_px(0.15)
-        for line in trivia_lines:
-            draw.text((left + printable_w / 2, y), line, font=trivia_font, fill="black", anchor="ma")
-            y += int(trivia_font.size * 1.35)
 
     return img
 
@@ -638,6 +621,17 @@ def build_book(
     entries: list[tuple[str, WordSearchGenerator]] = []
     toc_entries: list[tuple[int, str, int]] = []
     puzzle_number = 0
+
+    # Every puzzle gets a dedicated left-hand (verso, even-numbered)
+    # companion page immediately before it -- a trivia page if the puzzle
+    # has one, otherwise left blank -- so a puzzle with trivia always has
+    # somewhere to put it, rather than only sometimes getting a facing page
+    # depending on upstream parity. Align to even once here so that holds
+    # for every puzzle from the start.
+    if page_number % 2 == 1:
+        pages.append(new_page())
+        page_number += 1
+
     for spec in puzzle_specs:
         generator = WordSearchGenerator(
             spec.words,
@@ -661,16 +655,38 @@ def build_book(
                 f"{spec.title}: could not place {len(generator.skipped)} word(s): "
                 f"{', '.join(generator.skipped)}"
             )
+        if generator.blocked_words_found:
+            warnings.append(
+                f"{spec.title}: could not avoid blocked word(s) in the grid: "
+                f"{', '.join(generator.blocked_words_found)}"
+            )
 
         puzzle_number += 1
+
+        if spec.trivia:
+            facts = [f.strip() for f in spec.trivia.split("\n\n") if f.strip()]
+            doc = (
+                "# Did You Know?\n\n## "
+                + spec.title
+                + "\n\n"
+                + "\n\n".join(f"- {fact}" for fact in facts)
+            )
+            trivia_pages = render_text_pages(doc, page_number, text_scale)
+            pages += trivia_pages
+            page_number += len(trivia_pages)
+        else:
+            pages.append(new_page())
+            page_number += 1
+        # Safety net: a trivia blurb long enough to spill onto a second page
+        # would otherwise flip parity for every puzzle after it.
         page_number = _force_recto(pages, page_number)
+
         pages.append(
             render_puzzle_page(
                 generator,
                 spec.title,
                 page_number,
                 puzzle_number=puzzle_number,
-                trivia=spec.trivia,
                 text_scale=text_scale,
             )
         )

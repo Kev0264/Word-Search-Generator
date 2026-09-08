@@ -158,6 +158,13 @@ def run_single(args: argparse.Namespace) -> int:
             file=sys.stderr,
         )
 
+    if generator.blocked_words_found:
+        print(
+            "Warning: could not avoid blocked word(s) in the grid: "
+            f"{', '.join(generator.blocked_words_found)}",
+            file=sys.stderr,
+        )
+
     renderer = PuzzleRenderer(generator, title=args.title or "Word Search", cell_size=args.cell_size)
     renderer.save_puzzle(args.output)
     print(f"Puzzle saved to {args.output}")
@@ -204,6 +211,13 @@ def run_batch(args: argparse.Namespace) -> int:
             print(
                 f"Warning ({txt_file.name}): could not place {len(generator.skipped)} "
                 f"word(s): {', '.join(generator.skipped)}",
+                file=sys.stderr,
+            )
+
+        if generator.blocked_words_found:
+            print(
+                f"Warning ({txt_file.name}): could not avoid blocked word(s) in the grid: "
+                f"{', '.join(generator.blocked_words_found)}",
                 file=sys.stderr,
             )
 

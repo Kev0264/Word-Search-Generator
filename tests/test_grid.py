@@ -79,3 +79,96 @@ def test_straight_only_directions_are_respected():
     gen.generate()
     for placed in gen.placements:
         assert placed.direction in ("N", "S", "E", "W")
+
+
+def test_avoid_blocked_words_rerolls_filler_until_clean():
+    from word_search.profanity import find_blocked_words, load_blocklist
+
+    word = min(load_blocklist(), key=len)
+    gen = WordSearchGenerator(["PLACEHOLDER"], rows=1, cols=len(word) + 10, seed=7)
+    gen.placements = []
+    gen.grid = [list(word + "Q" * (gen.cols - len(word)))]
+    assert find_blocked_words(gen.grid)  # sanity check: dirty before the reroll
+
+    gen._avoid_blocked_words()
+
+    assert find_blocked_words(gen.grid) == []
+    assert gen.blocked_words_found == []
+
+
+def test_avoid_blocked_words_ignores_an_exact_intentional_placement():
+    """If the author's own chosen word happens to match a blocklist entry
+    outright (e.g. an innocuous word an overzealous list still flags), that's
+    their deliberate choice, not an accidental letter combination -- it
+    should be left alone and not reported."""
+    from word_search.grid import PlacedWord
+    from word_search.profanity import load_blocklist
+
+    word = min(load_blocklist(), key=len)
+    gen = WordSearchGenerator(["PLACEHOLDER"], rows=1, cols=len(word), seed=3)
+    gen.grid = [list(word)]
+    gen.placements = [PlacedWord(word, 0, 0, "E", [(0, i) for i in range(len(word))], word)]
+
+    gen._avoid_blocked_words()
+
+    assert "".join(gen.grid[0]) == word
+    assert gen.blocked_words_found == []
+
+
+def test_avoid_blocked_words_ignores_a_substring_of_an_intentional_placement():
+    """A blocklist word that's simply a substring of a longer word the
+    author typed (e.g. "ORAL" inside "CORAL") isn't an accidental word
+    appearing in the puzzle -- it's just how that legitimate word is
+    spelled, and shouldn't be flagged or rerolled."""
+    from word_search.grid import PlacedWord
+    from word_search.profanity import load_blocklist
+
+    word = min(load_blocklist(), key=len)
+    framed = "Q" + word + "Q"
+    gen = WordSearchGenerator(["PLACEHOLDER"], rows=1, cols=len(framed), seed=3)
+    gen.grid = [list(framed)]
+    gen.placements = [PlacedWord(framed, 0, 0, "E", [(0, i) for i in range(len(framed))], framed)]
+
+    gen._avoid_blocked_words()
+
+    assert "".join(gen.grid[0]) == framed
+    assert gen.blocked_words_found == []
+
+
+def test_avoid_blocked_words_reports_a_match_spanning_two_crossing_placements():
+    """A blocked word assembled from two different placed words crossing
+    paths (no filler cell involved) is a genuine coincidence a solver could
+    actually read -- rerolling filler can't fix it, but it should still be
+    reported rather than silently ignored like a same-word substring is."""
+    from word_search.grid import PlacedWord
+    from word_search.profanity import load_blocklist
+
+    word = min(load_blocklist(), key=len)
+    split = len(word) // 2
+    first, second = word[:split], word[split:]
+    assert first and second  # sanity: both halves non-empty
+
+    gen = WordSearchGenerator(["PLACEHOLDER"], rows=1, cols=len(word), seed=3)
+    gen.grid = [list(word)]
+    gen.placements = [
+        PlacedWord(first, 0, 0, "E", [(0, i) for i in range(len(first))], first),
+        PlacedWord(
+            second,
+            0,
+            len(first),
+            "E",
+            [(0, len(first) + i) for i in range(len(second))],
+            second,
+        ),
+    ]
+
+    gen._avoid_blocked_words()
+
+    assert "".join(gen.grid[0]) == word  # still can't be fixed by rerolling filler
+    assert word in gen.blocked_words_found
+
+
+def test_check_profanity_false_skips_the_check():
+    gen = WordSearchGenerator(["CAT", "DOG"], rows=8, cols=8, seed=1, check_profanity=False)
+    gen.generate()
+    assert gen.blocked_words_found == []

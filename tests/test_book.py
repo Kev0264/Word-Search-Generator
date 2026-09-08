@@ -216,8 +216,11 @@ def test_toc_reservation_and_recto_forcing_produce_correct_total_pages():
 
     page_number = 2  # after the title page
     page_number += _math.ceil(len(specs) / _toc_rows_per_page())  # TOC pages
+    if page_number % 2 == 1:  # align to even so every puzzle's pairing starts right
+        page_number += 1
     for _ in specs:
-        page_number = _force_recto([], page_number)
+        page_number += 1  # companion page (blank -- none of these specs have trivia)
+        page_number = _force_recto([], page_number)  # safety net, normally a no-op
         page_number += 1  # the puzzle page itself
     page_number = _force_recto([], page_number)  # the "Answer Keys" divider
     page_number += 1
@@ -242,6 +245,48 @@ def test_render_toc_pages_produces_exact_requested_page_count():
     assert len(pages) == 2
     for page in pages:
         assert page.size == (PAGE_W, PAGE_H)
+
+
+def _is_blank_page(img) -> bool:
+    # Every page gets a footer page number stamped, so exclude that strip.
+    from word_search.book import PAGE_W
+
+    content_area = img.crop((0, 0, PAGE_W, img.height - 300))
+    return content_area.convert("L").getextrema() == (255, 255)
+
+
+def test_puzzle_with_trivia_gets_a_facing_facts_page_others_stay_blank():
+    """Every puzzle gets a companion page immediately before it; it should
+    only actually contain content when that specific puzzle has trivia."""
+    import math as _math
+
+    from word_search.book import PuzzleSpec, _toc_rows_per_page
+
+    specs = [
+        PuzzleSpec(title="Animals", words=["CAT", "DOG", "BIRD"], trivia="Cats sleep a lot."),
+        PuzzleSpec(title="Colors", words=["RED", "BLUE", "GREEN"]),
+    ]
+    pages, _ = build_book(
+        specs,
+        rows=10,
+        cols=10,
+        allow_backwards=True,
+        directions=None,
+        seed=1,
+        book_title="Test Book",
+    )
+
+    page_number = 2  # after the title page
+    page_number += _math.ceil(len(specs) / _toc_rows_per_page())  # TOC pages
+    if page_number % 2 == 1:
+        page_number += 1
+
+    animals_companion_index = page_number - 1  # page_number is 1-indexed
+    page_number += 2  # companion + puzzle for Animals
+    colors_companion_index = page_number - 1
+
+    assert not _is_blank_page(pages[animals_companion_index])
+    assert _is_blank_page(pages[colors_companion_index])
 
 
 def test_large_print_preset_uses_small_grid_and_scaled_text():

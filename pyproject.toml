@@ -9,6 +9,7 @@ description = "Generate word search puzzles and export them as PNG or PDF"
 requires-python = ">=3.10"
 dependencies = [
     "Pillow>=10.0",
+    "better-profanity>=0.7.0",
 ]
 
 [project.optional-dependencies]

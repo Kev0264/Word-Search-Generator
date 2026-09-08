@@ -11,6 +11,8 @@ with an optional answer key.
 - Answer key export with placed words highlighted
 - Reproducible output via `--seed`
 - Word list loaded from a text file or the command line
+- Random filler letters are checked against a profanity blocklist and
+  automatically rerolled if they happen to spell something out
 
 ## Install
 
@@ -101,10 +103,11 @@ Space,,MOON,STAR,PLANET,COMET,GALAXY
 Leave the title blank for an auto-numbered "Puzzle 1", "Puzzle 2", ....
 
 **Trivia blurbs (optional)**: leave the trivia cell blank if a puzzle
-doesn't have one. When present, it's printed as an italicized blurb below
-that puzzle's word list. Quote the cell if the fact itself contains a
-comma; for multiple short paragraphs, put a blank line inside the (quoted)
-cell:
+doesn't have one. When present, it's rendered as a "Did You Know?" fact
+page facing that puzzle (see below) — one bullet per fact, so you can
+write a single theme-level tidbit or one fact per word, whatever fits.
+Quote the cell if a fact contains a comma; put a blank line inside the
+(quoted) cell to separate multiple facts into their own bullets:
 
 ```csv
 Animals,"An elephant's trunk has over 40,000 muscles.",TIGER,ELEPHANT,GIRAFFE
@@ -118,13 +121,18 @@ Both are optional; omit either flag to skip that section.
 The book is assembled as: title page → intro pages → instructions pages → a
 combined table of contents / progress checklist (a checkbox, number, and
 dot-leadered page number per puzzle, so you can both jump to a puzzle and
-mark it done in the same list) → one full page per puzzle → an "Answer
-Keys" divider → 4-up answer key pages (2×2 mini grids per page, with every
-solution cell shaded in translucent gray rather than full color, so it
-stays legible and print-safe in a black & white KDP interior). Each puzzle
-and the "Answer Keys" divider always start on a right-hand (recto) page — a
-blank page is inserted before one if needed — so a puzzle you're marking up
-always gets a clean, dedicated spread. A warning is printed if the
+mark it done in the same list) → one two-page spread per puzzle → an
+"Answer Keys" divider → 4-up answer key pages (2×2 mini grids per page,
+with every solution cell shaded in translucent gray rather than full
+color, so it stays legible and print-safe in a black & white KDP
+interior). Every puzzle gets a dedicated left-hand (verso) page immediately
+before its own right-hand (recto) page: if that puzzle has a trivia blurb
+it's rendered there as a "Did You Know?" fact list facing the puzzle,
+otherwise that page is simply left blank. This is deliberate, not a page
+count minimization -- it guarantees a puzzle with trivia always has
+somewhere to put it, and keeps every puzzle's spread starting in the same
+place regardless of what precedes it. The "Answer Keys" divider is
+similarly always pushed to a recto page. A warning is printed if the
 assembled book comes in under KDP's 24-page paperback minimum.
 
 Each puzzle page is headed "Puzzle N: Title" in a serif heading font with a
@@ -179,6 +187,34 @@ to every puzzle in the book.
   the first is kept.
 - A word longer than the grid in both dimensions raises an error; a word that
   just can't find a free spot after many attempts is skipped with a warning.
+
+## Blocked-word filter
+
+Since the leftover grid cells are filled with random letters, they can
+occasionally spell out something unintended in one of the 8 directions.
+After generating each puzzle, the whole grid is scanned (every row, column,
+and diagonal, forwards and backwards) against a filtered profanity
+wordlist from the [`better-profanity`](https://pypi.org/project/better-profanity/)
+package, and the random filler letters are rerolled (the placed words
+themselves are never touched) until the grid is clean — this reliably
+takes just one or two attempts in practice.
+
+The filter only cares about *accidental* occurrences — a blocklist word
+that's simply a substring of a word you deliberately typed (e.g. `ORAL`
+inside `CORAL`, or `PECKER` inside `WOODPECKER`) is recognized as
+that word's own spelling and ignored, not flagged. It also ignores an
+exact match to one of your own chosen words outright (your word list is
+your choice, not something this tool second-guesses). What it does still
+report — because rerolling filler can't fix it — is the rare case where a
+blocked word is assembled from two of your *different* placed words
+crossing paths at an intersection; a warning like `could not avoid
+blocked word(s) in the grid: ...` means exactly that, and identifies which
+puzzle and word so you can adjust your word list if you want to.
+
+Entries shorter than 4 letters are excluded from the blocklist entirely —
+short fragments turn up by pure chance in almost any grid of random
+letters, so checking them would flag nearly every puzzle for no
+meaningful reason.
 
 ## Tests
 

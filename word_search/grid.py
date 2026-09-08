@@ -4,6 +4,8 @@ import random
 import string
 from dataclasses import dataclass, field
 
+from .profanity import find_blocked_words
+
 DIRECTIONS: dict[str, tuple[int, int]] = {
     "E": (0, 1),
     "W": (0, -1),
@@ -43,6 +45,8 @@ class WordSearchGenerator:
         seed: int | None = None,
         max_attempts_per_word: int = 500,
         fill_letters: str = string.ascii_uppercase,
+        check_profanity: bool = True,
+        max_profanity_retries: int = 30,
     ):
         self.words, self.display_words = self._normalize_words(words)
         self.rows = rows
@@ -51,11 +55,14 @@ class WordSearchGenerator:
         self.directions = directions or list(DIRECTIONS.keys())
         self.max_attempts_per_word = max_attempts_per_word
         self.fill_letters = fill_letters
+        self.check_profanity = check_profanity
+        self.max_profanity_retries = max_profanity_retries
 
         self._rng = random.Random(seed)
         self.grid: list[list[str]] = [["" for _ in range(cols)] for _ in range(rows)]
         self.placements: list[PlacedWord] = []
         self.skipped: list[str] = []
+        self.blocked_words_found: list[str] = []
 
     @staticmethod
     def _normalize_words(words: list[str]) -> tuple[list[str], dict[str, str]]:
@@ -88,6 +95,8 @@ class WordSearchGenerator:
                 self.skipped.append(self.display_words[word])
 
         self._fill_blanks()
+        if self.check_profanity:
+            self._avoid_blocked_words()
         return self.grid
 
     def _place_word(self, word: str) -> bool:
@@ -129,3 +138,60 @@ class WordSearchGenerator:
             for c in range(self.cols):
                 if not self.grid[r][c]:
                     self.grid[r][c] = self._rng.choice(self.fill_letters)
+
+    def _avoid_blocked_words(self) -> None:
+        """Rerolls the random filler letters (leaving placed words alone)
+        whenever the grid happens to spell out a blocked word by chance, in
+        any of the 8 directions.
+
+        A match entirely contained within a single placed word's own cells
+        is ignored outright, not just left unfixed -- e.g. "ORAL" inside
+        "CORAL" or "PECKER" inside "WOODPECKER" isn't an accidental word
+        appearing in the puzzle, it's just a substring of a word the author
+        deliberately chose, forwards or in that word's own reversed
+        spelling. The actual risk this guards against is a blocked word
+        assembled from filler letters (whether entirely filler, or a
+        coincidence spanning two different placed words at a crossing) --
+        those are rerolled if possible, and reported if not."""
+        cell_to_placements: dict[tuple[int, int], set[int]] = {}
+        for idx, placed in enumerate(self.placements):
+            for cell in placed.cells:
+                cell_to_placements.setdefault(cell, set()).add(idx)
+
+        filler_cells = [
+            (r, c)
+            for r in range(self.rows)
+            for c in range(self.cols)
+            if (r, c) not in cell_to_placements
+        ]
+
+        def real_matches(matches):
+            found = []
+            for word, cells in matches:
+                involved: set[int] = set()
+                involves_filler = False
+                for cell in cells:
+                    placements_here = cell_to_placements.get(cell)
+                    if not placements_here:
+                        involves_filler = True
+                    else:
+                        involved |= placements_here
+                if involves_filler or len(involved) > 1:
+                    found.append((word, cells, involves_filler))
+            return found
+
+        for _ in range(self.max_profanity_retries):
+            matches = real_matches(find_blocked_words(self.grid))
+            if not matches:
+                self.blocked_words_found = []
+                return
+            if not any(involves_filler for _, _, involves_filler in matches):
+                # No remaining match involves a filler cell (it's purely
+                # placed words crossing paths); further rerolls can't help.
+                break
+            for r, c in filler_cells:
+                self.grid[r][c] = self._rng.choice(self.fill_letters)
+        else:
+            matches = real_matches(find_blocked_words(self.grid))
+
+        self.blocked_words_found = sorted({word for word, _, _ in matches})
