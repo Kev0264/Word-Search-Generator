@@ -5,9 +5,8 @@ a collection of puzzles designed to challenge and entertain, whether
 you're relaxing at home, unwinding after a long day, or passing the time
 on the go.
 
-Each puzzle hides a list of words somewhere in a grid of letters. Words
-can run in any direction, including backwards and diagonally, so keep
-your eyes sharp!
+Each puzzle hides a list of words somewhere in a grid of letters.
+{{directions}}. {{backwards}}. Keep your eyes sharp!
 
 ## What's Inside
 

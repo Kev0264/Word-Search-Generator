@@ -5,15 +5,15 @@ somewhere inside it. Your job is to find every word on the list.
 
 ## Rules
 
-- Words can appear horizontally, vertically, or diagonally
-- Words can be spelled forwards or backwards
+- {{directions}}
+- {{backwards}}
 - Letters can be shared between two words that cross paths
 
 ## Tips
 
 - Circle or highlight each word as you find it
 - Cross words off the list below the grid as you go
-- Scan row by row, then column by column, then try the diagonals
+- {{scan_tip}}
 - Stuck on a word? Look for uncommon letters first, like Q, X, or Z
 
 ## Checking Your Work

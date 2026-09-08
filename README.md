@@ -118,6 +118,18 @@ Animals,"An elephant's trunk has over 40,000 muscles.",TIGER,ELEPHANT,GIRAFFE
 bullets. Content that overflows one page automatically flows onto the next.
 Both are optional; omit either flag to skip that section.
 
+Either file can reference three placeholders that get substituted with
+text matching the actual `--difficulty`/`--straight-only`/`--no-backwards`
+settings used for that build, so one instructions file stays accurate
+across every difficulty instead of hardcoding rules that are only true for
+some of them:
+
+| Placeholder | Full-direction example | Straight-only example |
+| --- | --- | --- |
+| `{{directions}}` | "Words can appear horizontally, vertically, or diagonally" | "Words can appear horizontally or vertically" |
+| `{{backwards}}` | "Words can be spelled forwards or backwards" | "Words are always spelled forwards" |
+| `{{scan_tip}}` | "Scan row by row, then column by column, then try the diagonals" | "Scan row by row, then column by column" |
+
 If the CSV has an accidental copy-paste duplicate — the same title twice, or
 two rows with an identical word list under different titles — a warning
 names both puzzles so you can fix it before printing.

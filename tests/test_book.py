@@ -3,7 +3,9 @@ from word_search.book import (
     PAGE_W,
     PuzzleSpec,
     _markdown_blocks,
+    apply_placeholders,
     build_book,
+    difficulty_placeholders,
     find_duplicate_puzzle_warnings,
     read_puzzle_csv,
 )
@@ -395,3 +397,50 @@ def test_build_book_inserts_copyright_page_after_title():
     # Page 1 = title, page 2 = copyright -- both non-blank, page 2 with the year.
     assert pages[0].convert("L").getextrema() != (255, 255)
     assert pages[1].convert("L").getextrema() != (255, 255)
+
+
+def test_difficulty_placeholders_reflect_all_directions_and_backwards_allowed():
+    placeholders = difficulty_placeholders(directions=None, allow_backwards=True)
+    assert "diagonally" in placeholders["directions"]
+    assert "backwards" in placeholders["backwards"]
+    assert "diagonals" in placeholders["scan_tip"]
+
+
+def test_difficulty_placeholders_reflect_straight_only_no_backwards():
+    placeholders = difficulty_placeholders(directions=["N", "S", "E", "W"], allow_backwards=False)
+    assert "diagonally" not in placeholders["directions"]
+    assert "backwards" not in placeholders["backwards"]
+    assert "diagonals" not in placeholders["scan_tip"]
+
+
+def test_apply_placeholders_substitutes_known_tokens_and_leaves_others():
+    text = "- {{directions}}\n- {{unknown}} stays put"
+    result = apply_placeholders(text, {"directions": "Words go sideways"})
+    assert "Words go sideways" in result
+    assert "{{unknown}}" in result
+
+
+def test_build_book_substitutes_placeholders_in_instructions():
+    pages_easy, _ = build_book(
+        _sample_specs(),
+        rows=10,
+        cols=10,
+        allow_backwards=False,
+        directions=["N", "S", "E", "W"],
+        seed=1,
+        book_title="Test Book",
+        instructions_text="## Rules\n\n- {{directions}}\n- {{backwards}}",
+    )
+    pages_hard, _ = build_book(
+        _sample_specs(),
+        rows=10,
+        cols=10,
+        allow_backwards=True,
+        directions=None,
+        seed=1,
+        book_title="Test Book",
+        instructions_text="## Rules\n\n- {{directions}}\n- {{backwards}}",
+    )
+    # Different placement rules should render visibly different instructions
+    # pages (the easy version is shorter text, so a different pixel content).
+    assert pages_easy[2].tobytes() != pages_hard[2].tobytes()

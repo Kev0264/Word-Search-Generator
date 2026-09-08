@@ -630,6 +630,38 @@ def render_toc_pages(
     return pages
 
 
+def difficulty_placeholders(directions: list[str] | None, allow_backwards: bool) -> dict[str, str]:
+    """Short phrases describing the actual placement rules used for this
+    book, so an intro/instructions file can reference `{{directions}}`,
+    `{{backwards}}`, and `{{scan_tip}}` instead of hardcoding text that's
+    only true for some difficulties (e.g. "easy" never places words
+    backwards or diagonally)."""
+    has_diagonals = directions is None or any(d in ("NE", "NW", "SE", "SW") for d in directions)
+    return {
+        "directions": (
+            "Words can appear horizontally, vertically, or diagonally"
+            if has_diagonals
+            else "Words can appear horizontally or vertically"
+        ),
+        "backwards": (
+            "Words can be spelled forwards or backwards"
+            if allow_backwards
+            else "Words are always spelled forwards"
+        ),
+        "scan_tip": (
+            "Scan row by row, then column by column, then try the diagonals"
+            if has_diagonals
+            else "Scan row by row, then column by column"
+        ),
+    }
+
+
+def apply_placeholders(text: str, placeholders: dict[str, str]) -> str:
+    for key, value in placeholders.items():
+        text = text.replace("{{" + key + "}}", value)
+    return text
+
+
 def _force_recto(pages: list[Image.Image], page_number: int) -> int:
     """Inserts a blank page if page_number is even, so the next page (a
     puzzle, or the answer-key section) always starts on a right-hand
@@ -669,13 +701,19 @@ def build_book(
     pages.append(render_copyright_page(book_title, author, year, page_number, text_scale))
     page_number += 1
 
+    placeholders = difficulty_placeholders(directions, allow_backwards)
+
     if intro_text:
-        intro_pages = render_text_pages(intro_text, page_number, text_scale)
+        intro_pages = render_text_pages(
+            apply_placeholders(intro_text, placeholders), page_number, text_scale
+        )
         pages += intro_pages
         page_number += len(intro_pages)
 
     if instructions_text:
-        instructions_pages = render_text_pages(instructions_text, page_number, text_scale)
+        instructions_pages = render_text_pages(
+            apply_placeholders(instructions_text, placeholders), page_number, text_scale
+        )
         pages += instructions_pages
         page_number += len(instructions_pages)
 
