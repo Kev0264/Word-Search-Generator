@@ -1,8 +1,10 @@
 from word_search.book import (
     PAGE_H,
     PAGE_W,
+    PuzzleSpec,
     _markdown_blocks,
     build_book,
+    find_duplicate_puzzle_warnings,
     read_puzzle_csv,
 )
 
@@ -214,7 +216,7 @@ def test_toc_reservation_and_recto_forcing_produce_correct_total_pages():
         book_title="Test Book",
     )
 
-    page_number = 2  # after the title page
+    page_number = 3  # after the title and copyright pages
     page_number += _math.ceil(len(specs) / _toc_rows_per_page())  # TOC pages
     if page_number % 2 == 1:  # align to even so every puzzle's pairing starts right
         page_number += 1
@@ -276,7 +278,7 @@ def test_puzzle_with_trivia_gets_a_facing_facts_page_others_stay_blank():
         book_title="Test Book",
     )
 
-    page_number = 2  # after the title page
+    page_number = 3  # after the title and copyright pages
     page_number += _math.ceil(len(specs) / _toc_rows_per_page())  # TOC pages
     if page_number % 2 == 1:
         page_number += 1
@@ -325,3 +327,71 @@ def test_build_book_includes_intro_and_instructions_pages():
     )
 
     assert len(pages_with) > len(pages_without)
+
+
+def test_find_duplicate_puzzle_warnings_detects_duplicate_titles():
+    specs = _sample_specs()
+    specs.append(PuzzleSpec(title="Animals", words=["FOX", "OWL"]))
+
+    warnings = find_duplicate_puzzle_warnings(specs)
+
+    assert len(warnings) == 1
+    assert "Animals" in warnings[0]
+    assert "puzzles 1 and 3" in warnings[0]
+
+
+def test_find_duplicate_puzzle_warnings_detects_identical_word_lists():
+    specs = [
+        PuzzleSpec(title="Animals", words=["CAT", "DOG", "BIRD"]),
+        PuzzleSpec(title="Pets", words=["dog", "bird", "cat"]),  # same set, different case/order
+    ]
+
+    warnings = find_duplicate_puzzle_warnings(specs)
+
+    assert len(warnings) == 1
+    assert "Animals" in warnings[0]
+    assert "Pets" in warnings[0]
+
+
+def test_find_duplicate_puzzle_warnings_is_empty_when_all_distinct():
+    warnings = find_duplicate_puzzle_warnings(_sample_specs())
+    assert warnings == []
+
+
+def test_build_book_surfaces_duplicate_puzzle_warnings():
+    specs = _sample_specs() + [PuzzleSpec(title="Animals", words=["FOX"])]
+    _, warnings = build_book(
+        specs,
+        rows=10,
+        cols=10,
+        allow_backwards=True,
+        directions=None,
+        seed=1,
+        book_title="Test Book",
+    )
+    assert any("Duplicate puzzle title" in w for w in warnings)
+
+
+def test_render_copyright_page_is_page_sized_and_non_blank():
+    from word_search.book import render_copyright_page
+
+    img = render_copyright_page("Test Book", "Jane Doe", 2026, page_number=2)
+
+    assert img.size == (PAGE_W, PAGE_H)
+    assert img.convert("L").getextrema() != (255, 255)
+
+
+def test_build_book_inserts_copyright_page_after_title():
+    pages, _ = build_book(
+        _sample_specs(),
+        rows=10,
+        cols=10,
+        allow_backwards=True,
+        directions=None,
+        seed=1,
+        book_title="Test Book",
+        author="Jane Doe",
+    )
+    # Page 1 = title, page 2 = copyright -- both non-blank, page 2 with the year.
+    assert pages[0].convert("L").getextrema() != (255, 255)
+    assert pages[1].convert("L").getextrema() != (255, 255)

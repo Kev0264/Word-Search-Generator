@@ -172,3 +172,60 @@ def test_check_profanity_false_skips_the_check():
     gen = WordSearchGenerator(["CAT", "DOG"], rows=8, cols=8, seed=1, check_profanity=False)
     gen.generate()
     assert gen.blocked_words_found == []
+
+
+def test_avoid_duplicate_words_rerolls_an_accidental_extra_occurrence():
+    from word_search.grid import PlacedWord
+
+    gen = WordSearchGenerator(["CAT"], rows=1, cols=10, seed=1)
+    gen.placements = [PlacedWord("CAT", 0, 0, "E", [(0, 0), (0, 1), (0, 2)], "CAT")]
+    gen.grid = [list("CATQCATQQQ")]  # a second, accidental "CAT" at cols 4-6
+
+    gen._avoid_duplicate_words()
+
+    assert gen.duplicate_words_found == []
+
+
+def test_avoid_duplicate_words_ignores_a_substring_of_another_placed_word():
+    """CAT showing up inside CATERPILLAR's own letters isn't a coincidence,
+    it's just how CATERPILLAR is spelled -- shouldn't be flagged or touched."""
+    from word_search.grid import PlacedWord
+
+    gen = WordSearchGenerator(["CAT", "CATERPILLAR"], rows=2, cols=11, seed=1)
+    gen.grid = [list("CATERPILLAR"), list("CAT" + "Q" * 8)]
+    gen.placements = [
+        PlacedWord(
+            "CATERPILLAR", 0, 0, "E", [(0, i) for i in range(11)], "CATERPILLAR"
+        ),
+        PlacedWord("CAT", 1, 0, "E", [(1, 0), (1, 1), (1, 2)], "CAT"),
+    ]
+
+    gen._avoid_duplicate_words()
+
+    assert "".join(gen.grid[0]) == "CATERPILLAR"
+    assert gen.duplicate_words_found == []
+
+
+def test_avoid_duplicate_words_reports_a_match_spanning_two_crossing_placements():
+    from word_search.grid import PlacedWord
+
+    gen = WordSearchGenerator(["ABCD", "AB", "CD"], rows=2, cols=4, seed=1)
+    gen.grid = [list("ABCD"), list("ABCD")]
+    gen.placements = [
+        PlacedWord("ABCD", 1, 0, "E", [(1, 0), (1, 1), (1, 2), (1, 3)], "ABCD"),
+        PlacedWord("AB", 0, 0, "E", [(0, 0), (0, 1)], "AB"),
+        PlacedWord("CD", 0, 2, "E", [(0, 2), (0, 3)], "CD"),
+    ]
+
+    gen._avoid_duplicate_words()
+
+    assert "".join(gen.grid[0]) == "ABCD"  # unfixable: no filler cell involved
+    assert "ABCD" in gen.duplicate_words_found
+
+
+def test_check_duplicate_words_false_skips_the_check():
+    gen = WordSearchGenerator(
+        ["CAT", "DOG"], rows=8, cols=8, seed=1, check_duplicate_words=False
+    )
+    gen.generate()
+    assert gen.duplicate_words_found == []

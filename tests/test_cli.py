@@ -127,6 +127,96 @@ def test_csv_mode_reports_error_for_missing_file(tmp_path, capsys):
     assert "not a file" in capsys.readouterr().err
 
 
+def test_csv_mode_final_line_reports_warning_count(tmp_path, capsys):
+    csv_path = tmp_path / "puzzles.csv"
+    csv_path.write_text(
+        "Title,Trivia,Words\n"
+        "Animals,,TIGER,LION,BEAR\n"
+        "Animals,,FOX,OWL,BAT\n"  # duplicate title -> guaranteed warning
+    )
+
+    exit_code = main(
+        ["--csv", str(csv_path), "--output", str(tmp_path / "book.pdf"), "--size", "10"]
+    )
+
+    assert exit_code == 0  # --strict wasn't passed, so warnings don't fail the build
+    out = capsys.readouterr().out
+    assert "warning(s)" in out
+    assert "Book saved to" in out
+
+
+def test_csv_mode_strict_exits_nonzero_on_warnings(tmp_path):
+    csv_path = tmp_path / "puzzles.csv"
+    csv_path.write_text(
+        "Title,Trivia,Words\n"
+        "Animals,,TIGER,LION,BEAR\n"
+        "Animals,,FOX,OWL,BAT\n"
+    )
+
+    exit_code = main(
+        [
+            "--csv",
+            str(csv_path),
+            "--output",
+            str(tmp_path / "book.pdf"),
+            "--size",
+            "10",
+            "--strict",
+        ]
+    )
+
+    assert exit_code == 1
+    assert (tmp_path / "book.pdf").exists()  # still saved despite the non-zero exit
+
+
+def test_csv_mode_strict_exits_zero_when_clean(tmp_path):
+    # A tiny book always trips the "under 24 pages" warning regardless of
+    # content, so use enough distinct puzzles to clear that threshold and
+    # isolate --strict's behavior to genuinely warning-free content.
+    csv_path = tmp_path / "puzzles.csv"
+    rows = [f"Theme {i},,WORDA{i},WORDB{i},WORDC{i}" for i in range(15)]
+    csv_path.write_text("Title,Trivia,Words\n" + "\n".join(rows) + "\n")
+
+    exit_code = main(
+        [
+            "--csv",
+            str(csv_path),
+            "--output",
+            str(tmp_path / "book.pdf"),
+            "--size",
+            "10",
+            "--seed",
+            "1",
+            "--strict",
+        ]
+    )
+
+    assert exit_code == 0
+
+
+def test_csv_mode_year_flag_is_accepted(tmp_path):
+    csv_path = tmp_path / "puzzles.csv"
+    csv_path.write_text("Title,Trivia,Words\nAnimals,,TIGER,LION,BEAR\n")
+
+    exit_code = main(
+        [
+            "--csv",
+            str(csv_path),
+            "--output",
+            str(tmp_path / "book.pdf"),
+            "--size",
+            "10",
+            "--author",
+            "Jane Doe",
+            "--year",
+            "2030",
+        ]
+    )
+
+    assert exit_code == 0
+    assert (tmp_path / "book.pdf").exists()
+
+
 def test_batch_mode_warns_on_word_count_outside_difficulty_range(tmp_path, capsys):
     words_dir = tmp_path / "word_lists"
     words_dir.mkdir()

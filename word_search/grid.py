@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import random
+import re
 import string
 from dataclasses import dataclass, field
 
+from .gridscan import find_matches
 from .profanity import find_blocked_words
 
 DIRECTIONS: dict[str, tuple[int, int]] = {
@@ -46,6 +48,7 @@ class WordSearchGenerator:
         max_attempts_per_word: int = 500,
         fill_letters: str = string.ascii_uppercase,
         check_profanity: bool = True,
+        check_duplicate_words: bool = True,
         max_profanity_retries: int = 30,
     ):
         self.words, self.display_words = self._normalize_words(words)
@@ -56,6 +59,7 @@ class WordSearchGenerator:
         self.max_attempts_per_word = max_attempts_per_word
         self.fill_letters = fill_letters
         self.check_profanity = check_profanity
+        self.check_duplicate_words = check_duplicate_words
         self.max_profanity_retries = max_profanity_retries
 
         self._rng = random.Random(seed)
@@ -63,6 +67,8 @@ class WordSearchGenerator:
         self.placements: list[PlacedWord] = []
         self.skipped: list[str] = []
         self.blocked_words_found: list[str] = []
+        self.duplicate_words_found: list[str] = []
+        self._cell_to_placements_cache: dict[tuple[int, int], set[int]] | None = None
 
     @staticmethod
     def _normalize_words(words: list[str]) -> tuple[list[str], dict[str, str]]:
@@ -95,8 +101,18 @@ class WordSearchGenerator:
                 self.skipped.append(self.display_words[word])
 
         self._fill_blanks()
-        if self.check_profanity:
-            self._avoid_blocked_words()
+
+        # Each check rerolls filler letters independently; run a couple of
+        # rounds so the rare case of one check's reroll reintroducing an
+        # issue the other check had just fixed still gets caught.
+        for _ in range(3):
+            if self.check_profanity:
+                self._avoid_blocked_words()
+            if self.check_duplicate_words:
+                self._avoid_duplicate_words()
+            if not self.blocked_words_found and not self.duplicate_words_found:
+                break
+
         return self.grid
 
     def _place_word(self, word: str) -> bool:
@@ -139,52 +155,55 @@ class WordSearchGenerator:
                 if not self.grid[r][c]:
                     self.grid[r][c] = self._rng.choice(self.fill_letters)
 
-    def _avoid_blocked_words(self) -> None:
-        """Rerolls the random filler letters (leaving placed words alone)
-        whenever the grid happens to spell out a blocked word by chance, in
-        any of the 8 directions.
+    def _cell_to_placements(self) -> dict[tuple[int, int], set[int]]:
+        if self._cell_to_placements_cache is None:
+            mapping: dict[tuple[int, int], set[int]] = {}
+            for idx, placed in enumerate(self.placements):
+                for cell in placed.cells:
+                    mapping.setdefault(cell, set()).add(idx)
+            self._cell_to_placements_cache = mapping
+        return self._cell_to_placements_cache
 
-        A match entirely contained within a single placed word's own cells
-        is ignored outright, not just left unfixed -- e.g. "ORAL" inside
-        "CORAL" or "PECKER" inside "WOODPECKER" isn't an accidental word
-        appearing in the puzzle, it's just a substring of a word the author
-        deliberately chose, forwards or in that word's own reversed
-        spelling. The actual risk this guards against is a blocked word
-        assembled from filler letters (whether entirely filler, or a
-        coincidence spanning two different placed words at a crossing) --
-        those are rerolled if possible, and reported if not."""
-        cell_to_placements: dict[tuple[int, int], set[int]] = {}
-        for idx, placed in enumerate(self.placements):
-            for cell in placed.cells:
-                cell_to_placements.setdefault(cell, set()).add(idx)
+    def _classify_matches(
+        self, matches: list[tuple[str, list[tuple[int, int]]]]
+    ) -> list[tuple[str, list[tuple[int, int]], bool]]:
+        """Keeps only matches that are a genuine coincidence -- involving at
+        least one random filler cell, or spanning two *different* placed
+        words crossing paths -- and drops any match fully explained by a
+        single placed word's own letters (substring or exact, forwards or
+        in that word's own reversed spelling), since that's simply how a
+        deliberately chosen word is spelled, not an accidental occurrence."""
+        cell_to_placements = self._cell_to_placements()
+        found = []
+        for word, cells in matches:
+            involved: set[int] = set()
+            involves_filler = False
+            for cell in cells:
+                placements_here = cell_to_placements.get(cell)
+                if not placements_here:
+                    involves_filler = True
+                else:
+                    involved |= placements_here
+            if involves_filler or len(involved) > 1:
+                found.append((word, cells, involves_filler))
+        return found
 
+    def _reroll_until_clean(self, find_raw_matches) -> list[str]:
+        """Rerolls filler letters (leaving placed words alone) until
+        find_raw_matches() -- a callable scanning self.grid -- turns up no
+        more genuine coincidences, or retries run out. Returns the sorted
+        list of words that couldn't be avoided."""
         filler_cells = [
             (r, c)
             for r in range(self.rows)
             for c in range(self.cols)
-            if (r, c) not in cell_to_placements
+            if (r, c) not in self._cell_to_placements()
         ]
 
-        def real_matches(matches):
-            found = []
-            for word, cells in matches:
-                involved: set[int] = set()
-                involves_filler = False
-                for cell in cells:
-                    placements_here = cell_to_placements.get(cell)
-                    if not placements_here:
-                        involves_filler = True
-                    else:
-                        involved |= placements_here
-                if involves_filler or len(involved) > 1:
-                    found.append((word, cells, involves_filler))
-            return found
-
         for _ in range(self.max_profanity_retries):
-            matches = real_matches(find_blocked_words(self.grid))
+            matches = self._classify_matches(find_raw_matches())
             if not matches:
-                self.blocked_words_found = []
-                return
+                return []
             if not any(involves_filler for _, _, involves_filler in matches):
                 # No remaining match involves a filler cell (it's purely
                 # placed words crossing paths); further rerolls can't help.
@@ -192,6 +211,39 @@ class WordSearchGenerator:
             for r, c in filler_cells:
                 self.grid[r][c] = self._rng.choice(self.fill_letters)
         else:
-            matches = real_matches(find_blocked_words(self.grid))
+            matches = self._classify_matches(find_raw_matches())
 
-        self.blocked_words_found = sorted({word for word, _, _ in matches})
+        return sorted({word for word, _, _ in matches})
+
+    def _avoid_blocked_words(self) -> None:
+        """Guards against the grid spelling out a profanity-blocklist word
+        by chance. See _classify_matches for what counts as a genuine
+        coincidence versus just a substring of a word you chose yourself."""
+        self.blocked_words_found = self._reroll_until_clean(lambda: find_blocked_words(self.grid))
+
+    def _avoid_duplicate_words(self) -> None:
+        """Guards against one of your own placed words accidentally
+        appearing a *second* time elsewhere in the grid by chance -- a
+        solver could circle the wrong instance, which the answer key
+        wouldn't match. A word that's simply a substring of another word
+        you placed (e.g. CAT inside CATERPILLAR) is not flagged, for the
+        same reason a blocklist substring inside a legitimate word isn't:
+        it's not a coincidence, it's just how that other word is spelled."""
+        if not self.placements:
+            self.duplicate_words_found = []
+            return
+
+        unique_words = sorted({p.word for p in self.placements}, key=len, reverse=True)
+        pattern = re.compile("|".join(re.escape(w) for w in unique_words))
+        min_length = min(len(w) for w in unique_words)
+
+        expected_occurrences = set()
+        for placed in self.placements:
+            expected_occurrences.add(tuple(placed.cells))
+            expected_occurrences.add(tuple(reversed(placed.cells)))
+
+        def find_extra_occurrences():
+            matches = find_matches(self.grid, pattern, min_length)
+            return [(w, cells) for w, cells in matches if tuple(cells) not in expected_occurrences]
+
+        self.duplicate_words_found = self._reroll_until_clean(find_extra_occurrences)

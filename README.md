@@ -118,8 +118,14 @@ Animals,"An elephant's trunk has over 40,000 muscles.",TIGER,ELEPHANT,GIRAFFE
 bullets. Content that overflows one page automatically flows onto the next.
 Both are optional; omit either flag to skip that section.
 
-The book is assembled as: title page → intro pages → instructions pages → a
-combined table of contents / progress checklist (a checkbox, number, and
+If the CSV has an accidental copy-paste duplicate — the same title twice, or
+two rows with an identical word list under different titles — a warning
+names both puzzles so you can fix it before printing.
+
+The book is assembled as: title page → a copyright page (the title page's
+conventional verso: `© {year} {author}` plus a standard rights-reserved
+notice; `--year` defaults to the current year) → intro pages → instructions
+pages → a combined table of contents / progress checklist (a checkbox, number, and
 dot-leadered page number per puzzle, so you can both jump to a puzzle and
 mark it done in the same list) → one two-page spread per puzzle → an
 "Answer Keys" divider → 4-up answer key pages (2×2 mini grids per page,
@@ -151,6 +157,13 @@ bottom, plus a small extra buffer between the margin and the grid itself.
 `--no-backwards`, and `--straight-only` flags as single-puzzle mode, applied
 to every puzzle in the book.
 
+The final line always reports how many warnings the build produced (e.g.
+"78 pages, 30 puzzles, 3 warning(s)") so a handful of warnings printed
+earlier can't scroll past unnoticed. Pass `--strict` to also make the
+command exit with a non-zero status when there were any — the book is
+still saved either way, this just makes it easy for a script to catch
+before you publish.
+
 ### Options
 
 | Flag | Description |
@@ -164,7 +177,9 @@ to every puzzle in the book.
 | `--intro` | Text/markdown file rendered as the book's introduction page(s) (`--csv` mode) |
 | `--instructions` | Text/markdown file rendered as the book's instructions page(s) (`--csv` mode) |
 | `--book-title` | Title page text (`--csv` mode; default: the CSV filename) |
-| `--author` | Author name on the title page (`--csv` mode) |
+| `--author` | Author name on the title page and copyright notice (`--csv` mode) |
+| `--year` | Copyright year on the copyright page (`--csv` mode; default: current year) |
+| `--strict` | Exit non-zero if the build produced any warnings (`--csv` mode); the book is still saved |
 | `--difficulty` | `easy`, `medium`, `hard`, or `large-print` preset for size/directions (see above) |
 | `--size, -s` | Grid size: `15` (square) or `15x20` (rows x cols) |
 | `--output, -o` | Output path — puzzle `.png`/`.pdf` in single-file mode, or the book PDF in `--csv` mode (default: `book.pdf`) |
@@ -215,6 +230,14 @@ Entries shorter than 4 letters are excluded from the blocklist entirely —
 short fragments turn up by pure chance in almost any grid of random
 letters, so checking them would flag nearly every puzzle for no
 meaningful reason.
+
+The same scan also runs against your *own* word list, checking whether any
+placed word accidentally appears a second time elsewhere in the grid by
+chance — a solver could circle the wrong instance, and the answer key
+wouldn't match it. It's rerolled the same way, using the same "ignore a
+substring of a word you chose, only report a genuine cross-word
+coincidence" logic, and warns as `word(s) accidentally appear more than
+once in the grid: ...` if it can't be fixed.
 
 ## Tests
 

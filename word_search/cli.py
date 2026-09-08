@@ -64,6 +64,19 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--author", help="Author name printed on the title page (used with --csv)")
     parser.add_argument(
+        "--year",
+        type=int,
+        help="Copyright year on the title page's copyright notice (used with --csv; "
+        "default: the current year)",
+    )
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Exit with a non-zero status if the build produced any warnings (used with "
+        "--csv) -- the book is still saved either way, this just makes issues easy to "
+        "catch in a script before publishing",
+    )
+    parser.add_argument(
         "--output-dir",
         default="generated_puzzles",
         help="Directory to write output into when using --words-dir (default: generated_puzzles)",
@@ -165,6 +178,13 @@ def run_single(args: argparse.Namespace) -> int:
             file=sys.stderr,
         )
 
+    if generator.duplicate_words_found:
+        print(
+            "Warning: word(s) accidentally appear more than once in the grid: "
+            f"{', '.join(generator.duplicate_words_found)}",
+            file=sys.stderr,
+        )
+
     renderer = PuzzleRenderer(generator, title=args.title or "Word Search", cell_size=args.cell_size)
     renderer.save_puzzle(args.output)
     print(f"Puzzle saved to {args.output}")
@@ -221,6 +241,13 @@ def run_batch(args: argparse.Namespace) -> int:
                 file=sys.stderr,
             )
 
+        if generator.duplicate_words_found:
+            print(
+                f"Warning ({txt_file.name}): word(s) accidentally appear more than once "
+                f"in the grid: {', '.join(generator.duplicate_words_found)}",
+                file=sys.stderr,
+            )
+
         title = args.title or title_from_filename(txt_file)
         renderer = PuzzleRenderer(generator, title=title, cell_size=args.cell_size)
 
@@ -267,6 +294,7 @@ def run_book(args: argparse.Namespace) -> int:
         intro_text=intro_text,
         instructions_text=instructions_text,
         difficulty=args.difficulty,
+        year=args.year,
     )
 
     for warning in warnings:
@@ -277,7 +305,11 @@ def run_book(args: argparse.Namespace) -> int:
         output = "book.pdf"
 
     save_book(pages, output)
-    print(f"Book saved to {output} ({len(pages)} pages, {len(specs)} puzzles)")
+    warning_note = f", {len(warnings)} warning(s)" if warnings else ""
+    print(f"Book saved to {output} ({len(pages)} pages, {len(specs)} puzzles{warning_note})")
+
+    if args.strict and warnings:
+        return 1
     return 0
 
 

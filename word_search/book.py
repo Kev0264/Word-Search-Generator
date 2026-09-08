@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import math
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -44,6 +45,7 @@ MIN_KDP_PAGES = 24
 
 TITLE_SIZE = 100
 AUTHOR_SIZE = 44
+COPYRIGHT_SIZE = 28
 H1_SIZE = 78
 H2_SIZE = 52
 BODY_SIZE = 40
@@ -132,6 +134,40 @@ def read_puzzle_csv(path: str | Path) -> list[PuzzleSpec]:
         trivia = row[1].strip() if len(row) > 1 else ""
         specs.append(PuzzleSpec(title=title, words=words, trivia=trivia or None))
     return specs
+
+
+def find_duplicate_puzzle_warnings(specs: list[PuzzleSpec]) -> list[str]:
+    """Flags likely copy-paste mistakes in a puzzle spreadsheet: the same
+    title used twice, or two different-looking rows that hide an identical
+    word list. Neither is fatal, so both are reported as warnings rather
+    than blocking the build."""
+    warnings: list[str] = []
+
+    first_title_at: dict[str, int] = {}
+    for number, spec in enumerate(specs, start=1):
+        key = spec.title.strip().lower()
+        if key in first_title_at:
+            warnings.append(
+                f'Duplicate puzzle title "{spec.title}" (puzzles '
+                f"{first_title_at[key]} and {number}) -- check for a copy-paste mistake."
+            )
+        else:
+            first_title_at[key] = number
+
+    first_words_at: dict[tuple[str, ...], tuple[int, str]] = {}
+    for number, spec in enumerate(specs, start=1):
+        key = tuple(sorted(w.upper() for w in spec.words))
+        if key in first_words_at:
+            other_number, other_title = first_words_at[key]
+            warnings.append(
+                f'"{other_title}" (puzzle {other_number}) and "{spec.title}" '
+                f"(puzzle {number}) have identical word lists -- check for a "
+                "copy-paste mistake."
+            )
+        else:
+            first_words_at[key] = (number, spec.title)
+
+    return warnings
 
 
 def _wrap_paragraph(text: str, font, max_width: int) -> list[str]:
@@ -280,6 +316,42 @@ def render_title_page(
             fill="black",
             anchor="mm",
         )
+    return img
+
+
+def render_copyright_page(
+    book_title: str, author: str | None, year: int, page_number: int, text_scale: float = 1.0
+) -> Image.Image:
+    """The copyright/imprint page conventionally on the back of the title
+    page (page 2, the title page's verso) in a published book."""
+    left, right, top, bottom = page_margins(page_number)
+    printable_w = PAGE_W - left - right
+
+    notice = f"© {year} {author}" if author else f"© {year} {book_title}"
+    lines_to_draw = [
+        notice,
+        "All rights reserved.",
+        "",
+        "No part of this publication may be reproduced, distributed, or "
+        "transmitted in any form or by any means, including photocopying, "
+        "recording, or other electronic or mechanical methods, without "
+        "prior written permission from the publisher, except for brief "
+        "quotations embodied in critical reviews and certain other "
+        "noncommercial uses permitted by copyright law.",
+    ]
+
+    img = new_page()
+    draw = ImageDraw.Draw(img)
+    font = load_body_font(round(COPYRIGHT_SIZE * text_scale))
+    line_height = int(font.size * 1.5)
+    y = PAGE_H * 0.6
+    for line in lines_to_draw:
+        if not line:
+            y += line_height
+            continue
+        for wrapped_line in _wrap_paragraph(line, font, printable_w):
+            draw.text((left + printable_w / 2, y), wrapped_line, font=font, fill="black", anchor="ma")
+            y += line_height
     return img
 
 
@@ -582,13 +654,19 @@ def build_book(
     intro_text: str | None = None,
     instructions_text: str | None = None,
     difficulty: str | None = None,
+    year: int | None = None,
 ) -> tuple[list[Image.Image], list[str]]:
-    warnings: list[str] = []
+    warnings: list[str] = list(find_duplicate_puzzle_warnings(puzzle_specs))
     pages: list[Image.Image] = []
     page_number = 1
     text_scale = text_scale_for(difficulty)
+    if year is None:
+        year = date.today().year
 
     pages.append(render_title_page(book_title, author, page_number, text_scale))
+    page_number += 1
+
+    pages.append(render_copyright_page(book_title, author, year, page_number, text_scale))
     page_number += 1
 
     if intro_text:
@@ -659,6 +737,11 @@ def build_book(
             warnings.append(
                 f"{spec.title}: could not avoid blocked word(s) in the grid: "
                 f"{', '.join(generator.blocked_words_found)}"
+            )
+        if generator.duplicate_words_found:
+            warnings.append(
+                f"{spec.title}: word(s) accidentally appear more than once in the grid: "
+                f"{', '.join(generator.duplicate_words_found)}"
             )
 
         puzzle_number += 1
