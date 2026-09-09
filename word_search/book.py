@@ -44,6 +44,12 @@ GRID_PADDING_IN = 0.15
 
 MIN_KDP_PAGES = 24
 
+# Each puzzle's grid placement is independent of every other puzzle's, so a
+# blocked-word collision (two of the puzzle's own chosen words crossing to
+# spell something unintended) is retried per-puzzle with a different seed
+# rather than by searching for one lucky seed for the entire book.
+PLACEMENT_RETRY_ATTEMPTS = 25
+
 TITLE_SIZE = 100
 SUBTITLE_SIZE = 52
 AUTHOR_SIZE = 44
@@ -399,6 +405,8 @@ def render_copyright_page(
         "prior written permission from the publisher, except for brief "
         "quotations embodied in critical reviews and certain other "
         "noncommercial uses permitted by copyright law.",
+        "",
+        "Facts researched from a variety of public sources and independently verified.",
     ]
 
     img = new_page()
@@ -810,19 +818,31 @@ def build_book(
         pages.append(new_page())
         page_number += 1
 
-    for spec in puzzle_specs:
-        generator = WordSearchGenerator(
-            spec.words,
-            rows=rows,
-            cols=cols,
-            allow_backwards=allow_backwards,
-            directions=directions,
-            seed=seed,
-        )
-        try:
-            generator.generate()
-        except WordSearchGenerationError as exc:
-            warnings.append(f"{spec.title}: {exc} (puzzle skipped)")
+    for puzzle_index, spec in enumerate(puzzle_specs):
+        generator: WordSearchGenerator | None = None
+        generation_error: WordSearchGenerationError | None = None
+        for attempt in range(PLACEMENT_RETRY_ATTEMPTS):
+            trial_seed = None if seed is None else seed + puzzle_index * 1000 + attempt
+            trial = WordSearchGenerator(
+                spec.words,
+                rows=rows,
+                cols=cols,
+                allow_backwards=allow_backwards,
+                directions=directions,
+                seed=trial_seed,
+            )
+            try:
+                trial.generate()
+            except WordSearchGenerationError as exc:
+                generation_error = exc
+                generator = None
+                break
+            generator = trial
+            if not generator.blocked_words_found and not generator.duplicate_words_found:
+                break
+
+        if generator is None:
+            warnings.append(f"{spec.title}: {generation_error} (puzzle skipped)")
             continue
 
         count_warning = word_count_warning(difficulty, len(generator.words))
