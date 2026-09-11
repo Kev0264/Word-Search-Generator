@@ -8,7 +8,9 @@ from word_search.book import (
     difficulty_placeholders,
     find_duplicate_puzzle_warnings,
     read_puzzle_csv,
+    render_answer_key_pages,
 )
+from word_search.grid import WordSearchGenerator
 
 
 def test_read_puzzle_csv_parses_title_and_words(tmp_path):
@@ -306,6 +308,31 @@ def test_large_print_preset_uses_small_grid_and_scaled_text():
     assert text_scale_for(None) == 1.0
 
 
+def test_scaled_font_px_floors_large_print_text_to_16pt():
+    from word_search.book import DPI, scaled_font_px
+
+    # A small base size (e.g. the word list body text) must still come out
+    # to at least 16pt once large-print scaling is applied -- KDP requires
+    # 16pt+ text for a book to be listed as large print.
+    small_base_px = 20
+    large_print_px = scaled_font_px(small_base_px, 1.35)
+    assert large_print_px * 72 / DPI >= 16
+
+    # Medium (no scaling in effect) must be left untouched by the floor.
+    assert scaled_font_px(small_base_px, 1.0) == small_base_px
+
+
+def test_answer_key_pages_scale_up_for_large_print():
+    generator = WordSearchGenerator(["CAT", "DOG"], rows=10, cols=10, seed=1)
+    generator.generate()
+    entries = [("Test Puzzle", generator)]
+
+    normal_page = render_answer_key_pages(entries, 1)[0]
+    large_print_page = render_answer_key_pages(entries, 1, text_scale=1.35)[0]
+
+    assert normal_page.tobytes() != large_print_page.tobytes()
+
+
 def test_build_book_includes_intro_and_instructions_pages():
     pages_without, _ = build_book(
         _sample_specs(),
@@ -381,6 +408,24 @@ def test_render_copyright_page_is_page_sized_and_non_blank():
 
     assert img.size == (PAGE_W, PAGE_H)
     assert img.convert("L").getextrema() != (255, 255)
+
+
+def test_copyright_page_text_stays_above_bottom_margin_at_large_print_scale():
+    from word_search.book import page_margins, render_copyright_page, text_scale_for
+
+    scale = text_scale_for("large-print")
+    img = render_copyright_page("Test Book", "Jane Doe", 2026, page_number=2, text_scale=scale)
+    _, _, _, bottom = page_margins(2)
+
+    pixels = img.convert("L").load()
+    w, h = img.size
+    lowest_drawn_y = 0
+    for y in range(h - 1, -1, -1):
+        if any(pixels[x, y] < 255 for x in range(0, w, 4)):
+            lowest_drawn_y = y
+            break
+
+    assert lowest_drawn_y < PAGE_H - bottom
 
 
 def test_build_book_inserts_copyright_page_after_title():

@@ -74,6 +74,13 @@ RULE_COLOR = "#555555"
 # come out larger from that preset's smaller grid on the same fixed page).
 LARGE_PRINT_TEXT_SCALE = 1.35
 
+# KDP requires a large-print book's text to be 16pt or larger to be listed as
+# such. A flat 1.35x multiplier undershoots that floor for any element whose
+# base (medium-print) size was already small -- e.g. the word list comes out
+# to just ~12pt -- so every scaled size is additionally floored in points.
+MIN_LARGE_PRINT_PT = 16
+MIN_LARGE_PRINT_PX = math.ceil(MIN_LARGE_PRINT_PT * DPI / 72)
+
 
 @dataclass
 class PuzzleSpec:
@@ -88,6 +95,17 @@ def in_to_px(inches: float) -> int:
 
 def text_scale_for(difficulty: str | None) -> float:
     return LARGE_PRINT_TEXT_SCALE if difficulty == "large-print" else 1.0
+
+
+def scaled_font_px(base_px: float, text_scale: float) -> int:
+    """Applies text_scale to a base font size, then -- only when a scale is
+    actually in effect -- floors the result to MIN_LARGE_PRINT_PX so every
+    scaled text element genuinely qualifies as large print, not just ones
+    whose base size happened to already be large."""
+    size = round(base_px * text_scale)
+    if text_scale > 1.0:
+        size = max(size, MIN_LARGE_PRINT_PX)
+    return size
 
 
 def page_margins(page_number: int) -> tuple[int, int, int, int]:
@@ -261,22 +279,22 @@ def render_text_pages(
 
     for block_type, text in blocks:
         if block_type == "h1":
-            font = load_heading_font(round(H1_SIZE * text_scale))
+            font = load_heading_font(scaled_font_px(H1_SIZE, text_scale))
             indent, align = 0, "center"
             lines = [text]
             gap_before, gap_after = in_to_px(0.15), in_to_px(0.12)
         elif block_type == "h2":
-            font = load_heading_font(round(H2_SIZE * text_scale))
+            font = load_heading_font(scaled_font_px(H2_SIZE, text_scale))
             indent, align = 0, "left"
             lines = [text]
             gap_before, gap_after = in_to_px(0.12), in_to_px(0.08)
         elif block_type == "bullet":
-            font = load_body_font(round(BODY_SIZE * text_scale))
+            font = load_body_font(scaled_font_px(BODY_SIZE, text_scale))
             indent, align = in_to_px(0.35), "left"
             lines = _wrap_paragraph("•  " + text, font, printable_w - indent)
             gap_before, gap_after = in_to_px(0.03), in_to_px(0.03)
         else:
-            font = load_body_font(round(BODY_SIZE * text_scale))
+            font = load_body_font(scaled_font_px(BODY_SIZE, text_scale))
             indent, align = 0, "left"
             lines = _wrap_paragraph(text, font, printable_w)
             gap_before, gap_after = in_to_px(0.05), in_to_px(0.14)
@@ -329,7 +347,7 @@ def render_title_page(
     left, right, _, _ = page_margins(page_number)
     printable_w = PAGE_W - left - right
 
-    title_size = round(TITLE_SIZE * text_scale)
+    title_size = scaled_font_px(TITLE_SIZE, text_scale)
     title_font, title_lines = _fit_heading_lines(
         title, printable_w, title_size, round(title_size * 0.45)
     )
@@ -342,7 +360,7 @@ def render_title_page(
     subtitle_block_height = 0
     subtitle_gap = in_to_px(0.18) if subtitle else 0
     if subtitle:
-        subtitle_size = round(SUBTITLE_SIZE * text_scale)
+        subtitle_size = scaled_font_px(SUBTITLE_SIZE, text_scale)
         size = subtitle_size
         font = load_italic_font(size)
         lines = _wrap_paragraph(subtitle, font, printable_w)
@@ -379,7 +397,7 @@ def render_title_page(
         draw.text(
             (PAGE_W / 2, rule_y + in_to_px(0.3)),
             author,
-            font=load_body_font(round(AUTHOR_SIZE * text_scale)),
+            font=load_body_font(scaled_font_px(AUTHOR_SIZE, text_scale)),
             fill="black",
             anchor="mm",
         )
@@ -409,18 +427,25 @@ def render_copyright_page(
         "Facts researched from a variety of public sources and independently verified.",
     ]
 
+    font = load_body_font(scaled_font_px(COPYRIGHT_SIZE, text_scale))
+    line_height = int(font.size * 1.5)
+
+    # Wrap every line up front so the block's total height is known before
+    # drawing -- large-print's much bigger copyright text can otherwise
+    # overflow the bottom margin if we always start from the same fixed
+    # vertical position regardless of how tall the block turns out to be.
+    all_lines: list[str] = []
+    for line in lines_to_draw:
+        all_lines.extend(_wrap_paragraph(line, font, printable_w) if line else [""])
+    total_height = len(all_lines) * line_height
+
     img = new_page()
     draw = ImageDraw.Draw(img)
-    font = load_body_font(round(COPYRIGHT_SIZE * text_scale))
-    line_height = int(font.size * 1.5)
-    y = PAGE_H * 0.6
-    for line in lines_to_draw:
-        if not line:
-            y += line_height
-            continue
-        for wrapped_line in _wrap_paragraph(line, font, printable_w):
-            draw.text((left + printable_w / 2, y), wrapped_line, font=font, fill="black", anchor="ma")
-            y += line_height
+    y = min(PAGE_H * 0.6, PAGE_H - bottom - total_height)
+    for line in all_lines:
+        if line:
+            draw.text((left + printable_w / 2, y), line, font=font, fill="black", anchor="ma")
+        y += line_height
     return img
 
 
@@ -429,7 +454,7 @@ def render_section_divider(text: str, text_scale: float = 1.0) -> Image.Image:
     draw = ImageDraw.Draw(img)
     y = PAGE_H / 2
     draw.text(
-        (PAGE_W / 2, y), text, font=load_heading_font(round(DIVIDER_SIZE * text_scale)),
+        (PAGE_W / 2, y), text, font=load_heading_font(scaled_font_px(DIVIDER_SIZE, text_scale)),
         fill="black", anchor="mm",
     )
     _draw_title_rule(draw, PAGE_W / 2, y + in_to_px(0.4), in_to_px(2.5))
@@ -451,7 +476,7 @@ def render_puzzle_page(
     draw = ImageDraw.Draw(img)
 
     heading_text = f"Puzzle {puzzle_number}: {title}" if puzzle_number else title
-    title_font = load_heading_font(round(PUZZLE_TITLE_SIZE * text_scale))
+    title_font = load_heading_font(scaled_font_px(PUZZLE_TITLE_SIZE, text_scale))
     title_line_h = int(title_font.size * 1.3)
     rule_gap = in_to_px(0.1)
     title_h = title_line_h + rule_gap + in_to_px(0.15)
@@ -463,8 +488,8 @@ def render_puzzle_page(
         draw, left + printable_w / 2, title_y + title_line_h + rule_gap, printable_w * 0.5
     )
 
-    header_font = load_heading_font(round(WORDLIST_HEADER_SIZE * text_scale))
-    word_font = load_body_font(round(WORDLIST_BODY_SIZE * text_scale))
+    header_font = load_heading_font(scaled_font_px(WORDLIST_HEADER_SIZE, text_scale))
+    word_font = load_body_font(scaled_font_px(WORDLIST_BODY_SIZE, text_scale))
     words = sorted(generator.display_words.values())
     wrapped = wrap_words_by_pixel(words, word_font, printable_w)
     header_h = int(header_font.size * 1.4)
@@ -522,8 +547,9 @@ def _draw_mini_answer_key(
     qy: float,
     quad_w: float,
     quad_h: float,
+    text_scale: float = 1.0,
 ) -> None:
-    title_font = load_heading_font(MINI_TITLE_SIZE)
+    title_font = load_heading_font(scaled_font_px(MINI_TITLE_SIZE, text_scale))
     title_h = int(title_font.size * 1.4)
     draw.text((qx + quad_w / 2, qy), title, font=title_font, fill="black", anchor="ma")
 
@@ -564,7 +590,9 @@ def _draw_mini_answer_key(
 
 
 def render_answer_key_pages(
-    entries: list[tuple[str, WordSearchGenerator]], start_page_number: int
+    entries: list[tuple[str, WordSearchGenerator]],
+    start_page_number: int,
+    text_scale: float = 1.0,
 ) -> list[Image.Image]:
     """Lays out 4 mini answer keys per page (2x2), shaded with a uniform
     translucent gray over every solved cell -- print-safe in black & white
@@ -580,11 +608,11 @@ def render_answer_key_pages(
 
         img = new_page()
         draw = ImageDraw.Draw(img)
-        header_h = in_to_px(0.45)
+        header_h = in_to_px(0.45 * text_scale)
         draw.text(
             (left + printable_w / 2, top),
             "Answer Keys",
-            font=load_heading_font(H2_SIZE),
+            font=load_heading_font(scaled_font_px(H2_SIZE, text_scale)),
             fill="black",
             anchor="ma",
         )
@@ -601,7 +629,9 @@ def render_answer_key_pages(
         ]
 
         for (title, generator), (qx, qy) in zip(chunk, positions):
-            _draw_mini_answer_key(img, draw, generator, title, qx, qy, quad_w, quad_h)
+            _draw_mini_answer_key(
+                img, draw, generator, title, qx, qy, quad_w, quad_h, text_scale
+            )
 
         pages.append(img)
         page_number += 1
@@ -633,7 +663,7 @@ def _render_toc_page(
     y = top
 
     if is_first:
-        header_font = load_heading_font(round(TOC_HEADER_SIZE * text_scale))
+        header_font = load_heading_font(scaled_font_px(TOC_HEADER_SIZE, text_scale))
         draw.text(
             (left + printable_w / 2, y), "Contents", font=header_font, fill="black", anchor="ma"
         )
@@ -644,7 +674,7 @@ def _render_toc_page(
         y += in_to_px(0.15)
 
     row_h = in_to_px(TOC_ROW_HEIGHT_IN * text_scale)
-    row_font = load_body_font(round(TOC_ROW_SIZE * text_scale))
+    row_font = load_body_font(scaled_font_px(TOC_ROW_SIZE, text_scale))
     box_size = in_to_px(0.2 * text_scale)
 
     for puzzle_number, title, puzzle_page_number in chunk:
@@ -908,7 +938,7 @@ def build_book(
         pages.append(render_section_divider("Answer Keys", text_scale))
         page_number += 1
 
-        answer_pages = render_answer_key_pages(entries, page_number)
+        answer_pages = render_answer_key_pages(entries, page_number, text_scale)
         pages += answer_pages
         page_number += len(answer_pages)
 

@@ -26,8 +26,6 @@ Not needed yet -- revisit once the current book format is proven out.
 - [ ] Redistribute the last 4-up answer-key page's mini-grids when it has
       fewer than 4 entries (currently top-aligned, leaving the bottom half
       empty on the final page for a puzzle count that isn't a multiple of 4).
-- [ ] Consider a `--large-print` variant of the answer-key section (currently
-      only the puzzle pages, title page, TOC, and front matter scale text).
 - [ ] **Optional `Category` column + `--alphabetize` CLI flag.** Came up
       wanting to group the national parks book into a "National Parks"
       section and a separate section for the broader topics, with each
