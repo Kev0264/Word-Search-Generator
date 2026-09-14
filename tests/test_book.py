@@ -240,11 +240,13 @@ def test_toc_reservation_and_recto_forcing_produce_correct_total_pages():
 
 
 def test_render_toc_pages_produces_exact_requested_page_count():
-    from word_search.book import PuzzleSpec, WordSearchGenerator, render_toc_pages
+    from word_search.book import TocRow, WordSearchGenerator, render_toc_pages
 
     generator = WordSearchGenerator(["CAT", "DOG"], rows=10, cols=10, seed=1)
     generator.generate()
-    entries = [(i, f"Theme {i}", 10 + i) for i in range(1, 4)]
+    entries = [
+        TocRow(kind="puzzle", title=f"Theme {i}", page_number=10 + i, number=i) for i in range(1, 4)
+    ]
 
     pages = render_toc_pages(entries, start_page_number=4, page_count=2)
 
@@ -489,3 +491,162 @@ def test_build_book_substitutes_placeholders_in_instructions():
     # Different placement rules should render visibly different instructions
     # pages (the easy version is shorter text, so a different pixel content).
     assert pages_easy[2].tobytes() != pages_hard[2].tobytes()
+
+
+def test_read_puzzle_csv_parses_category_column(tmp_path):
+    csv_path = tmp_path / "puzzles.csv"
+    csv_path.write_text(
+        "Title,Trivia,Category,Words\n"
+        "Amethyst,,Crystals,PURPLE,QUARTZ\n"
+        "Tarot,,Divination,CARDS,SPREAD\n"
+    )
+
+    specs = read_puzzle_csv(csv_path)
+
+    assert [s.category for s in specs] == ["Crystals", "Divination"]
+    assert specs[0].words == ["PURPLE", "QUARTZ"]
+
+
+def test_read_puzzle_csv_without_category_header_leaves_category_none(tmp_path):
+    csv_path = tmp_path / "puzzles.csv"
+    csv_path.write_text("Title,Trivia,Words\nAnimals,,CAT,DOG\n")
+
+    specs = read_puzzle_csv(csv_path)
+
+    assert specs[0].category is None
+    assert specs[0].words == ["CAT", "DOG"]
+
+
+def test_organize_puzzle_specs_with_no_categories_is_a_single_unlabeled_group():
+    from word_search.book import organize_puzzle_specs
+
+    specs = _sample_specs()
+    sections = organize_puzzle_specs(specs)
+
+    assert sections == [(None, specs)]
+
+
+def test_organize_puzzle_specs_groups_by_first_appearance_order():
+    from word_search.book import organize_puzzle_specs
+
+    specs = [
+        PuzzleSpec(title="Amethyst", words=["A"], category="Crystals"),
+        PuzzleSpec(title="Tarot", words=["B"], category="Divination"),
+        PuzzleSpec(title="Quartz", words=["C"], category="Crystals"),
+    ]
+
+    sections = organize_puzzle_specs(specs)
+
+    assert [category for category, _ in sections] == ["Crystals", "Divination"]
+    assert [s.title for s in sections[0][1]] == ["Amethyst", "Quartz"]
+    assert [s.title for s in sections[1][1]] == ["Tarot"]
+
+
+def test_organize_puzzle_specs_buckets_blank_categories_into_fallback_last():
+    from word_search.book import organize_puzzle_specs
+
+    specs = [
+        PuzzleSpec(title="Uncategorized One", words=["A"], category=None),
+        PuzzleSpec(title="Amethyst", words=["B"], category="Crystals"),
+        PuzzleSpec(title="Uncategorized Two", words=["C"], category=""),
+    ]
+
+    sections = organize_puzzle_specs(specs, category_fallback_label="Misc")
+
+    assert [category for category, _ in sections] == ["Crystals", "Misc"]
+    assert [s.title for s in sections[-1][1]] == ["Uncategorized One", "Uncategorized Two"]
+
+
+def test_organize_puzzle_specs_alphabetizes_categories_and_titles_when_requested():
+    from word_search.book import organize_puzzle_specs
+
+    specs = [
+        PuzzleSpec(title="Tarot", words=["A"], category="Divination"),
+        PuzzleSpec(title="Quartz", words=["B"], category="Crystals"),
+        PuzzleSpec(title="Amethyst", words=["C"], category="Crystals"),
+        PuzzleSpec(title="Uncategorized", words=["D"], category=None),
+    ]
+
+    sections = organize_puzzle_specs(specs, alphabetize=True, category_fallback_label="Misc")
+
+    assert [category for category, _ in sections] == ["Crystals", "Divination", "Misc"]
+    assert [s.title for s in sections[0][1]] == ["Amethyst", "Quartz"]
+
+
+def test_organize_puzzle_specs_alphabetizes_flat_list_with_no_categories():
+    from word_search.book import organize_puzzle_specs
+
+    specs = [
+        PuzzleSpec(title="Zebra", words=["A"]),
+        PuzzleSpec(title="Apple", words=["B"]),
+    ]
+
+    sections = organize_puzzle_specs(specs, alphabetize=True)
+
+    assert [s.title for _, group in sections for s in group] == ["Apple", "Zebra"]
+
+
+def _categorized_specs():
+    return [
+        PuzzleSpec(title="Amethyst", words=["PURPLE", "QUARTZ", "STONE"], category="Crystals"),
+        PuzzleSpec(title="Moonstone", words=["GLOW", "PALE", "SHEEN"], category="Crystals"),
+        PuzzleSpec(title="Tarot", words=["CARDS", "SPREAD", "DECK"], category="Divination"),
+    ]
+
+
+def test_build_book_with_categories_adds_more_pages_than_uncategorized_equivalent():
+    categorized_pages, categorized_warnings = build_book(
+        _categorized_specs(),
+        rows=10,
+        cols=10,
+        allow_backwards=True,
+        directions=None,
+        seed=1,
+        book_title="Test Book",
+    )
+    flat_specs = [
+        PuzzleSpec(title=s.title, words=s.words, trivia=s.trivia) for s in _categorized_specs()
+    ]
+    flat_pages, flat_warnings = build_book(
+        flat_specs,
+        rows=10,
+        cols=10,
+        allow_backwards=True,
+        directions=None,
+        seed=1,
+        book_title="Test Book",
+    )
+
+    # Both books are far short of the 24-page KDP minimum -- that expected
+    # warning isn't what this test is about, so only rule out anything else.
+    assert all("KDP paperback requires at least" in w for w in categorized_warnings)
+    assert all("KDP paperback requires at least" in w for w in flat_warnings)
+    # Each of the two categories gets its own non-blank divider page, so the
+    # categorized version must come out strictly longer.
+    assert len(categorized_pages) > len(flat_pages)
+
+
+def test_build_book_toc_lists_category_headings_before_their_puzzles():
+    import math as _math
+
+    from word_search.book import _toc_rows_per_page
+
+    specs = _categorized_specs()
+    pages, warnings = build_book(
+        specs,
+        rows=10,
+        cols=10,
+        allow_backwards=True,
+        directions=None,
+        seed=1,
+        book_title="Test Book",
+    )
+    # Far short of the 24-page KDP minimum is expected and irrelevant here.
+    assert all("KDP paperback requires at least" in w for w in warnings)
+
+    # 3 puzzles + 2 category headings share the TOC's row-based pagination.
+    rows_per_page = _toc_rows_per_page()
+    expected_toc_pages = _math.ceil((3 + 2) / rows_per_page)
+    toc_start = 2  # pages[0]=title, pages[1]=copyright, pages[2]=TOC's first page
+    for page in pages[toc_start : toc_start + expected_toc_pages]:
+        assert not _is_blank_page(page)

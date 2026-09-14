@@ -82,6 +82,20 @@ def build_parser() -> argparse.ArgumentParser:
         "catch in a script before publishing",
     )
     parser.add_argument(
+        "--alphabetize",
+        action="store_true",
+        help="Sort categories alphabetically and puzzles alphabetically by title within "
+        "each category (used with --csv; if the CSV has no Category column, just "
+        "alphabetizes the flat puzzle list by title)",
+    )
+    parser.add_argument(
+        "--uncategorized-label",
+        default="More to Explore",
+        help="Section label for puzzles with a blank Category cell, when the CSV has a "
+        "Category column and at least one other puzzle uses it (used with --csv; "
+        "default: 'More to Explore')",
+    )
+    parser.add_argument(
         "--output-dir",
         default="generated_puzzles",
         help="Directory to write output into when using --words-dir (default: generated_puzzles)",
@@ -301,6 +315,8 @@ def run_book(args: argparse.Namespace) -> int:
         instructions_text=instructions_text,
         difficulty=args.difficulty,
         year=args.year,
+        alphabetize=args.alphabetize,
+        category_fallback_label=args.uncategorized_label,
     )
 
     for warning in warnings:

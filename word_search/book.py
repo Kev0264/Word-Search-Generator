@@ -70,6 +70,10 @@ TOC_ROW_HEIGHT_IN = 0.42
 ANSWER_HIGHLIGHT_RGBA = (90, 90, 90, 100)
 RULE_COLOR = "#555555"
 
+# Label for the section holding puzzles whose Category cell was left blank,
+# when at least one other puzzle in the book does have a category.
+DEFAULT_CATEGORY_FALLBACK_LABEL = "More to Explore"
+
 # Accessibility preset: scales up every text element (grid letters already
 # come out larger from that preset's smaller grid on the same fixed page).
 LARGE_PRINT_TEXT_SCALE = 1.35
@@ -87,6 +91,18 @@ class PuzzleSpec:
     title: str
     words: list[str]
     trivia: str | None = None
+    category: str | None = None
+
+
+@dataclass
+class TocRow:
+    """One row of the table of contents: either a puzzle (with its checkbox,
+    number, and title) or a bold category heading with no checkbox."""
+
+    kind: str  # "puzzle" or "category"
+    title: str
+    page_number: int
+    number: int | None = None  # puzzle number; unused for category rows
 
 
 def in_to_px(inches: float) -> int:
@@ -140,26 +156,81 @@ def _draw_title_rule(draw: ImageDraw.ImageDraw, center_x: float, y: float, width
 
 
 def read_puzzle_csv(path: str | Path) -> list[PuzzleSpec]:
-    """Reads one puzzle per row, with a required header row (its own content
-    is ignored -- it's just skipped) and fixed columns: title, an optional
-    trivia blurb (leave the cell blank if none; embed a blank line within
-    the cell for multiple paragraphs), then every remaining column is a
-    word. Words always start at the same column on every row regardless of
+    """Reads one puzzle per row, with a required header row and fixed
+    columns: title, an optional trivia blurb (leave the cell blank if none;
+    embed a blank line within the cell for multiple paragraphs), an optional
+    `Category` column, then every remaining column is a word. The Category
+    column is detected by its header, case-insensitively -- old 3-column
+    (Title, Trivia, Words...) CSVs keep working unchanged, since without a
+    "Category" header the third column is just the first word column, as
+    before. Words always start at the same column on every row regardless of
     whether a puzzle has trivia, which keeps a spreadsheet's columns lined
     up; there's no fixed limit on how many word columns a row can have."""
     specs: list[PuzzleSpec] = []
     with open(path, newline="", encoding="utf-8") as f:
         rows = list(csv.reader(f))
+    header = rows[0] if rows else []
+    has_category_column = len(header) > 2 and header[2].strip().lower() == "category"
+    words_start = 3 if has_category_column else 2
     for row in rows[1:]:
         if not row or not any(cell.strip() for cell in row):
             continue
-        words = [w.strip() for w in row[2:] if w.strip()]
+        words = [w.strip() for w in row[words_start:] if w.strip()]
         if not words:
             continue
         title = row[0].strip() or f"Puzzle {len(specs) + 1}"
         trivia = row[1].strip() if len(row) > 1 else ""
-        specs.append(PuzzleSpec(title=title, words=words, trivia=trivia or None))
+        category = row[2].strip() if has_category_column and len(row) > 2 else ""
+        specs.append(
+            PuzzleSpec(title=title, words=words, trivia=trivia or None, category=category or None)
+        )
     return specs
+
+
+def organize_puzzle_specs(
+    puzzle_specs: list[PuzzleSpec],
+    alphabetize: bool = False,
+    category_fallback_label: str = DEFAULT_CATEGORY_FALLBACK_LABEL,
+) -> list[tuple[str | None, list[PuzzleSpec]]]:
+    """Groups puzzles into one section per distinct category value, in order
+    of each category's first appearance (uncategorized puzzles are bucketed
+    into a fallback section, always placed last). If no puzzle has a
+    category, returns everything as a single unlabeled section -- callers
+    should treat a None category as "no section divider needed".
+
+    With alphabetize=True, sections are sorted alphabetically by name and
+    puzzles alphabetically by title within each section; the fallback
+    section still sorts last. With no categories at all, alphabetize just
+    sorts the flat puzzle list by title.
+    """
+    if not any(spec.category for spec in puzzle_specs):
+        specs = puzzle_specs
+        if alphabetize:
+            specs = sorted(specs, key=lambda s: s.title.lower())
+        return [(None, specs)]
+
+    groups: dict[str, list[PuzzleSpec]] = {}
+    order: list[str] = []
+    fallback: list[PuzzleSpec] = []
+    for spec in puzzle_specs:
+        if not spec.category:
+            fallback.append(spec)
+            continue
+        if spec.category not in groups:
+            groups[spec.category] = []
+            order.append(spec.category)
+        groups[spec.category].append(spec)
+
+    if alphabetize:
+        order = sorted(order, key=str.lower)
+        for category in order:
+            groups[category].sort(key=lambda s: s.title.lower())
+        fallback.sort(key=lambda s: s.title.lower())
+
+    result = [(category, groups[category]) for category in order]
+    if fallback:
+        result.append((category_fallback_label, fallback))
+    return result
 
 
 def find_duplicate_puzzle_warnings(specs: list[PuzzleSpec]) -> list[str]:
@@ -649,12 +720,11 @@ def _toc_rows_per_page(text_scale: float = 1.0) -> int:
 
 
 def _render_toc_page(
-    chunk: list[tuple[int, str, int]],
+    chunk: list[TocRow],
     page_number: int,
     is_first: bool,
     text_scale: float = 1.0,
 ) -> Image.Image:
-    """chunk entries are (puzzle_number, title, puzzle_page_number)."""
     left, right, top, bottom = page_margins(page_number)
     printable_w = PAGE_W - left - right
 
@@ -675,28 +745,37 @@ def _render_toc_page(
 
     row_h = in_to_px(TOC_ROW_HEIGHT_IN * text_scale)
     row_font = load_body_font(scaled_font_px(TOC_ROW_SIZE, text_scale))
+    heading_font = load_heading_font(scaled_font_px(TOC_ROW_SIZE, text_scale))
     box_size = in_to_px(0.2 * text_scale)
 
-    for puzzle_number, title, puzzle_page_number in chunk:
+    for row in chunk:
         cy = y + row_h / 2
 
-        box_x0 = left
-        draw.rectangle(
-            [box_x0, cy - box_size / 2, box_x0 + box_size, cy + box_size / 2],
-            outline="black",
-            width=2,
-        )
+        if row.kind == "category":
+            # A bold heading row with no checkbox, distinguishing a section
+            # divider's entry from the checkbox-and-title puzzle rows below it.
+            font = heading_font
+            text_x = left
+            label = row.title
+        else:
+            font = row_font
+            box_x0 = left
+            draw.rectangle(
+                [box_x0, cy - box_size / 2, box_x0 + box_size, cy + box_size / 2],
+                outline="black",
+                width=2,
+            )
+            text_x = box_x0 + box_size + in_to_px(0.15)
+            label = f"{row.number}. {row.title}"
 
-        text_x = box_x0 + box_size + in_to_px(0.15)
-        label = f"{puzzle_number}. {title}"
-        draw.text((text_x, cy), label, font=row_font, fill="black", anchor="lm")
+        draw.text((text_x, cy), label, font=font, fill="black", anchor="lm")
 
-        number_str = str(puzzle_page_number)
-        number_w = draw.textlength(number_str, font=row_font)
+        number_str = str(row.page_number)
+        number_w = draw.textlength(number_str, font=font)
         number_x = left + printable_w - number_w
-        draw.text((number_x, cy), number_str, font=row_font, fill="black", anchor="lm")
+        draw.text((number_x, cy), number_str, font=font, fill="black", anchor="lm")
 
-        label_w = draw.textlength(label, font=row_font)
+        label_w = draw.textlength(label, font=font)
         dot_y = cy
         x = text_x + label_w + in_to_px(0.08)
         dot_limit = number_x - in_to_px(0.1)
@@ -710,7 +789,7 @@ def _render_toc_page(
 
 
 def render_toc_pages(
-    entries: list[tuple[int, str, int]],
+    entries: list[TocRow],
     start_page_number: int,
     page_count: int,
     text_scale: float = 1.0,
@@ -787,6 +866,8 @@ def build_book(
     instructions_text: str | None = None,
     difficulty: str | None = None,
     year: int | None = None,
+    alphabetize: bool = False,
+    category_fallback_label: str = DEFAULT_CATEGORY_FALLBACK_LABEL,
 ) -> tuple[list[Image.Image], list[str]]:
     warnings: list[str] = list(find_duplicate_puzzle_warnings(puzzle_specs))
     pages: list[Image.Image] = []
@@ -794,6 +875,21 @@ def build_book(
     text_scale = text_scale_for(difficulty)
     if year is None:
         year = date.today().year
+
+    # If any puzzle has a category, group same-category puzzles together
+    # (each getting its own section-divider page and TOC heading) instead of
+    # processing puzzle_specs in raw CSV order. Uncategorized puzzles bucket
+    # into a labeled fallback section. With no categories at all, this is a
+    # single unlabeled section -- behaves exactly as before.
+    sections = organize_puzzle_specs(puzzle_specs, alphabetize, category_fallback_label)
+    has_sections = any(category is not None for category, _ in sections)
+    ordered_specs: list[PuzzleSpec] = [spec for _, specs in sections for spec in specs]
+    section_starts: dict[int, str] = {}
+    if has_sections:
+        index = 0
+        for category, specs in sections:
+            section_starts[index] = category
+            index += len(specs)
 
     pages.append(render_title_page(book_title, author, page_number, text_scale, subtitle=subtitle))
     page_number += 1
@@ -828,14 +924,17 @@ def build_book(
     toc_page_count = 0
     if puzzle_specs:
         rows_per_page = _toc_rows_per_page(text_scale)
-        toc_page_count = math.ceil(len(puzzle_specs) / rows_per_page)
+        # Each category heading takes up one row of its own, alongside every
+        # puzzle's row, when this book is organized into labeled sections.
+        toc_row_count = len(ordered_specs) + (len(sections) if has_sections else 0)
+        toc_page_count = math.ceil(toc_row_count / rows_per_page)
         toc_index = len(pages)
         toc_page_number_start = page_number
         pages.extend(new_page() for _ in range(toc_page_count))
         page_number += toc_page_count
 
     entries: list[tuple[str, WordSearchGenerator]] = []
-    toc_entries: list[tuple[int, str, int]] = []
+    toc_entries: list[TocRow] = []
     puzzle_number = 0
 
     # Every puzzle gets a dedicated left-hand (verso, even-numbered)
@@ -843,12 +942,20 @@ def build_book(
     # has one, otherwise left blank -- so a puzzle with trivia always has
     # somewhere to put it, rather than only sometimes getting a facing page
     # depending on upstream parity. Align to even once here so that holds
-    # for every puzzle from the start.
-    if page_number % 2 == 1:
+    # for every puzzle from the start. When the book is sectioned, the first
+    # section's divider (below) establishes this same alignment instead.
+    if not has_sections and page_number % 2 == 1:
         pages.append(new_page())
         page_number += 1
 
-    for puzzle_index, spec in enumerate(puzzle_specs):
+    for puzzle_index, spec in enumerate(ordered_specs):
+        if puzzle_index in section_starts:
+            category_label = section_starts[puzzle_index]
+            page_number = _force_recto(pages, page_number)
+            pages.append(render_section_divider(category_label, text_scale))
+            toc_entries.append(TocRow(kind="category", title=category_label, page_number=page_number))
+            page_number += 1
+
         generator: WordSearchGenerator | None = None
         generation_error: WordSearchGenerationError | None = None
         for attempt in range(PLACEMENT_RETRY_ATTEMPTS):
@@ -923,7 +1030,9 @@ def build_book(
                 text_scale=text_scale,
             )
         )
-        toc_entries.append((puzzle_number, spec.title, page_number))
+        toc_entries.append(
+            TocRow(kind="puzzle", title=spec.title, page_number=page_number, number=puzzle_number)
+        )
         page_number += 1
         entries.append((spec.title, generator))
 
