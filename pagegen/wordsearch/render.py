@@ -5,6 +5,13 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+from ..fonts import (  # noqa: F401  (re-exported for book.py)
+    load_body_font,
+    load_font,
+    load_heading_font,
+    load_italic_font,
+    wrap_words_by_pixel,
+)
 from .grid import WordSearchGenerator
 
 MARGIN = 40
@@ -31,66 +38,6 @@ HIGHLIGHT_PALETTE = [
     "#ff99c8",
     "#bde0fe",
 ]
-
-
-def load_font(size: int) -> ImageFont.ImageFont:
-    """Bold sans -- used for grid letters and other bold emphasis."""
-    for name in ("DejaVuSans-Bold.ttf", "Arial Bold.ttf", "arialbd.ttf"):
-        try:
-            return ImageFont.truetype(name, size)
-        except OSError:
-            continue
-    return ImageFont.load_default()
-
-
-def load_heading_font(size: int) -> ImageFont.ImageFont:
-    """Bold serif -- used for titles/headings, distinct from body text and
-    grid letters so the page reads with real typographic hierarchy."""
-    for name in ("DejaVuSerif-Bold.ttf", "Georgia Bold.ttf", "Times New Roman Bold.ttf"):
-        try:
-            return ImageFont.truetype(name, size)
-        except OSError:
-            continue
-    return load_font(size)
-
-
-def load_body_font(size: int) -> ImageFont.ImageFont:
-    """Regular-weight sans -- used for paragraphs and word lists, so not
-    every line on the page is shouting in bold."""
-    for name in ("DejaVuSans.ttf", "Arial.ttf", "arial.ttf"):
-        try:
-            return ImageFont.truetype(name, size)
-        except OSError:
-            continue
-    return load_font(size)
-
-
-def load_italic_font(size: int) -> ImageFont.ImageFont:
-    """Italic sans -- used for small callouts like a trivia blurb."""
-    for name in ("DejaVuSans-Oblique.ttf", "Arial Italic.ttf", "ariali.ttf"):
-        try:
-            return ImageFont.truetype(name, size)
-        except OSError:
-            continue
-    return load_body_font(size)
-
-
-def wrap_words_by_pixel(words: list[str], font: ImageFont.ImageFont, max_width: int) -> list[str]:
-    """Greedily packs words onto lines (three spaces apart) so that no
-    rendered line exceeds max_width pixels for the given font."""
-    draw = ImageDraw.Draw(Image.new("RGB", (1, 1)))
-    lines: list[str] = []
-    current: list[str] = []
-    for word in words:
-        candidate = "   ".join(current + [word])
-        if current and draw.textlength(candidate, font=font) > max_width:
-            lines.append("   ".join(current))
-            current = [word]
-        else:
-            current.append(word)
-    if current:
-        lines.append("   ".join(current))
-    return lines
 
 
 class PuzzleRenderer:

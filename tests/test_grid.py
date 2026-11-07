@@ -1,6 +1,6 @@
 import pytest
 
-from word_search.grid import DIRECTIONS, WordSearchGenerationError, WordSearchGenerator
+from pagegen.wordsearch.grid import DIRECTIONS, WordSearchGenerationError, WordSearchGenerator
 
 
 def test_normalizes_and_dedupes_words():
@@ -82,7 +82,7 @@ def test_straight_only_directions_are_respected():
 
 
 def test_avoid_blocked_words_rerolls_filler_until_clean():
-    from word_search.profanity import find_blocked_words, load_blocklist
+    from pagegen.wordsearch.profanity import find_blocked_words, load_blocklist
 
     word = min(load_blocklist(), key=len)
     gen = WordSearchGenerator(["PLACEHOLDER"], rows=1, cols=len(word) + 10, seed=7)
@@ -101,8 +101,8 @@ def test_avoid_blocked_words_ignores_an_exact_intentional_placement():
     outright (e.g. an innocuous word an overzealous list still flags), that's
     their deliberate choice, not an accidental letter combination -- it
     should be left alone and not reported."""
-    from word_search.grid import PlacedWord
-    from word_search.profanity import load_blocklist
+    from pagegen.wordsearch.grid import PlacedWord
+    from pagegen.wordsearch.profanity import load_blocklist
 
     word = min(load_blocklist(), key=len)
     gen = WordSearchGenerator(["PLACEHOLDER"], rows=1, cols=len(word), seed=3)
@@ -120,8 +120,8 @@ def test_avoid_blocked_words_ignores_a_substring_of_an_intentional_placement():
     author typed (e.g. "ORAL" inside "CORAL") isn't an accidental word
     appearing in the puzzle -- it's just how that legitimate word is
     spelled, and shouldn't be flagged or rerolled."""
-    from word_search.grid import PlacedWord
-    from word_search.profanity import load_blocklist
+    from pagegen.wordsearch.grid import PlacedWord
+    from pagegen.wordsearch.profanity import load_blocklist
 
     word = min(load_blocklist(), key=len)
     framed = "Q" + word + "Q"
@@ -140,8 +140,8 @@ def test_avoid_blocked_words_reports_a_match_spanning_two_crossing_placements():
     paths (no filler cell involved) is a genuine coincidence a solver could
     actually read -- rerolling filler can't fix it, but it should still be
     reported rather than silently ignored like a same-word substring is."""
-    from word_search.grid import PlacedWord
-    from word_search.profanity import load_blocklist
+    from pagegen.wordsearch.grid import PlacedWord
+    from pagegen.wordsearch.profanity import load_blocklist
 
     word = min(load_blocklist(), key=len)
     split = len(word) // 2
@@ -175,7 +175,7 @@ def test_check_profanity_false_skips_the_check():
 
 
 def test_avoid_duplicate_words_rerolls_an_accidental_extra_occurrence():
-    from word_search.grid import PlacedWord
+    from pagegen.wordsearch.grid import PlacedWord
 
     gen = WordSearchGenerator(["CAT"], rows=1, cols=10, seed=1)
     gen.placements = [PlacedWord("CAT", 0, 0, "E", [(0, 0), (0, 1), (0, 2)], "CAT")]
@@ -189,7 +189,7 @@ def test_avoid_duplicate_words_rerolls_an_accidental_extra_occurrence():
 def test_avoid_duplicate_words_ignores_a_substring_of_another_placed_word():
     """CAT showing up inside CATERPILLAR's own letters isn't a coincidence,
     it's just how CATERPILLAR is spelled -- shouldn't be flagged or touched."""
-    from word_search.grid import PlacedWord
+    from pagegen.wordsearch.grid import PlacedWord
 
     gen = WordSearchGenerator(["CAT", "CATERPILLAR"], rows=2, cols=11, seed=1)
     gen.grid = [list("CATERPILLAR"), list("CAT" + "Q" * 8)]
@@ -207,7 +207,7 @@ def test_avoid_duplicate_words_ignores_a_substring_of_another_placed_word():
 
 
 def test_avoid_duplicate_words_reports_a_match_spanning_two_crossing_placements():
-    from word_search.grid import PlacedWord
+    from pagegen.wordsearch.grid import PlacedWord
 
     gen = WordSearchGenerator(["ABCD", "AB", "CD"], rows=2, cols=4, seed=1)
     gen.grid = [list("ABCD"), list("ABCD")]

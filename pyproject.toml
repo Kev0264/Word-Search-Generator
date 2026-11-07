@@ -3,9 +3,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "word-search-generator"
+name = "pagegen"
 version = "0.1.0"
-description = "Generate word search puzzles and export them as PNG or PDF"
+description = "Generate printable pages and KDP books: word searches, moon calendars, tarot spreads"
 requires-python = ">=3.10"
 dependencies = [
     "Pillow>=10.0",
@@ -18,7 +18,11 @@ dev = [
 ]
 
 [project.scripts]
-wordsearch = "word_search.cli:main"
+pagegen = "pagegen.cli:main"
+wordsearch = "pagegen.wordsearch.cli:main"
 
 [tool.setuptools]
-packages = ["word_search"]
+packages = ["pagegen", "pagegen.wordsearch", "pagegen.moon", "pagegen.tarot"]
+
+[tool.setuptools.package-data]
+pagegen = ["assets/fonts/*.ttf", "assets/fonts/*.txt"]

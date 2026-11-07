@@ -1,4 +1,4 @@
-from word_search.book import (
+from pagegen.wordsearch.book import (
     PAGE_H,
     PAGE_W,
     PuzzleSpec,
@@ -10,7 +10,7 @@ from word_search.book import (
     read_puzzle_csv,
     render_answer_key_pages,
 )
-from word_search.grid import WordSearchGenerator
+from pagegen.wordsearch.grid import WordSearchGenerator
 
 
 def test_read_puzzle_csv_parses_title_and_words(tmp_path):
@@ -110,7 +110,7 @@ def test_markdown_headings_and_bullets_parsed_separately():
 
 
 def _sample_specs():
-    from word_search.book import PuzzleSpec
+    from pagegen.wordsearch.book import PuzzleSpec
 
     return [
         PuzzleSpec(title="Animals", words=["CAT", "DOG", "BIRD"]),
@@ -164,7 +164,7 @@ def test_build_book_warns_below_kdp_minimum_page_count():
 
 
 def test_build_book_skips_puzzle_too_long_for_grid_with_warning():
-    from word_search.book import PuzzleSpec
+    from pagegen.wordsearch.book import PuzzleSpec
 
     specs = [
         PuzzleSpec(title="TooLong", words=["SUPERCALIFRAGILISTIC"]),
@@ -187,7 +187,7 @@ def test_build_book_skips_puzzle_too_long_for_grid_with_warning():
 
 
 def test_force_recto_inserts_blank_page_only_when_even():
-    from word_search.book import _force_recto
+    from pagegen.wordsearch.book import _force_recto
 
     pages: list = []
     # Odd page number: nothing inserted, number unchanged.
@@ -207,7 +207,7 @@ def test_toc_reservation_and_recto_forcing_produce_correct_total_pages():
     out of sync with the real per-puzzle page numbers."""
     import math as _math
 
-    from word_search.book import PuzzleSpec, _force_recto, _toc_rows_per_page
+    from pagegen.wordsearch.book import PuzzleSpec, _force_recto, _toc_rows_per_page
 
     specs = [PuzzleSpec(title=f"Theme {i}", words=["CAT", "DOG", "BIRD"]) for i in range(1, 6)]
     pages, _ = build_book(
@@ -240,7 +240,7 @@ def test_toc_reservation_and_recto_forcing_produce_correct_total_pages():
 
 
 def test_render_toc_pages_produces_exact_requested_page_count():
-    from word_search.book import TocRow, WordSearchGenerator, render_toc_pages
+    from pagegen.wordsearch.book import TocRow, WordSearchGenerator, render_toc_pages
 
     generator = WordSearchGenerator(["CAT", "DOG"], rows=10, cols=10, seed=1)
     generator.generate()
@@ -257,7 +257,7 @@ def test_render_toc_pages_produces_exact_requested_page_count():
 
 def _is_blank_page(img) -> bool:
     # Every page gets a footer page number stamped, so exclude that strip.
-    from word_search.book import PAGE_W
+    from pagegen.wordsearch.book import PAGE_W
 
     content_area = img.crop((0, 0, PAGE_W, img.height - 300))
     return content_area.convert("L").getextrema() == (255, 255)
@@ -268,7 +268,7 @@ def test_puzzle_with_trivia_gets_a_facing_facts_page_others_stay_blank():
     only actually contain content when that specific puzzle has trivia."""
     import math as _math
 
-    from word_search.book import PuzzleSpec, _toc_rows_per_page
+    from pagegen.wordsearch.book import PuzzleSpec, _toc_rows_per_page
 
     specs = [
         PuzzleSpec(title="Animals", words=["CAT", "DOG", "BIRD"], trivia="Cats sleep a lot."),
@@ -298,8 +298,8 @@ def test_puzzle_with_trivia_gets_a_facing_facts_page_others_stay_blank():
 
 
 def test_large_print_preset_uses_small_grid_and_scaled_text():
-    from word_search.book import text_scale_for
-    from word_search.difficulty import DIFFICULTY_PRESETS
+    from pagegen.wordsearch.book import text_scale_for
+    from pagegen.wordsearch.difficulty import DIFFICULTY_PRESETS
 
     preset = DIFFICULTY_PRESETS["large-print"]
     assert int(preset["size"]) <= 12
@@ -311,7 +311,7 @@ def test_large_print_preset_uses_small_grid_and_scaled_text():
 
 
 def test_scaled_font_px_floors_large_print_text_to_16pt():
-    from word_search.book import DPI, scaled_font_px
+    from pagegen.wordsearch.book import DPI, scaled_font_px
 
     # A small base size (e.g. the word list body text) must still come out
     # to at least 16pt once large-print scaling is applied -- KDP requires
@@ -404,7 +404,7 @@ def test_build_book_surfaces_duplicate_puzzle_warnings():
 
 
 def test_render_copyright_page_is_page_sized_and_non_blank():
-    from word_search.book import render_copyright_page
+    from pagegen.wordsearch.book import render_copyright_page
 
     img = render_copyright_page("Test Book", "Jane Doe", 2026, page_number=2)
 
@@ -413,7 +413,7 @@ def test_render_copyright_page_is_page_sized_and_non_blank():
 
 
 def test_copyright_page_text_stays_above_bottom_margin_at_large_print_scale():
-    from word_search.book import page_margins, render_copyright_page, text_scale_for
+    from pagegen.wordsearch.book import page_margins, render_copyright_page, text_scale_for
 
     scale = text_scale_for("large-print")
     img = render_copyright_page("Test Book", "Jane Doe", 2026, page_number=2, text_scale=scale)
@@ -518,7 +518,7 @@ def test_read_puzzle_csv_without_category_header_leaves_category_none(tmp_path):
 
 
 def test_organize_puzzle_specs_with_no_categories_is_a_single_unlabeled_group():
-    from word_search.book import organize_puzzle_specs
+    from pagegen.wordsearch.book import organize_puzzle_specs
 
     specs = _sample_specs()
     sections = organize_puzzle_specs(specs)
@@ -527,7 +527,7 @@ def test_organize_puzzle_specs_with_no_categories_is_a_single_unlabeled_group():
 
 
 def test_organize_puzzle_specs_groups_by_first_appearance_order():
-    from word_search.book import organize_puzzle_specs
+    from pagegen.wordsearch.book import organize_puzzle_specs
 
     specs = [
         PuzzleSpec(title="Amethyst", words=["A"], category="Crystals"),
@@ -543,7 +543,7 @@ def test_organize_puzzle_specs_groups_by_first_appearance_order():
 
 
 def test_organize_puzzle_specs_buckets_blank_categories_into_fallback_last():
-    from word_search.book import organize_puzzle_specs
+    from pagegen.wordsearch.book import organize_puzzle_specs
 
     specs = [
         PuzzleSpec(title="Uncategorized One", words=["A"], category=None),
@@ -558,7 +558,7 @@ def test_organize_puzzle_specs_buckets_blank_categories_into_fallback_last():
 
 
 def test_organize_puzzle_specs_alphabetizes_categories_and_titles_when_requested():
-    from word_search.book import organize_puzzle_specs
+    from pagegen.wordsearch.book import organize_puzzle_specs
 
     specs = [
         PuzzleSpec(title="Tarot", words=["A"], category="Divination"),
@@ -574,7 +574,7 @@ def test_organize_puzzle_specs_alphabetizes_categories_and_titles_when_requested
 
 
 def test_organize_puzzle_specs_alphabetizes_flat_list_with_no_categories():
-    from word_search.book import organize_puzzle_specs
+    from pagegen.wordsearch.book import organize_puzzle_specs
 
     specs = [
         PuzzleSpec(title="Zebra", words=["A"]),
@@ -629,7 +629,7 @@ def test_build_book_with_categories_adds_more_pages_than_uncategorized_equivalen
 def test_build_book_toc_lists_category_headings_before_their_puzzles():
     import math as _math
 
-    from word_search.book import _toc_rows_per_page
+    from pagegen.wordsearch.book import _toc_rows_per_page
 
     specs = _categorized_specs()
     pages, warnings = build_book(

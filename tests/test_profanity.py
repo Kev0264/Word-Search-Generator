@@ -1,4 +1,4 @@
-from word_search.profanity import MIN_BLOCKED_WORD_LENGTH, find_blocked_words, load_blocklist
+from pagegen.wordsearch.profanity import MIN_BLOCKED_WORD_LENGTH, find_blocked_words, load_blocklist
 
 
 def test_load_blocklist_only_contains_clean_single_word_entries():

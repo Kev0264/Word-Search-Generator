@@ -1,7 +1,82 @@
-# Word Search Generator
+# pagegen
 
-Generate word search puzzles from a word list and export them as PNG or PDF,
-with an optional answer key.
+Generate printable pages and KDP book interiors from the command line:
+
+- **Word searches**: single puzzles, batches, and full KDP puzzle books
+- **Moon calendars**: a year of moon phases, computed offline, with traditional
+  full moon names, Blue Moons, and the Wheel of the Year sabbats
+- **Tarot spread sheets**: fill-in journal pages for eight spreads, from a
+  daily draw to the Celtic Cross
+
+Every new page type can render to three paper formats:
+
+| `--paper` | Use | Layout |
+| --- | --- | --- |
+| `kdp` | KDP paperback interior | 8.5x11in, mirrored gutter margins, title and copyright pages, page numbers |
+| `letter` | Etsy-style printable (US) | 8.5x11in, even 0.5in margins, no front matter |
+| `a4` | Etsy-style printable (international) | A4, even 0.5in margins, no front matter |
+
+Pass several formats at once (`--paper letter a4`) to get one PDF per format,
+each suffixed with its name (`moon_2027_letter.pdf`, `moon_2027_a4.pdf`).
+
+## Themes
+
+Moon and tarot pages take `--theme`:
+
+| `--theme` | Look |
+| --- | --- |
+| `celestial` (default) | Cinzel headings, EB Garamond text, a framed page with star corners, triple-moon dividers, star-scattered empty cells, deep plum accents |
+| `plain` | System fonts, no ornaments |
+
+`--paper kdp` is always rendered in grayscale for KDP's black-and-white
+interiors. For Letter/A4, add `--grayscale` to get a printer-friendly version.
+Many Etsy listings offer both the color and the grayscale version.
+
+The celestial theme also adds content to the pages. Each month's subtitle
+names its full moon and what that moon is traditionally associated with. Each
+sabbat line gets a short description, and the full-moon journal prompt
+mentions that month's moon.
+
+The bundled fonts are under the SIL Open Font License
+(`pagegen/assets/fonts/OFL-*.txt`), which permits embedding them in PDFs you
+sell. All ornaments are drawn in code (`pagegen/ornaments.py`), so there is
+no third-party artwork to license. A new theme is a `Theme(...)` entry in
+`pagegen/theme.py`.
+
+## Moon calendars
+
+```bash
+# Printable Letter + A4 set for an Etsy listing
+pagegen moon --year 2027 --paper letter a4 -o moon_2027.pdf
+
+# KDP lunar planner: each month faces a new-moon/full-moon journal page
+pagegen moon --year 2027 --paper kdp --journal -o moon_planner_2027.pdf \
+    --title "2027 Moon Calendar" --subtitle "A Witch's Lunar Planner" --author "Your Name"
+```
+
+Phase times use Meeus's *Astronomical Algorithms* and match published USNO
+times to within about a minute. Dates and times are shown in `--timezone`
+(an IANA name, default `America/New_York`), because a phase near midnight can
+fall on a different date in another zone. `--week-start monday` suits A4/European buyers.
+Sabbats and the drawn moon shapes follow the northern hemisphere.
+
+## Tarot spread sheets
+
+```bash
+pagegen tarot --list                                        # show available spreads
+pagegen tarot --paper letter a4 -o tarot_spreads.pdf        # one page per spread
+pagegen tarot --spreads daily --count 90 --paper kdp \
+    --title "Daily Tarot Journal" -o daily_tarot.pdf        # 90-day KDP journal
+```
+
+`--spreads` takes any sequence of spreads, and `--count` repeats that sequence.
+Spreads are defined in `pagegen/tarot/spreads.py`. Adding one is a name, a
+description, and a list of card positions.
+
+## Word searches
+
+The word search tool works as before. Run it either as `wordsearch ...` or as
+`pagegen wordsearch ...` (same options).
 
 ## Features
 
@@ -23,7 +98,7 @@ pip install -r requirements.txt
 ## Usage
 
 ```bash
-python -m word_search.cli --words-file words.txt --size 15 --output puzzle.png --answer-key answer_key.png
+python -m pagegen.wordsearch.cli --words-file words.txt --size 15 --output puzzle.png --answer-key answer_key.png
 ```
 
 Or with an editable install (`pip install -e .`), use the `wordsearch` command:

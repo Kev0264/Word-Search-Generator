@@ -6,43 +6,41 @@ from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
+from ..bookparts import (  # noqa: F401  (several re-exported for callers/tests)
+    DPI,
+    H2_SIZE,
+    LARGE_PRINT_TEXT_SCALE,
+    MIN_KDP_PAGES,
+    MIN_LARGE_PRINT_PX,
+    PAGE_H,
+    PAGE_W,
+    RULE_COLOR,
+    _draw_title_rule,
+    _fit_heading_lines,
+    _force_recto,
+    _markdown_blocks,
+    _wrap_paragraph,
+    in_to_px,
+    new_page,
+    page_margins,
+    render_copyright_page,
+    render_section_divider,
+    render_text_pages,
+    render_title_page,
+    save_book,
+    scaled_font_px,
+    stamp_page_number,
+)
+from ..fonts import load_body_font, load_font, load_heading_font, wrap_words_by_pixel
 from .difficulty import word_count_warning
 from .grid import WordSearchGenerationError, WordSearchGenerator
-from .render import (
-    GRID_LINE_COLOR,
-    load_body_font,
-    load_font,
-    load_heading_font,
-    load_italic_font,
-    wrap_words_by_pixel,
-)
-
-# KDP paperback interior sized for 8.5x11in at the 300 DPI print requires.
-# No bleed: nothing is drawn outside the margins, which keeps the layout
-# simple and avoids the extra 0.125in bleed allowance entirely.
-DPI = 300
-PAGE_WIDTH_IN = 8.5
-PAGE_HEIGHT_IN = 11.0
-PAGE_W = round(PAGE_WIDTH_IN * DPI)
-PAGE_H = round(PAGE_HEIGHT_IN * DPI)
-
-# KDP's inside (gutter) margin needs to grow with page count to stay clear of
-# the binding; 1.0in comfortably covers books up to a few hundred pages, with
-# extra room beyond KDP's bare minimum since these are puzzles the reader
-# marks up by hand near the grid's edge, not just text to read. Margins
-# mirror left/right by page parity so facing pages read correctly once bound.
-MARGIN_INSIDE_IN = 1.0
-MARGIN_OUTSIDE_IN = 0.75
-MARGIN_TOP_IN = 0.75
-MARGIN_BOTTOM_IN = 0.85
+from .render import GRID_LINE_COLOR
 
 # Extra breathing room between the margin and the puzzle grid itself, so a
 # circled answer near the grid's edge never has to crowd the margin line.
 GRID_PADDING_IN = 0.15
-
-MIN_KDP_PAGES = 24
 
 # Each puzzle's grid placement is independent of every other puzzle's, so a
 # blocked-word collision (two of the puzzle's own chosen words crossing to
@@ -50,40 +48,19 @@ MIN_KDP_PAGES = 24
 # rather than by searching for one lucky seed for the entire book.
 PLACEMENT_RETRY_ATTEMPTS = 25
 
-TITLE_SIZE = 100
-SUBTITLE_SIZE = 52
-AUTHOR_SIZE = 44
-COPYRIGHT_SIZE = 28
-H1_SIZE = 78
-H2_SIZE = 52
-BODY_SIZE = 40
 PUZZLE_TITLE_SIZE = 60
 WORDLIST_HEADER_SIZE = 44
 WORDLIST_BODY_SIZE = 38
 MINI_TITLE_SIZE = 30
-DIVIDER_SIZE = 90
-PAGE_NUMBER_SIZE = 30
 TOC_HEADER_SIZE = 64
 TOC_ROW_SIZE = 32
 TOC_ROW_HEIGHT_IN = 0.42
 
 ANSWER_HIGHLIGHT_RGBA = (90, 90, 90, 100)
-RULE_COLOR = "#555555"
 
 # Label for the section holding puzzles whose Category cell was left blank,
 # when at least one other puzzle in the book does have a category.
 DEFAULT_CATEGORY_FALLBACK_LABEL = "More to Explore"
-
-# Accessibility preset: scales up every text element (grid letters already
-# come out larger from that preset's smaller grid on the same fixed page).
-LARGE_PRINT_TEXT_SCALE = 1.35
-
-# KDP requires a large-print book's text to be 16pt or larger to be listed as
-# such. A flat 1.35x multiplier undershoots that floor for any element whose
-# base (medium-print) size was already small -- e.g. the word list comes out
-# to just ~12pt -- so every scaled size is additionally floored in points.
-MIN_LARGE_PRINT_PT = 16
-MIN_LARGE_PRINT_PX = math.ceil(MIN_LARGE_PRINT_PT * DPI / 72)
 
 
 @dataclass
@@ -105,54 +82,8 @@ class TocRow:
     number: int | None = None  # puzzle number; unused for category rows
 
 
-def in_to_px(inches: float) -> int:
-    return round(inches * DPI)
-
-
 def text_scale_for(difficulty: str | None) -> float:
     return LARGE_PRINT_TEXT_SCALE if difficulty == "large-print" else 1.0
-
-
-def scaled_font_px(base_px: float, text_scale: float) -> int:
-    """Applies text_scale to a base font size, then -- only when a scale is
-    actually in effect -- floors the result to MIN_LARGE_PRINT_PX so every
-    scaled text element genuinely qualifies as large print, not just ones
-    whose base size happened to already be large."""
-    size = round(base_px * text_scale)
-    if text_scale > 1.0:
-        size = max(size, MIN_LARGE_PRINT_PX)
-    return size
-
-
-def page_margins(page_number: int) -> tuple[int, int, int, int]:
-    """Returns (left, right, top, bottom) in pixels, mirroring the inside
-    (gutter) margin to whichever side faces the spine for this page."""
-    inside = in_to_px(MARGIN_INSIDE_IN)
-    outside = in_to_px(MARGIN_OUTSIDE_IN)
-    top = in_to_px(MARGIN_TOP_IN)
-    bottom = in_to_px(MARGIN_BOTTOM_IN)
-    if page_number % 2 == 1:
-        return inside, outside, top, bottom
-    return outside, inside, top, bottom
-
-
-def new_page() -> Image.Image:
-    return Image.new("RGB", (PAGE_W, PAGE_H), "white")
-
-
-def stamp_page_number(img: Image.Image, number: int) -> None:
-    draw = ImageDraw.Draw(img)
-    draw.text(
-        (PAGE_W / 2, PAGE_H - in_to_px(0.4)),
-        str(number),
-        font=load_body_font(PAGE_NUMBER_SIZE),
-        fill="black",
-        anchor="ma",
-    )
-
-
-def _draw_title_rule(draw: ImageDraw.ImageDraw, center_x: float, y: float, width: float) -> None:
-    draw.line([(center_x - width / 2, y), (center_x + width / 2, y)], fill=RULE_COLOR, width=3)
 
 
 def read_puzzle_csv(path: str | Path) -> list[PuzzleSpec]:
@@ -267,271 +198,6 @@ def find_duplicate_puzzle_warnings(specs: list[PuzzleSpec]) -> list[str]:
     return warnings
 
 
-def _wrap_paragraph(text: str, font, max_width: int) -> list[str]:
-    draw = ImageDraw.Draw(Image.new("RGB", (1, 1)))
-    words = text.split()
-    lines: list[str] = []
-    current: list[str] = []
-    for word in words:
-        candidate = " ".join(current + [word])
-        if current and draw.textlength(candidate, font=font) > max_width:
-            lines.append(" ".join(current))
-            current = [word]
-        else:
-            current.append(word)
-    if current:
-        lines.append(" ".join(current))
-    return lines or [""]
-
-
-def _markdown_blocks(text: str) -> list[tuple[str, str]]:
-    """Parses a tiny markdown subset: '# '/'## ' headings, '- '/'* ' bullets,
-    blank-line-separated paragraphs. Anything else is treated as a paragraph,
-    so plain, unformatted text still flows correctly. A wrapped continuation
-    line (no marker of its own) stays part of whichever paragraph or bullet
-    is currently open, rather than starting a stray new paragraph."""
-    blocks: list[tuple[str, str]] = []
-    open_type: str | None = None
-    open_lines: list[str] = []
-
-    def flush() -> None:
-        nonlocal open_type, open_lines
-        if open_lines:
-            blocks.append((open_type, " ".join(open_lines)))
-        open_type = None
-        open_lines = []
-
-    for raw_line in text.splitlines():
-        line = raw_line.strip()
-        if not line:
-            flush()
-        elif line.startswith("# "):
-            flush()
-            blocks.append(("h1", line[2:].strip()))
-        elif line.startswith("## "):
-            flush()
-            blocks.append(("h2", line[3:].strip()))
-        elif line.startswith("- ") or line.startswith("* "):
-            flush()
-            open_type = "bullet"
-            open_lines = [line[2:].strip()]
-        else:
-            if open_type is None:
-                open_type = "para"
-            open_lines.append(line)
-    flush()
-    return blocks
-
-
-def render_text_pages(
-    markdown_text: str, start_page_number: int, text_scale: float = 1.0
-) -> list[Image.Image]:
-    """Flows a tiny-markdown document across as many pages as it needs."""
-    blocks = _markdown_blocks(markdown_text)
-    pages: list[Image.Image] = []
-    page_number = start_page_number
-    left, right, top, bottom = page_margins(page_number)
-    printable_w = PAGE_W - left - right
-    bottom_limit = PAGE_H - bottom
-
-    img = new_page()
-    draw = ImageDraw.Draw(img)
-    y = top
-
-    def start_new_page() -> None:
-        nonlocal img, draw, y, page_number, left, right, printable_w
-        pages.append(img)
-        page_number += 1
-        left, right, _, _ = page_margins(page_number)
-        printable_w = PAGE_W - left - right
-        img = new_page()
-        draw = ImageDraw.Draw(img)
-        y = top
-
-    for block_type, text in blocks:
-        if block_type == "h1":
-            font = load_heading_font(scaled_font_px(H1_SIZE, text_scale))
-            indent, align = 0, "center"
-            lines = [text]
-            gap_before, gap_after = in_to_px(0.15), in_to_px(0.12)
-        elif block_type == "h2":
-            font = load_heading_font(scaled_font_px(H2_SIZE, text_scale))
-            indent, align = 0, "left"
-            lines = [text]
-            gap_before, gap_after = in_to_px(0.12), in_to_px(0.08)
-        elif block_type == "bullet":
-            font = load_body_font(scaled_font_px(BODY_SIZE, text_scale))
-            indent, align = in_to_px(0.35), "left"
-            lines = _wrap_paragraph("•  " + text, font, printable_w - indent)
-            gap_before, gap_after = in_to_px(0.03), in_to_px(0.03)
-        else:
-            font = load_body_font(scaled_font_px(BODY_SIZE, text_scale))
-            indent, align = 0, "left"
-            lines = _wrap_paragraph(text, font, printable_w)
-            gap_before, gap_after = in_to_px(0.05), in_to_px(0.14)
-
-        line_height = int(font.size * 1.4)
-
-        if y + gap_before + line_height > bottom_limit and y > top:
-            start_new_page()
-        y += gap_before
-
-        for line in lines:
-            if y + line_height > bottom_limit and y > top:
-                start_new_page()
-            if align == "center":
-                draw.text((left + printable_w / 2, y), line, font=font, fill="black", anchor="ma")
-            else:
-                draw.text((left + indent, y), line, font=font, fill="black", anchor="la")
-            y += line_height
-
-        y += gap_after
-
-    pages.append(img)
-    return pages
-
-
-def _fit_heading_lines(
-    text: str, printable_w: int, base_size: int, min_size: int
-) -> tuple[ImageFont.ImageFont, list[str]]:
-    """Shrinks a heading font until its wrapped text fits in at most two
-    lines within printable_w, down to min_size."""
-    size = base_size
-    font = load_heading_font(size)
-    lines = _wrap_paragraph(text, font, printable_w)
-    while len(lines) > 2 and size > min_size:
-        size -= 4
-        font = load_heading_font(size)
-        lines = _wrap_paragraph(text, font, printable_w)
-    return font, lines
-
-
-def render_title_page(
-    title: str,
-    author: str | None,
-    page_number: int,
-    text_scale: float = 1.0,
-    subtitle: str | None = None,
-) -> Image.Image:
-    img = new_page()
-    draw = ImageDraw.Draw(img)
-    left, right, _, _ = page_margins(page_number)
-    printable_w = PAGE_W - left - right
-
-    title_size = scaled_font_px(TITLE_SIZE, text_scale)
-    title_font, title_lines = _fit_heading_lines(
-        title, printable_w, title_size, round(title_size * 0.45)
-    )
-    title_line_height = int(title_font.size * 1.15)
-    title_block_height = title_line_height * len(title_lines)
-
-    subtitle_font = None
-    subtitle_lines: list[str] = []
-    subtitle_line_height = 0
-    subtitle_block_height = 0
-    subtitle_gap = in_to_px(0.18) if subtitle else 0
-    if subtitle:
-        subtitle_size = scaled_font_px(SUBTITLE_SIZE, text_scale)
-        size = subtitle_size
-        font = load_italic_font(size)
-        lines = _wrap_paragraph(subtitle, font, printable_w)
-        min_size = round(subtitle_size * 0.5)
-        while len(lines) > 2 and size > min_size:
-            size -= 4
-            font = load_italic_font(size)
-            lines = _wrap_paragraph(subtitle, font, printable_w)
-        subtitle_font, subtitle_lines = font, lines
-        subtitle_line_height = int(subtitle_font.size * 1.2)
-        subtitle_block_height = subtitle_line_height * len(subtitle_lines)
-
-    total_height = title_block_height + subtitle_gap + subtitle_block_height
-    title_y = PAGE_H * 0.4
-    top_of_block = title_y - total_height / 2
-
-    for i, line in enumerate(title_lines):
-        line_center_y = top_of_block + title_line_height * i + title_line_height / 2
-        draw.text((PAGE_W / 2, line_center_y), line, font=title_font, fill="black", anchor="mm")
-
-    cursor_y = top_of_block + title_block_height
-    if subtitle and subtitle_font is not None:
-        cursor_y += subtitle_gap
-        for i, line in enumerate(subtitle_lines):
-            line_center_y = cursor_y + subtitle_line_height * i + subtitle_line_height / 2
-            draw.text(
-                (PAGE_W / 2, line_center_y), line, font=subtitle_font, fill="#333333", anchor="mm"
-            )
-        cursor_y += subtitle_block_height
-
-    rule_y = cursor_y + in_to_px(0.25)
-    _draw_title_rule(draw, PAGE_W / 2, rule_y, in_to_px(2.5))
-    if author:
-        draw.text(
-            (PAGE_W / 2, rule_y + in_to_px(0.3)),
-            author,
-            font=load_body_font(scaled_font_px(AUTHOR_SIZE, text_scale)),
-            fill="black",
-            anchor="mm",
-        )
-    return img
-
-
-def render_copyright_page(
-    book_title: str, author: str | None, year: int, page_number: int, text_scale: float = 1.0
-) -> Image.Image:
-    """The copyright/imprint page conventionally on the back of the title
-    page (page 2, the title page's verso) in a published book."""
-    left, right, top, bottom = page_margins(page_number)
-    printable_w = PAGE_W - left - right
-
-    notice = f"© {year} {author}" if author else f"© {year} {book_title}"
-    lines_to_draw = [
-        notice,
-        "All rights reserved.",
-        "",
-        "No part of this publication may be reproduced, distributed, or "
-        "transmitted in any form or by any means, including photocopying, "
-        "recording, or other electronic or mechanical methods, without "
-        "prior written permission from the publisher, except for brief "
-        "quotations embodied in critical reviews and certain other "
-        "noncommercial uses permitted by copyright law.",
-        "",
-        "Facts researched from a variety of public sources and independently verified.",
-    ]
-
-    font = load_body_font(scaled_font_px(COPYRIGHT_SIZE, text_scale))
-    line_height = int(font.size * 1.5)
-
-    # Wrap every line up front so the block's total height is known before
-    # drawing -- large-print's much bigger copyright text can otherwise
-    # overflow the bottom margin if we always start from the same fixed
-    # vertical position regardless of how tall the block turns out to be.
-    all_lines: list[str] = []
-    for line in lines_to_draw:
-        all_lines.extend(_wrap_paragraph(line, font, printable_w) if line else [""])
-    total_height = len(all_lines) * line_height
-
-    img = new_page()
-    draw = ImageDraw.Draw(img)
-    y = min(PAGE_H * 0.6, PAGE_H - bottom - total_height)
-    for line in all_lines:
-        if line:
-            draw.text((left + printable_w / 2, y), line, font=font, fill="black", anchor="ma")
-        y += line_height
-    return img
-
-
-def render_section_divider(text: str, text_scale: float = 1.0) -> Image.Image:
-    img = new_page()
-    draw = ImageDraw.Draw(img)
-    y = PAGE_H / 2
-    draw.text(
-        (PAGE_W / 2, y), text, font=load_heading_font(scaled_font_px(DIVIDER_SIZE, text_scale)),
-        fill="black", anchor="mm",
-    )
-    _draw_title_rule(draw, PAGE_W / 2, y + in_to_px(0.4), in_to_px(2.5))
-    return img
-
-
 def render_puzzle_page(
     generator: WordSearchGenerator,
     title: str,
@@ -589,9 +255,7 @@ def render_puzzle_page(
         for c in range(cols):
             cx = grid_left + c * cell_size + cell_size / 2
             cy = grid_top + r * cell_size + cell_size / 2
-            draw.text(
-                (cx, cy), generator.grid[r][c], font=letter_font, fill="black", anchor="mm"
-            )
+            draw.text((cx, cy), generator.grid[r][c], font=letter_font, fill="black", anchor="mm")
 
     word_list_top = grid_top + grid_h + in_to_px(0.15)
     draw.text(
@@ -645,9 +309,7 @@ def _draw_mini_answer_key(
         for c in range(cols):
             cx = gx + c * cell + cell / 2
             cy = gy + r * cell + cell / 2
-            draw.text(
-                (cx, cy), generator.grid[r][c], font=letter_font, fill="black", anchor="mm"
-            )
+            draw.text((cx, cy), generator.grid[r][c], font=letter_font, fill="black", anchor="mm")
 
     highlighted = {cell_rc for placed in generator.placements for cell_rc in placed.cells}
     if highlighted:
@@ -700,9 +362,7 @@ def render_answer_key_pages(
         ]
 
         for (title, generator), (qx, qy) in zip(chunk, positions):
-            _draw_mini_answer_key(
-                img, draw, generator, title, qx, qy, quad_w, quad_h, text_scale
-            )
+            _draw_mini_answer_key(img, draw, generator, title, qx, qy, quad_w, quad_h, text_scale)
 
         pages.append(img)
         page_number += 1
@@ -840,18 +500,6 @@ def apply_placeholders(text: str, placeholders: dict[str, str]) -> str:
     return text
 
 
-def _force_recto(pages: list[Image.Image], page_number: int) -> int:
-    """Inserts a blank page if page_number is even, so the next page (a
-    puzzle, or the answer-key section) always starts on a right-hand
-    (recto) page -- the convention in puzzle books, since the reader marks
-    up the page and each puzzle should get a clean, dedicated spread rather
-    than landing wherever the previous content happened to end."""
-    if page_number % 2 == 0:
-        pages.append(new_page())
-        page_number += 1
-    return page_number
-
-
 def build_book(
     puzzle_specs: list[PuzzleSpec],
     rows: int,
@@ -953,7 +601,9 @@ def build_book(
             category_label = section_starts[puzzle_index]
             page_number = _force_recto(pages, page_number)
             pages.append(render_section_divider(category_label, text_scale))
-            toc_entries.append(TocRow(kind="category", title=category_label, page_number=page_number))
+            toc_entries.append(
+                TocRow(kind="category", title=category_label, page_number=page_number)
+            )
             page_number += 1
 
         generator: WordSearchGenerator | None = None
@@ -1037,9 +687,7 @@ def build_book(
         entries.append((spec.title, generator))
 
     if toc_index is not None:
-        toc_pages = render_toc_pages(
-            toc_entries, toc_page_number_start, toc_page_count, text_scale
-        )
+        toc_pages = render_toc_pages(toc_entries, toc_page_number_start, toc_page_count, text_scale)
         pages[toc_index : toc_index + toc_page_count] = toc_pages
 
     if entries:
@@ -1064,9 +712,3 @@ def build_book(
         stamp_page_number(page, i)
 
     return pages, warnings
-
-
-def save_book(pages: list[Image.Image], path: str | Path) -> None:
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    pages[0].save(path, "PDF", save_all=True, append_images=pages[1:], resolution=DPI)

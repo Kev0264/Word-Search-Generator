@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from word_search.cli import apply_difficulty, build_parser, main, word_count_warning
+from pagegen.wordsearch.cli import apply_difficulty, build_parser, main, word_count_warning
 
 
 def test_batch_mode_generates_puzzle_and_answer_key_per_file(tmp_path):
