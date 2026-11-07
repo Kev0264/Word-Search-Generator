@@ -110,6 +110,61 @@ def build_parser() -> argparse.ArgumentParser:
     tarot.add_argument("--intro", help="Markdown file rendered as introduction page(s) (kdp only)")
     tarot.add_argument("--list", action="store_true", help="List the available spreads and exit")
     _add_common_options(tarot, "tarot_spreads.pdf")
+
+    cover = sub.add_parser(
+        "cover",
+        help="KDP wraparound paperback cover (back, spine, front) around front-cover art",
+    )
+    cover.add_argument(
+        "--art",
+        required=True,
+        help="Front-cover image, ideally 2625x3375px (8.75x11.25in with bleed at 300 DPI)",
+    )
+    pages = cover.add_mutually_exclusive_group(required=True)
+    pages.add_argument("--pages", type=int, help="Interior page count (sets the spine width)")
+    pages.add_argument("--interior", help="Interior PDF to read the page count from")
+    cover.add_argument("--title", required=True, help='Book title; "|" forces a line break')
+    cover.add_argument("--subtitle")
+    cover.add_argument("--author")
+    cover.add_argument(
+        "--blurb",
+        help="Back-cover text, or a path to a text file. Blank lines separate paragraphs; "
+        "lines starting with '- ' become starred bullet points",
+    )
+    cover.add_argument("--paper", choices=["white", "cream"], default="white")
+    cover.add_argument(
+        "--art-scale",
+        type=float,
+        default=1.0,
+        help="Shrink the art (e.g. 0.94) so a border drawn near its edge moves inside "
+        "KDP's trim tolerance; the margin is filled from the art's own background",
+    )
+    cover.add_argument(
+        "--title-top",
+        type=float,
+        default=0.75,
+        help="Distance from the top trim to the title, in inches (default 0.75)",
+    )
+    cover.add_argument(
+        "--title-size",
+        type=float,
+        default=0.8,
+        help="Largest title cap height in inches; long titles shrink to fit (default 0.8)",
+    )
+    cover.add_argument(
+        "--author-bottom",
+        type=float,
+        default=0.75,
+        help="Distance from the bottom trim to the author line, in inches (default 0.75)",
+    )
+    cover.add_argument("--theme", choices=list(THEMES), default=DEFAULT_THEME)
+    cover.add_argument(
+        "--guides",
+        action="store_true",
+        help="Overlay trim, safe-zone, spine and barcode guides (for proofing only)",
+    )
+    cover.add_argument("--output", "-o", default="cover.pdf")
+    cover.add_argument("--strict", action="store_true")
     return parser
 
 
@@ -193,6 +248,41 @@ def run_tarot(args: argparse.Namespace) -> int:
     )
 
 
+def run_cover(args: argparse.Namespace) -> int:
+    from .cover import build_cover, count_pdf_pages, describe
+
+    pages = args.pages if args.pages is not None else count_pdf_pages(args.interior)
+    blurb = args.blurb
+    if blurb and Path(blurb).is_file():
+        blurb = Path(blurb).read_text(encoding="utf-8")
+    try:
+        image, warnings = build_cover(
+            args.art,
+            pages,
+            args.title,
+            subtitle=args.subtitle,
+            author=args.author,
+            blurb=blurb,
+            paper=args.paper,
+            theme=THEMES[args.theme],
+            art_scale=args.art_scale,
+            title_top_in=args.title_top,
+            author_bottom_in=args.author_bottom,
+            title_size_in=args.title_size,
+            guides=args.guides,
+        )
+    except (ValueError, OSError) as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 1
+    for warning in warnings:
+        print(f"Warning: {warning}", file=sys.stderr)
+    path = output_path_for(args.output, PAPER_FORMATS["kdp"], multiple=False)
+    save_pdf([image], path, quality=95)
+    print(describe(pages, args.paper))
+    print(f"Saved {path}")
+    return 1 if args.strict and warnings else 0
+
+
 def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     # Hand everything after `wordsearch` straight to its own parser, so its
@@ -207,6 +297,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_moon(args)
     if args.command == "tarot":
         return run_tarot(args)
+    if args.command == "cover":
+        return run_cover(args)
     return 2
 
 

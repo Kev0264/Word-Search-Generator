@@ -143,10 +143,15 @@ def stamp_page_numbers(pages: list[Image.Image], fmt: PageFormat) -> None:
         )
 
 
-def save_pdf(pages: list[Image.Image], path: str | Path, dpi: int = DPI) -> None:
+def save_pdf(
+    pages: list[Image.Image], path: str | Path, dpi: int = DPI, quality: int | None = None
+) -> None:
+    """Pillow embeds RGB/grayscale pages as JPEG; `quality` (1-95) raises it
+    above Pillow's default of 75 -- worth it for photographic cover art."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    pages[0].save(path, "PDF", save_all=True, append_images=pages[1:], resolution=dpi)
+    extra = {"quality": quality} if quality is not None else {}
+    pages[0].save(path, "PDF", save_all=True, append_images=pages[1:], resolution=dpi, **extra)
 
 
 def output_path_for(base: str | Path, fmt: PageFormat, multiple: bool) -> Path:

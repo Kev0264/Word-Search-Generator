@@ -73,6 +73,39 @@ pagegen tarot --spreads daily --count 90 --paper kdp \
 Spreads are defined in `pagegen/tarot/spreads.py`. Adding one is a name, a
 description, and a list of card positions.
 
+## KDP covers
+
+`pagegen cover` builds a full wraparound paperback cover (back, spine and
+front, with bleed) around front-cover art from any source. The art provides
+the picture. pagegen sets the title, subtitle, author and back-cover blurb in
+the theme's fonts, because AI image tools still garble lettering. It also
+sizes the canvas from the page count and paper type and keeps KDP's barcode
+area clear.
+
+```bash
+pagegen cover --art moon_art.jpg --interior moon_planner_2027.pdf \
+    --title "2027 Moon|Calendar" --subtitle "A Lunar Planner & Journal" \
+    --author "Your Name" --blurb blurb.txt --art-scale 0.95 -o moon_cover.pdf
+```
+
+- **Art:** 2625x3375px (8.75x11.25in at 300 DPI) with no text. The
+  command warns if the art is under 300 DPI or has the wrong shape.
+- **Page count:** `--interior` reads it from the interior PDF; use
+  `--pages N` to give it directly. `--paper cream` widens the spine.
+- **`--art-scale`:** shrinks the art when its painted border is close to
+  the edge. KDP's trim can shift by up to 1/8in, so a border sitting near the
+  edge can be cut off or end up lopsided. The margin this creates is filled
+  with the art's own edge color.
+- **Title placement:** a `|` in `--title` forces a line break.
+  `--title-top`, `--title-size` and `--author-bottom` (all in inches) fit the
+  text around the art.
+- **Blurb:** a plain text file. Blank lines separate paragraphs, and lines
+  starting with `- ` become starred bullet points.
+- **Spine:** spine text is added automatically once the book is thick enough
+  (KDP requires 79+ pages; legible lettering needs roughly 100+).
+- **`--guides`:** draws the trim, safe zone, spine and barcode area for
+  proofing. Leave it off for the file you upload.
+
 ## Word searches
 
 The word search tool works as before. Run it either as `wordsearch ...` or as
